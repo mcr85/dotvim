@@ -38,3 +38,5 @@ set colorcolumn=80
 
 " pasting - set paste or set nopaste
 set paste
+
+command! Status echo "Settings loaded!"
