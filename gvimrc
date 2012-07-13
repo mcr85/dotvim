@@ -3,6 +3,7 @@ call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
 colors blackboard
+set guifont=Monaco\ 7.5
 
 " highlight search
 set hlsearch
