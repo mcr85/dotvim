@@ -50,6 +50,12 @@ set ruler
 "	au InsertLeave * set cursorline
 " augroup END
 
+" KEYMAPS
+map <tab> %
+
+" Toggle [i]nvisible characters
+nnoremap <leader>i :set list!<cr>
+
 " SEARCH OPTIONS ----------------------------------------------------------------
 " highlight search
 set hlsearch
@@ -95,3 +101,6 @@ set sw=4
 set sts=4
 set smarttab
 set autoindent
+
+
+
