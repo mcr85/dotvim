@@ -1,3 +1,5 @@
+set nocompatible
+
 " Pathogen stuff, for plugins
 call pathogen#infect()
 call pathogen#helptags()
@@ -5,7 +7,7 @@ call pathogen#helptags()
 " file types
 filetype plugin on
 filetype indent on
-
+"
 if has("autocmd")
 	filetype on
 	filetype plugin indent on
@@ -17,7 +19,7 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
-set hidden
+"set hidden
 
 "vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -37,18 +39,18 @@ colors blackboard
 set gfn=Monaco\ 7
 " set line numbering
 set number
-set ruler
+"set ruler
 " margin line
 "set colorcolumn=80
 
 " Only show cursorline in the current window and in normal mode.
-"augroup cline
-"	au!
-"	au WinLeave * set nocursorline
-"	au WinEnter * set cursorline
-"	au InsertEnter * set nocursorline
-"	au InsertLeave * set cursorline
-" augroup END
+augroup cline
+	au!
+	au WinLeave * set nocursorline
+	au WinEnter * set cursorline
+	au InsertEnter * set nocursorline
+	au InsertLeave * set cursorline
+ augroup END
 
 " KEYMAPS
 map <tab> %
@@ -92,15 +94,20 @@ set wildmode=longest,list
 set nowrap
 
 " pasting - set paste or set nopaste
-set paste
+"set paste - this brakes supertab
 
 " whitespace controll, autoindent has to be last one
 set ts=4
-set noexpandtab
+"set noexpandtab
+set expandtab
 set sw=4
 set sts=4
 set smarttab
 set autoindent
+set textwidth=80
 
-
+" Supertab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabLongestHighlight = 1
+let g:SuperTabCrMapping = 1
 

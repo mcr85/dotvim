@@ -7,3 +7,6 @@
 [submodule "bundle/vim-blackboard"]
 	path = bundle/vim-blackboard
 	url = https://github.com/nelstrom/vim-blackboard.git
+[submodule "bundle/supertab"]
+	path = bundle/supertab
+	url = https://github.com/ervandew/supertab.git
