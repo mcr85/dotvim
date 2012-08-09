@@ -10,6 +10,3 @@
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "bundle/obvious-mode"]
-	path = bundle/obvious-mode
-	url = https://github.com/bsl/obviousmode
