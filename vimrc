@@ -36,7 +36,7 @@ let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
 colors blackboard
-set gfn=Monaco\ 7
+set gfn=Monaco\ 10
 " set line numbering
 set number
 "set ruler
@@ -113,3 +113,7 @@ let g:SuperTabCrMapping = 1
 
 " Obvious Mode
 set laststatus=2
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
+

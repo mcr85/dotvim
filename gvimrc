@@ -36,7 +36,7 @@ let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
 colors blackboard
-set gfn=Monaco\ 7
+set gfn=Monaco\ 10
 " set line numbering
 set number
 "set ruler
@@ -44,13 +44,14 @@ set number
 "set colorcolumn=80
 
 " Only show cursorline in the current window and in normal mode.
-augroup cline
-	au!
-	au WinLeave * set nocursorline
-	au WinEnter * set cursorline
-	au InsertEnter * set nocursorline
-	au InsertLeave * set cursorline
- augroup END
+"augroup cline
+"	au!
+"	au WinLeave * set nocursorline
+"	au WinEnter * set cursorline
+"	au InsertEnter * set nocursorline
+"	au InsertLeave * set cursorline
+" augroup END
+ set cursorline
 
 " KEYMAPS
 map <tab> %
@@ -114,3 +115,5 @@ let g:SuperTabCrMapping = 1
 " Obvious Mode
 set laststatus=2
 
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
