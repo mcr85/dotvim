@@ -13,3 +13,6 @@
 [submodule "bundle/obvious-mode"]
 	path = bundle/obvious-mode
 	url = https://github.com/bsl/obviousmode.git
+[submodule "bundle/vim-numbertoggle"]
+	path = bundle/vim-numbertoggle
+	url = https://github.com/jeffkreeftmeijer/vim-numbertoggle.git
