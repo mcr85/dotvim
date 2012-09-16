@@ -36,7 +36,7 @@ let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
 colors blackboard
-set gfn=Monaco\ 10
+set gfn=UbuntuMono\ 11
 " set line numbering
 set number
 "set ruler

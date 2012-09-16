@@ -35,10 +35,11 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
-colors blackboard
-set gfn=Monaco\ 10
+colors Mustang
+set gfn=UbuntuMono\ 11
 " set line numbering
 set number
+set linespace=2
 "set ruler
 " margin line
 "set colorcolumn=80
@@ -117,3 +118,10 @@ set laststatus=2
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
+
+" NERDTree
+map <F2> :NERDTreeToggle<CR>
+
+" Syntastic
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
+
