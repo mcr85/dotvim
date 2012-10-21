@@ -20,7 +20,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
-"set hidden
+" allows to change buffer without saving file
+set hidden
 
 "vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -36,7 +37,7 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
-colors Mustang
+colors vividchalk
 set gfn=UbuntuMono\ 11
 " set line numbering
 set number
@@ -73,6 +74,8 @@ set smartcase
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+" Ack
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 " Ack for the last search.
@@ -86,7 +89,7 @@ function! s:VSetSearch()
 	let @@ = temp
 endfunction
 
-" BEHAVIOUR ---------------------------------------------------------------------
+" BEHAVIOUR --------------------------------------------------------------------
 " see at least 'n' number of lines at the top/bottom of the screen
 set scrolloff=3
 
@@ -108,6 +111,13 @@ set sts=4
 set smarttab
 set autoindent
 set textwidth=80
+
+" PLUGINS --------------------------------------------------------------------
+
+" FuzzyFinder
+nnoremap <leader> f     :FufFile<CR>
+nnoremap <leader> b     :FufBuffer<CR>
+nnoremap <leader> t     :FufTag<CR>
 
 " Supertab
 let g:SuperTabDefaultCompletionType = "context"
@@ -145,3 +155,10 @@ let g:neocomplcache_enable_underbar_completion = 1
 " AutoComplPop like behavior.
 let g:neocomplcache_enable_auto_select = 1
 " neocomplcache -- END
+
+" FuzzyFinder
+nnoremap <leader>f :FufFile<CR>
+nnoremap <leader>b :FufBuffer<CR>
+nnoremap <leader>t :FufTag<CR>
+
+" Sparkup - gives zen coding - shortcut is Ctrl + E

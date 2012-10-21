@@ -20,7 +20,8 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
-"set hidden
+" allows to change buffer without saving file
+set hidden
 
 "vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -36,22 +37,24 @@ let mapleader = ","
 let maplocalleader = "\\"
 
 " APPEARANCE --------------------------------------------------------------------
-colors blackboard
+colors vividchalk
 set gfn=UbuntuMono\ 11
 " set line numbering
 set number
+set linespace=2
 "set ruler
 " margin line
 "set colorcolumn=80
 
 " Only show cursorline in the current window and in normal mode.
-augroup cline
-	au!
-	au WinLeave * set nocursorline
-	au WinEnter * set cursorline
-	au InsertEnter * set nocursorline
-	au InsertLeave * set cursorline
- augroup END
+"augroup cline
+"	au!
+"	au WinLeave * set nocursorline
+"	au WinEnter * set cursorline
+"	au InsertEnter * set nocursorline
+"	au InsertLeave * set cursorline
+" augroup END
+ set cursorline
 
 " KEYMAPS
 map <tab> %
@@ -71,6 +74,8 @@ set smartcase
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
+" Ack
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 " Ack for the last search.
@@ -84,7 +89,7 @@ function! s:VSetSearch()
 	let @@ = temp
 endfunction
 
-" BEHAVIOUR ---------------------------------------------------------------------
+" BEHAVIOUR --------------------------------------------------------------------
 " see at least 'n' number of lines at the top/bottom of the screen
 set scrolloff=3
 
@@ -107,6 +112,8 @@ set smarttab
 set autoindent
 set textwidth=80
 
+" PLUGINS --------------------------------------------------------------------
+
 " Supertab
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabLongestHighlight = 1
@@ -117,6 +124,16 @@ set laststatus=2
 
 " Tagbar
 nmap <F8> :TagbarToggle<CR>
+
+" NERDTree
+map <F2> :NERDTreeToggle<CR>
+
+" Syntastic
+let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
+
+" AutoComplPop
+set completeopt+=longest
+let g:acp_enableAtStartup = 1
 
 " neocomplcache -- START
 " Disable AutoComplPop.
@@ -133,3 +150,8 @@ let g:neocomplcache_enable_underbar_completion = 1
 " AutoComplPop like behavior.
 let g:neocomplcache_enable_auto_select = 1
 " neocomplcache -- END
+
+" FuzzyFinder
+nnoremap <leader>f :FufFile<CR>
+nnoremap <leader>b :FufBuffer<CR>
+nnoremap <leader>t :FufTag<CR>
