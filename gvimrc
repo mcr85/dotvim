@@ -4,21 +4,18 @@ set nocompatible
 call pathogen#infect()
 call pathogen#helptags()
 
-" file types
-filetype plugin on
-filetype indent on
-"
 if has("autocmd")
 	filetype on
 	filetype plugin indent on
 endif
 
 " auto completion
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+set omnifunc=syntaxcomplete#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
 
 " allows to change buffer without saving file
 set hidden
@@ -28,17 +25,22 @@ let g:html_inndent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
+
 " BASIC OPTIONS -----------------------------------------------------------------
-set listchars=tab:▸\ ,eol:¬,extends:❯,precedes:❮
-set showbreak=↪
+
+"set listchars=tab:?\ ,eol:¬,extends:?,precedes:?
+set showbreak=?
 au VimResized * :wincmd =
 " Leader
 let mapleader = ","
 let maplocalleader = "\\"
 
+
 " APPEARANCE --------------------------------------------------------------------
-colors vividchalk
-set gfn=UbuntuMono\ 11
+
+colors Tomorrow-Night
+"set gfn=Consolas\ 13
+set guifont=Consolas
 " set line numbering
 set number
 set linespace=2
@@ -54,15 +56,33 @@ set linespace=2
 "	au InsertEnter * set nocursorline
 "	au InsertLeave * set cursorline
 " augroup END
- set cursorline
+set cursorline
 
 " KEYMAPS
 map <tab> %
 
+" allows backspace in insert mode
+set backspace=start,indent,eol
+
+" paste and reformat/reindent
+:nnoremap <Esc>P  P'[v']=
+:nnoremap <Esc>p  p'[v']=
+
+" generate php tags
+nmap <silent> <F4>
+	\ :!ctags -f ./tags
+	\ --langmap="php:+.inc"
+	\ -h ".php.inc" -R --totals=yes
+	\ --tag-relative=yes --PHP-kinds=+cf-v .<CR>
+
+set tags=./tags,tags
+
 " Toggle [i]nvisible characters
 nnoremap <leader>i :set list!<cr>
 
+
 " SEARCH OPTIONS ----------------------------------------------------------------
+
 " highlight search
 set hlsearch
 " incremental search, don't have to type whole word
@@ -75,11 +95,13 @@ set smartcase
 nnoremap n nzzzv
 nnoremap N Nzzzv
 " Ack
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+" let g:ackprg="Ack -H --nocolor --nogroup --column"
+"let g:ackprg="Ack"
 " Open a Quickfix window for the last search.
 nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 " Ack for the last search.
 nnoremap <silent> <leader>/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
+"nnoremap <silent> <leader>/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\<", "\\b", ""), "\\>", "\\b", ""), "\\v", "", "") . "'"<CR>
 
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
@@ -89,7 +111,9 @@ function! s:VSetSearch()
 	let @@ = temp
 endfunction
 
+
 " BEHAVIOUR --------------------------------------------------------------------
+
 " see at least 'n' number of lines at the top/bottom of the screen
 set scrolloff=3
 
@@ -112,23 +136,19 @@ set smarttab
 set autoindent
 set textwidth=80
 
+
 " PLUGINS --------------------------------------------------------------------
 
-" FuzzyFinder
-nnoremap <leader> f     :FufFile<CR>
-nnoremap <leader> b     :FufBuffer<CR>
-nnoremap <leader> t     :FufTag<CR>
-
 " Supertab
-let g:SuperTabDefaultCompletionType = "context"
+"let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
 let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
 
+" TernJS (javascript intelligence engine)
+
 " Obvious Mode
 set laststatus=2
-
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -137,28 +157,23 @@ map <F2> :NERDTreeToggle<CR>
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
 
 " AutoComplPop
-set completeopt+=longest
+set completeopt=longest,menuone
 let g:acp_enableAtStartup = 1
 
-" neocomplcache -- START
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 1
-let g:neocomplcache_enable_at_startup = 1
-" Use smartcase.
-let g:neocomplcache_enable_smart_case = 1
-" Use camel case completion.
-let g:neocomplcache_enable_camel_case_completion = 1
-" Use underbar completion.
-let g:neocomplcache_enable_underbar_completion = 1
-" Set minimum syntax keyword length.
-" let g:neocomplcache_min_syntax_length = 3
-" AutoComplPop like behavior.
-let g:neocomplcache_enable_auto_select = 1
-" neocomplcache -- END
-
-" FuzzyFinder
-nnoremap <leader>f :FufFile<CR>
-nnoremap <leader>b :FufBuffer<CR>
-nnoremap <leader>t :FufTag<CR>
+" CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_match_window_reversed = 0
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
+
+" UltiSnippets
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+
+" PHP
+"let php_sql_query=1
+"let php_htmlInStrings=1
+"let php_noShortTags=1
+"let php_folding=1
+
+:syntax on
