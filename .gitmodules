@@ -40,3 +40,9 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = https://github.com/SirVer/ultisnips
+[submodule "bundle/gundo"]
+	path = bundle/gundo
+	url = https://github.com/sjl/gundo.vim.git
+[submodule "bundle/vim-multiple-cursors"]
+	path = bundle/vim-multiple-cursors
+	url = https://github.com/terryma/vim-multiple-cursors.git

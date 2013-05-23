@@ -20,13 +20,24 @@ set omnifunc=syntaxcomplete#Complete
 " allows to change buffer without saving file
 set hidden
 
-"vim-javascript settings
+" vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
 let g:html_indent_style1 = "inc"
 
+" Javascript Code Folding
+syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
+setlocal foldmethod=syntax
+setlocal foldlevel=99
+
 
 " BASIC OPTIONS -----------------------------------------------------------------
+
+" Auto-Reload vimrc
+augroup reload_vimrc " {
+    autocmd!
+    autocmd BufWritePost $MYVIMRC source $MYVIMRC
+augroup END " }
 
 "set listchars=tab:?\ ,eol:¬,extends:?,precedes:?
 set showbreak=?
@@ -69,7 +80,7 @@ set backspace=start,indent,eol
 :nnoremap <Esc>p  p'[v']=
 
 " generate php tags
-nmap <silent> <F4>
+nmap <silent> <F9>
 	\ :!ctags -f ./tags
 	\ --langmap="php:+.inc"
 	\ -h ".php.inc" -R --totals=yes
@@ -146,6 +157,7 @@ let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
 
 " TernJS (javascript intelligence engine)
+map <F4> :TernDef<CR>
 
 " Obvious Mode
 set laststatus=2
@@ -164,11 +176,25 @@ let g:acp_enableAtStartup = 1
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_match_window_reversed = 0
+" CtrlP-funky (function search in CtrlP)
+let g:ctrlp_extensions = ['funky']
+nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
 " UltiSnippets
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+
+" Gundo
+nnoremap <F5> :GundoToggle<CR>
+
+" Multiple cursors
+"let g:multi_cursor_use_default_mapping=0
+"let g:multi_cursor_next_key='<C-d>'
+"let g:multi_cursor_prev_key='<C-p>'
+"let g:multi_cursor_skip_key='<C-x>'
+"let g:multi_cursor_quit_key='<Esc>'
+
 
 " PHP
 "let php_sql_query=1
@@ -177,3 +203,4 @@ let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
 "let php_folding=1
 
 :syntax on
+
