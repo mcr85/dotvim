@@ -9,6 +9,9 @@ if has("autocmd")
 	filetype plugin indent on
 endif
 
+" encoding
+set encoding=utf-8
+
 " auto completion
 set omnifunc=syntaxcomplete#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -48,10 +51,8 @@ let maplocalleader = "\\"
 
 
 " APPEARANCE --------------------------------------------------------------------
-
 colors Tomorrow-Night
-"set gfn=Consolas\ 13
-set guifont=Consolas
+set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 " set line numbering
 set number
 set linespace=2
@@ -157,10 +158,14 @@ let g:SuperTabLongestHighlight = 1
 let g:SuperTabCrMapping = 1
 
 " TernJS (javascript intelligence engine)
+let g:tern_show_argument_hints='on_hold'
+let g:tern_map_keys=1
 map <F4> :TernDef<CR>
 
-" Obvious Mode
+" Powerline (windows status, Obvious Mode replacement)
 set laststatus=2
+set t_Co=256
+let g:Powerline_symbols = "fancy"
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -202,5 +207,5 @@ nnoremap <F5> :GundoToggle<CR>
 "let php_noShortTags=1
 "let php_folding=1
 
-:syntax on
 
+:syntax on
