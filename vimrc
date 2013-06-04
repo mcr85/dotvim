@@ -73,6 +73,13 @@ set cursorline
 " KEYMAPS
 map <tab> %
 
+nmap <C-V> "+gP
+imap <C-V> <ESC><C-V>i
+vmap <C-C> "+y
+
+map <C-S> <ESC>:w<CR>
+imap <C-S> <ESC>:w<CR>
+
 " allows backspace in insert mode
 set backspace=start,indent,eol
 
@@ -179,7 +186,7 @@ let g:acp_enableAtStartup = 1
 
 " CtrlP
 let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_cmd = 'CtrlPBuffer'
 let g:ctrlp_match_window_reversed = 0
 " CtrlP-funky (function search in CtrlP)
 let g:ctrlp_extensions = ['funky']
