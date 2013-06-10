@@ -34,6 +34,9 @@
 [submodule "bundle/ctrlp"]
 	path = bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule "bundle/ctrlp-funky"]
+	path = bundle/ctrlp-funky
+    url = https://github.com/tacahiroy/ctrlp-funky.git 
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = https://github.com/SirVer/ultisnips

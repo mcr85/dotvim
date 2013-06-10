@@ -42,19 +42,28 @@ augroup reload_vimrc " {
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
+" fast scrolling
+set ttyfast
+
+" history
+set history=700
+
 "set listchars=tab:?\ ,eol:¬,extends:?,precedes:?
 set showbreak=?
 au VimResized * :wincmd =
+
 " Leader
 let mapleader = ","
 let maplocalleader = "\\"
 
+" mouse
+set mouse=a
+set bs=2
 
 " APPEARANCE --------------------------------------------------------------------
-colors Tomorrow-Night
-set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
-" set line numbering
-set number
+colors Tomorrow-Night 
+set guifont=Ubuntu\ Mono\ 12 
+"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
 set linespace=2
 "set ruler
 " margin line
@@ -73,12 +82,26 @@ set cursorline
 " KEYMAPS
 map <tab> %
 
+" copy paste
 nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
 
+" file saving
 map <C-S> <ESC>:w<CR>
 imap <C-S> <ESC>:w<CR>
+
+" move around windows
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
+nnoremap <c-h> <c-w>h
+
+" tabs management
+nnoremap <A-k> :tabnext<CR>
+nnoremap <A-j> :tabprevious<CR>
+nnoremap <C-t> :tabnew<CR>
+nnoremap <C-w> :tabclose<CR>
 
 " allows backspace in insert mode
 set backspace=start,indent,eol
@@ -191,6 +214,7 @@ let g:ctrlp_match_window_reversed = 0
 " CtrlP-funky (function search in CtrlP)
 let g:ctrlp_extensions = ['funky']
 nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+let g:ctrlp_max_height=30
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
