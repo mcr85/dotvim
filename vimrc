@@ -62,8 +62,9 @@ set bs=2
 
 " APPEARANCE --------------------------------------------------------------------
 colors Tomorrow-Night 
-set guifont=Ubuntu\ Mono\ 12 
+"set guifont=Ubuntu\ Mono\ 12 
 "set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+set guifont=Inconsolata\ for\ Powerline:h16
 set linespace=2
 "set ruler
 " margin line
@@ -86,6 +87,8 @@ map <tab> %
 nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
+:nnoremap <Esc>P  P'[v']=
+:nnoremap <Esc>p  p'[v']=
 
 " file saving
 map <C-S> <ESC>:w<CR>
@@ -105,10 +108,6 @@ nnoremap <C-w> :tabclose<CR>
 
 " allows backspace in insert mode
 set backspace=start,indent,eol
-
-" paste and reformat/reindent
-:nnoremap <Esc>P  P'[v']=
-:nnoremap <Esc>p  p'[v']=
 
 " generate php tags
 nmap <silent> <F9>
