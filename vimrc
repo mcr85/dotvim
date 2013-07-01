@@ -9,6 +9,12 @@ if has("autocmd")
 	filetype plugin indent on
 endif
 
+" backup 
+set nobackup
+
+" swap
+set noswapfile
+
 " encoding
 set encoding=utf-8
 
@@ -60,12 +66,24 @@ let maplocalleader = "\\"
 set mouse=a
 set bs=2
 
-" APPEARANCE --------------------------------------------------------------------
+
+" APPEARANCE -------------------------------------------------------------------
+
 colors Tomorrow-Night 
-"set guifont=Ubuntu\ Mono\ 12 
-"set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
-set guifont=Inconsolata\ for\ Powerline:h16
+if has('win32')
+    set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+elseif has('mac')
+    set guifont=Inconsolata\ for\ Powerline:h16
+elseif has('unix')
+    set guifont=Ubuntu\ Mono\ 12 
+endif
+
 set linespace=2
+
+" openning new splits
+set splitbelow
+set splitright
+
 "set ruler
 " margin line
 "set colorcolumn=80
@@ -80,8 +98,18 @@ set linespace=2
 " augroup END
 set cursorline
 
-" KEYMAPS
+
+" KEYMAPS ---------------------------------------------------------------------
+
 map <tab> %
+
+" turn off annoying bindings
+nnoremap <F1> <nop>
+nnoremap Q <nop>
+nnoremap K <nop>
+
+" turn off search highlight
+nnoremap <leader>h :noh<cr>
 
 " copy paste
 nmap <C-V> "+gP
@@ -201,19 +229,36 @@ map <F2> :NERDTreeToggle<CR>
 
 " Syntastic
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
+let g:syntastic_enable_signs = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+
 
 " AutoComplPop
 set completeopt=longest,menuone
 let g:acp_enableAtStartup = 1
 
 " CtrlP
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlPBuffer'
-let g:ctrlp_match_window_reversed = 0
+"let g:ctrlp_map = '<c-e>'
+"let g:ctrlp_cmd = 'CtrlPBuffer'
+"let g:ctrlp_match_window_reversed = 0
 " CtrlP-funky (function search in CtrlP)
-let g:ctrlp_extensions = ['funky']
-nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-let g:ctrlp_max_height=30
+"let g:ctrlp_extensions = ['funky']
+"nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
+"let g:ctrlp_max_height=30
+
+" Unite (CtrlP alternative)
+" search files like in CtrlP
+nnoremap <C-p> :Unite -start-insert file_rec<cr>
+" content search like ack.vim
+nnoremap <space>/ :Unite -start-insert grep:.<cr>
+" buffer switching
+nnoremap <space>s :Unite buffer<cr>
+" recent files - mru
+nnoremap <space>r :Unite file_mru<cr>
+let g:unite_source_file_ignore_pattern = 
+      \'^\%(/\|\a\+:/\)$\|\~$\|\.\%(o|exe|dll|bak|sw[po]\)$'
+let g:unite_source_file_mru_limit = 100
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
@@ -230,12 +275,10 @@ nnoremap <F5> :GundoToggle<CR>
 "let g:multi_cursor_skip_key='<C-x>'
 "let g:multi_cursor_quit_key='<Esc>'
 
-
 " PHP
 "let php_sql_query=1
 "let php_htmlInStrings=1
 "let php_noShortTags=1
 "let php_folding=1
-
 
 :syntax on
