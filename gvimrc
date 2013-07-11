@@ -6,7 +6,8 @@ call pathogen#helptags()
 
 if has("autocmd")
 	filetype on
-	filetype plugin indent on
+	filetype plugin on
+    filetype indent on
 endif
 
 " backup 
@@ -71,7 +72,7 @@ set bs=2
 
 colors Tomorrow-Night 
 if has('win32')
-    set guifont=Consolas\ for\ Powerline\ FixedD:h10:cANSI
+    set guifont=Consolas\ for\ Powerline\ FixedD:h11:b:cANSI
 elseif has('mac')
     set guifont=Inconsolata\ for\ Powerline:h16
 elseif has('unix')
@@ -133,6 +134,13 @@ nnoremap <A-k> :tabnext<CR>
 nnoremap <A-j> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-w> :tabclose<CR>
+
+" buffer kill
+nnoremap <leader>bd :bd<cr>
+
+" Quickfix open/close
+nnoremap <leader>co :copen<cr>
+nnoremap <leader>cc :cclose<cr>
 
 " allows backspace in insert mode
 set backspace=start,indent,eol
@@ -196,14 +204,16 @@ set nowrap
 "set paste - this brakes supertab
 
 " whitespace controll, autoindent has to be last one
-set ts=4
 "set noexpandtab
+set showmatch
+set ts=4
 set expandtab
 set sw=4
 set sts=4
-set smarttab
+"set smarttab
 set autoindent
-set textwidth=80
+"set textwidth=80
+set expandtab
 
 
 " PLUGINS --------------------------------------------------------------------
