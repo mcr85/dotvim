@@ -20,9 +20,10 @@ set noswapfile
 set encoding=utf-8
 
 " auto completion
-set omnifunc=syntaxcomplete#Complete
+"set omnifunc=syntaxcomplete#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript set omnifunc=tern#Complete
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
@@ -207,7 +208,6 @@ set nowrap
 "set noexpandtab
 set showmatch
 set ts=4
-set expandtab
 set sw=4
 set sts=4
 "set smarttab
@@ -220,13 +220,14 @@ set expandtab
 
 " Supertab
 "let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:SuperTabLongestHighlight = 1
-let g:SuperTabCrMapping = 1
+"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+"let g:SuperTabLongestHighlight = 1
+"let g:SuperTabCrMapping = 1
 
 " TernJS (javascript intelligence engine)
 let g:tern_show_argument_hints='on_hold'
 let g:tern_map_keys=1
+let g:tern_request_timeout=3
 map <F4> :TernDef<CR>
 
 " Powerline (windows status, Obvious Mode replacement)
@@ -243,10 +244,15 @@ let g:syntastic_enable_signs = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
+" EasyMotion
+let g:EasyMotion_leader_key = '<Space>'
+
+" Number Toggle - relative numbers on sidebar
+" <C-n>
 
 " AutoComplPop
-set completeopt=longest,menuone
-let g:acp_enableAtStartup = 1
+"set completeopt=longest,menuone
+"let g:acp_enableAtStartup = 1
 
 " CtrlP
 "let g:ctrlp_map = '<c-e>'
@@ -290,5 +296,10 @@ nnoremap <F5> :GundoToggle<CR>
 "let php_htmlInStrings=1
 "let php_noShortTags=1
 "let php_folding=1
+
+" YouCompleteMe
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+set completeopt-=preview
 
 :syntax on
