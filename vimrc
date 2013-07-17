@@ -62,7 +62,7 @@ au VimResized * :wincmd =
 
 " Leader
 let mapleader = ","
-let maplocalleader = "\\"
+let maplocalleader = ","
 
 " mouse
 set mouse=a
@@ -226,9 +226,8 @@ set expandtab
 
 " TernJS (javascript intelligence engine)
 let g:tern_show_argument_hints='on_hold'
-let g:tern_map_keys=1
 let g:tern_request_timeout=3
-map <F4> :TernDef<CR>
+let g:tern_map_prefix="<leader>"
 
 " Powerline (windows status, Obvious Mode replacement)
 set laststatus=2
