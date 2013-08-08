@@ -71,9 +71,9 @@ set bs=2
 
 " APPEARANCE -------------------------------------------------------------------
 
-colors Tomorrow-Night 
+colors xoria256
 if has('win32')
-    set guifont=Consolas\ for\ Powerline\ FixedD:h11:b:cANSI
+    set guifont=Ubuntu_Mono_for_Powerline:h10:cANSI
 elseif has('mac')
     set guifont=Inconsolata\ for\ Powerline:h16
 elseif has('unix')
@@ -134,7 +134,7 @@ nnoremap <c-h> <c-w>h
 nnoremap <A-k> :tabnext<CR>
 nnoremap <A-j> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
-nnoremap <C-w> :tabclose<CR>
+nnoremap <C-t>c :tabclose<CR>
 
 " buffer kill
 nnoremap <leader>bd :bd<cr>
@@ -229,10 +229,10 @@ let g:tern_show_argument_hints='on_hold'
 let g:tern_request_timeout=3
 let g:tern_map_prefix="<leader>"
 
-" Powerline (windows status, Obvious Mode replacement)
+" Airline (replacement for Powerline - windows status, Obvious Mode replacement)
 set laststatus=2
 set t_Co=256
-let g:Powerline_symbols = "fancy"
+let g:airline_powerline_fonts = 1
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -248,19 +248,6 @@ let g:EasyMotion_leader_key = '<Space>'
 
 " Number Toggle - relative numbers on sidebar
 " <C-n>
-
-" AutoComplPop
-"set completeopt=longest,menuone
-"let g:acp_enableAtStartup = 1
-
-" CtrlP
-"let g:ctrlp_map = '<c-e>'
-"let g:ctrlp_cmd = 'CtrlPBuffer'
-"let g:ctrlp_match_window_reversed = 0
-" CtrlP-funky (function search in CtrlP)
-"let g:ctrlp_extensions = ['funky']
-"nnoremap <Leader>fU :execute 'CtrlPFunky ' . expand('<cword>')<Cr>
-"let g:ctrlp_max_height=30
 
 " Unite (CtrlP alternative)
 " search files like in CtrlP
@@ -300,5 +287,9 @@ nnoremap <F5> :GundoToggle<CR>
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 set completeopt-=preview
+
+" sexy_scroller
+let g:SexyScroller_EasingStyle=2
+let g:SexyScroller_MaxTime=300
 
 :syntax on
