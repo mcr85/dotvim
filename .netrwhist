@@ -1,8 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/home/mcr/.vim/bundle'
 let g:netrw_dirhist_2='/media/PROGRAMY/Warsztat/WEB/DRAWC/css'
 let g:netrw_dirhist_3='D:/SMART_APPS/debug_player/js'
 let g:netrw_dirhist_4='D:/SMART_APPS/debug_player'
 let g:netrw_dirhist_5='D:/SMART_APPS/debug_player/js'
 let g:netrw_dirhist_6='D:/SMART_APPS/debug_player'
+let g:netrw_dirhist_7='D:/wamp/www/bbtutorial'
+let g:netrw_dirhist_8='D:/wamp/www/todomvc/architecture-examples/backbone'

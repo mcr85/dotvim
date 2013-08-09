@@ -228,6 +228,7 @@ set expandtab
 let g:tern_show_argument_hints='on_hold'
 let g:tern_request_timeout=3
 let g:tern_map_prefix="<leader>"
+let g:tern_map_keys=1
 
 " Airline (replacement for Powerline - windows status, Obvious Mode replacement)
 set laststatus=2
