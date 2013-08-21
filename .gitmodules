@@ -55,3 +55,6 @@
 [submodule "bundle/visual-star-search"]
 	path = bundle/visual-star-search
 	url = https://github.com/nelstrom/vim-visual-star-search.git
+[submodule "bundle/move"]
+	path = bundle/move
+	url = https://github.com/matze/vim-move.git
