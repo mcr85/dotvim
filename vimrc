@@ -71,9 +71,9 @@ set bs=2
 
 " APPEARANCE -------------------------------------------------------------------
 
-colors xoria256
+colors Tomorrow-Night
 if has('win32')
-    set guifont=Ubuntu_Mono_for_Powerline:h10:cANSI
+    set guifont=Powerline_Consolas:h10:cANSI
 elseif has('mac')
     set guifont=Inconsolata\ for\ Powerline:h16
 elseif has('unix')
