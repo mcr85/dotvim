@@ -10,6 +10,7 @@ if has("autocmd")
     filetype indent on
 endif
 
+
 " backup 
 set nobackup
 
@@ -30,6 +31,9 @@ autocmd FileType javascript set omnifunc=tern#Complete
 
 " allows to change buffer without saving file
 set hidden
+
+" CDC = Change to Directory of Current file
+command CDC cd %:p:h
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
