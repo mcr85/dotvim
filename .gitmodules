@@ -16,9 +16,6 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = https://github.com/scrooloose/syntastic.git
-[submodule "bundle/sparkup"]
-	path = bundle/sparkup
-	url = https://github.com/rstacruz/sparkup.git
 [submodule "bundle/easymotion"]
 	path = bundle/easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
@@ -58,6 +55,12 @@
 [submodule "bundle/move"]
 	path = bundle/move
 	url = https://github.com/matze/vim-move.git
-[submodule "bundle\\tcomment"]
-	path = bundle\\tcomment
+[submodule "bundle/vim-pasta"]
+	path = bundle/vim-pasta
+	url = git://github.com/sickill/vim-pasta.git
+[submodule "bundle/tcomment"]
+	path = bundle/tcomment
 	url = https://github.com/tomtom/tcomment_vim.git
+[submodule "bundle/emmet-vim"]
+	path = bundle/emmet-vim
+	url = https://github.com/mattn/emmet-vim.git 
