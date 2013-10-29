@@ -10,16 +10,6 @@ if has("autocmd")
     filetype indent on
 endif
 
-
-" backup 
-set nobackup
-
-" swap
-set noswapfile
-
-" encoding
-set encoding=utf-8
-
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -28,12 +18,6 @@ autocmd FileType javascript set omnifunc=tern#Complete
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-
-" allows to change buffer without saving file
-set hidden
-
-" CDC = Change to Directory of Current file
-command CDC cd %:p:h
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -54,14 +38,16 @@ augroup reload_vimrc " {
     autocmd BufWritePost $MYVIMRC source $MYVIMRC
 augroup END " }
 
-" fast scrolling
-set ttyfast
 
-" history
-set history=700
+set hidden          " allows to change buffer without saving file
+set nobackup        " backup 
+set noswapfile      " swap
+set nowb
+set encoding=utf-8  " encoding
+set ttyfast         " fast scrolling
+set history=700     " history
+set wildmenu        " Better command completion
 
-"set listchars=tab:?\ ,eol:¬,extends:?,precedes:?
-set showbreak=?
 au VimResized * :wincmd =
 
 " Leader
@@ -73,9 +59,25 @@ set mouse=a
 set bs=2
 
 
-" APPEARANCE -------------------------------------------------------------------
+" APPEARANCE & UI --------------------------------------------------------------
 
-colors Tomorrow-Night
+set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
+set linebreak
+let &showbreak='↪ '
+set linespace=2
+set cmdheight=1         " Height of the command bar
+set background=dark
+set lazyredraw
+
+" openning new splits
+set splitbelow
+set splitright
+set cursorline
+
+"colors Tomorrow-Night   " color scheme
+colors base16-tomorrow  " color scheme
+
+" Font
 if has('win32')
     set guifont=Powerline_Consolas:h10:cANSI
 elseif has('mac')
@@ -84,28 +86,12 @@ elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12 
 endif
 
-set linespace=2
+set t_Co=256
 
-" openning new splits
-set splitbelow
-set splitright
-
-"set ruler
-" margin line
-"set colorcolumn=80
-
-" Only show cursorline in the current window and in normal mode.
-"augroup cline
-"	au!
-"	au WinLeave * set nocursorline
-"	au WinEnter * set cursorline
-"	au InsertEnter * set nocursorline
-"	au InsertLeave * set cursorline
-" augroup END
-set cursorline
-
-
-" KEYMAPS ---------------------------------------------------------------------
+" KEYMAPS & COMMANDS -----------------------------------------------------------
+"
+" CDC = Change to Directory of Current file
+command CDC cd %:p:h
 
 map <tab> %
 
@@ -165,14 +151,11 @@ nnoremap <leader>i :set list!<cr>
 
 " SEARCH OPTIONS ----------------------------------------------------------------
 
-" highlight search
-set hlsearch
-" incremental search, don't have to type whole word
-set incsearch
-" ignore casing when searching
-set ignorecase
-" don't ignore casing in searching when at least one letter is upper-case
-set smartcase
+set hlsearch    " highlight search
+set incsearch   " incremental search, don't have to type whole word
+set ignorecase  " ignore casing when searching
+set smartcase   " don't ignore casing when at least one letter is upper-case
+set magic       " magic for regular expresion
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -196,17 +179,11 @@ endfunction
 
 " BEHAVIOUR --------------------------------------------------------------------
 
-" see at least 'n' number of lines at the top/bottom of the screen
-set scrolloff=3
-
-" file name completion
-set wildmode=longest,list
-
-" do not wrap lines
-set nowrap
+set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
+set wildmode=longest,list   " file name completion
+set nowrap                  " do not wrap lines
 
 " pasting - set paste or set nopaste
-"set paste - this brakes supertab
 
 " whitespace controll, autoindent has to be last one
 "set noexpandtab
@@ -222,12 +199,6 @@ set expandtab
 
 " PLUGINS --------------------------------------------------------------------
 
-" Supertab
-"let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-"let g:SuperTabLongestHighlight = 1
-"let g:SuperTabCrMapping = 1
-
 " TernJS (javascript intelligence engine)
 let g:tern_show_argument_hints='on_hold'
 let g:tern_request_timeout=3
@@ -236,8 +207,8 @@ let g:tern_map_keys=1
 
 " Airline (replacement for Powerline - windows status, Obvious Mode replacement)
 set laststatus=2
-set t_Co=256
 let g:airline_powerline_fonts = 1
+let g:bufferline_echo=0
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -255,17 +226,48 @@ let g:EasyMotion_leader_key = '<Space>'
 " <C-n>
 
 " Unite (CtrlP alternative)
-" search files like in CtrlP
-nnoremap <C-p> :Unite -start-insert file_rec<cr>
-" content search like ack.vim
-nnoremap <space>/ :Unite -start-insert grep:.<cr>
-" buffer switching
-nnoremap <space>s :Unite buffer<cr>
-" recent files - mru
-nnoremap <space>r :Unite file_mru<cr>
-let g:unite_source_file_ignore_pattern = 
-      \'^\%(/\|\a\+:/\)$\|\~$\|\.\%(o|exe|dll|bak|sw[po]\)$'
+let g:unite_enable_start_insert = 1
+let g:unite_split_rule = "botright"
+let g:unite_force_overwrite_statusline = 0
+let g:unite_winheight = 10
 let g:unite_source_file_mru_limit = 100
+let g:unite_source_file_ignore_pattern = 
+            \'^\%(/\|\a\+:/\)$\|\~$\|\.\%(o|exe|dll|bak|sw[po]\)$'
+
+call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+      \ 'ignore_pattern', join([
+      \ '\.git/',
+      \ ], '\|'))
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+nnoremap <C-P> :<C-u>Unite  -buffer-name=files   -start-insert buffer file_rec/async:!<cr>
+
+autocmd FileType unite call s:unite_settings()
+
+function! s:unite_settings()
+    let b:SuperTabDisabled=1
+    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+    imap <silent><buffer><expr> <C-x> unite#do_action('split')
+    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+    imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+    nnoremap <leader>f :Unite file_rec<cr>
+    nnoremap <space>/ :Unite -start-insert grep:.<cr>
+    nnoremap <space>s :Unite buffer<cr>
+    nnoremap <space>r :Unite file_mru<cr>
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
+
+" search files like in CtrlP
+" nnoremap <C-p> :Unite -start-insert file_rec<cr>
+" content search like ack.vim
+" nnoremap <space>/ :Unite -start-insert grep:.<cr>
+" buffer switching
+" nnoremap <space>s :Unite buffer<cr>
+" recent files - mru
+" nnoremap <space>r :Unite file_mru<cr>
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
@@ -292,9 +294,3 @@ nnoremap <F5> :GundoToggle<CR>
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 set completeopt-=preview
-
-" sexy_scroller
-let g:SexyScroller_EasingStyle=2
-let g:SexyScroller_MaxTime=300
-
-:syntax on

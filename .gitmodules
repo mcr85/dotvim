@@ -43,9 +43,6 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
-[submodule "bundle/sexy_scroller"]
-	path = bundle/sexy_scroller
-	url = https://github.com/joeytwiddle/sexy_scroller.vim.git
 [submodule "bundle/airline"]
 	path = bundle/airline
 	url = https://github.com/bling/vim-airline.git
