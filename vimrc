@@ -61,6 +61,11 @@ set bs=2
 
 " APPEARANCE & UI --------------------------------------------------------------
 
+"window size
+if has('win32') && has('gui_running')
+    set lines=50 columns=200
+endif
+
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
 let &showbreak='↪ '
@@ -207,11 +212,12 @@ let g:tern_map_keys=1
 
 " Airline (replacement for Powerline - windows status, Obvious Mode replacement)
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
+let NERDTreeWinSize=36
 
 " Syntastic
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
@@ -259,6 +265,13 @@ function! s:unite_settings()
     nnoremap <space>r :Unite file_mru<cr>
     nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction
+
+" Use ag for search
+if executable('ag')
+  let g:unite_source_grep_command = 'ag'
+  let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+  let g:unite_source_grep_recursive_opt = ''
+endif
 
 " search files like in CtrlP
 " nnoremap <C-p> :Unite -start-insert file_rec<cr>
