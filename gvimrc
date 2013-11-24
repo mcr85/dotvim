@@ -10,6 +10,8 @@ if has("autocmd")
     filetype indent on
 endif
 
+" let $LC_NUMERIC = 'en_US.utf8'
+
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
@@ -226,7 +228,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
 " EasyMotion
-let g:EasyMotion_leader_key = '<Space>'
+let g:EasyMotion_leader_key = '<leader>'
 
 " Number Toggle - relative numbers on sidebar
 " <C-n>
@@ -240,31 +242,32 @@ let g:unite_source_file_mru_limit = 100
 let g:unite_source_file_ignore_pattern = 
             \'^\%(/\|\a\+:/\)$\|\~$\|\.\%(o|exe|dll|bak|sw[po]\)$'
 
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
       \ '\.git/',
+      \ 'git5/.*/review/',
+      \ 'google/obj/',
+      \ 'tmp/',
+      \ '.sass-cache',
       \ ], '\|'))
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-
-nnoremap <C-P> :<C-u>Unite  -buffer-name=files   -start-insert buffer file_rec/async:!<cr>
-
-autocmd FileType unite call s:unite_settings()
-
-function! s:unite_settings()
-    let b:SuperTabDisabled=1
-    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-    imap <silent><buffer><expr> <C-x> unite#do_action('split')
-    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-    imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-    nnoremap <leader>f :Unite file_rec<cr>
-    nnoremap <space>/ :Unite -start-insert grep:.<cr>
-    nnoremap <space>s :Unite buffer<cr>
-    nnoremap <space>r :Unite file_mru<cr>
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
+let b:SuperTabDisabled=1
+" Map space to the prefix for Unite
+nnoremap [unite] <Nop>
+nmap <space> [unite]
+nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file buffer<cr>
+imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+imap <silent><buffer><expr> <C-x> unite#do_action('split')
+imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+nnoremap [unite]f :Unite -buffer-name=files -start-insert file_rec/async file<cr>
+nnoremap [unite]/ :Unite -buffer-name=search -start-insert grep:.<cr>
+nnoremap [unite]s :Unite -buffer-name=buffer -start-insert buffer<cr>
+nnoremap [unite]r :Unite -buffer-name=recent -start-insert file_mru<cr>
+nmap <buffer> <ESC> <Plug>(unite_exit)
 
 " Use ag for search
 if executable('ag')
@@ -272,15 +275,6 @@ if executable('ag')
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
 endif
-
-" search files like in CtrlP
-" nnoremap <C-p> :Unite -start-insert file_rec<cr>
-" content search like ack.vim
-" nnoremap <space>/ :Unite -start-insert grep:.<cr>
-" buffer switching
-" nnoremap <space>s :Unite buffer<cr>
-" recent files - mru
-" nnoremap <space>r :Unite file_mru<cr>
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
