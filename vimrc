@@ -10,7 +10,7 @@ if has("autocmd")
     filetype indent on
 endif
 
-let $LC_NUMERIC = 'en_US.utf8'
+language 'pl_PL.UTF-8'
 
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
@@ -64,9 +64,9 @@ set bs=2
 " APPEARANCE & UI --------------------------------------------------------------
 
 "window size
-if has('win32') && has('gui_running')
-    set lines=50 columns=200
-endif
+" if has('win32') && has('gui_running')
+"     set lines=50 columns=200
+" endif
 
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
@@ -262,7 +262,7 @@ autocmd FileType unite call s:unite_settings()
 
 function! s:unite_settings()
     let b:SuperTabDisabled=1
-    nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file buffer<cr>
+    nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file<cr>
     imap <buffer> <C-j>   <Plug>(unite_select_next_line)
     imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
     imap <silent><buffer><expr> <C-x> unite#do_action('split')

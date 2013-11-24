@@ -10,7 +10,7 @@ if has("autocmd")
     filetype indent on
 endif
 
-" let $LC_NUMERIC = 'en_US.utf8'
+language 'pl_PL.UTF-8'
 
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
@@ -64,9 +64,9 @@ set bs=2
 " APPEARANCE & UI --------------------------------------------------------------
 
 "window size
-if has('win32') && has('gui_running')
-    set lines=50 columns=200
-endif
+" if has('win32') && has('gui_running')
+"     set lines=50 columns=200
+" endif
 
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
@@ -244,6 +244,7 @@ let g:unite_source_file_ignore_pattern =
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
+
 call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
       \ '\.git/',
@@ -253,21 +254,26 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
       \ '.sass-cache',
       \ ], '\|'))
 
-let b:SuperTabDisabled=1
 " Map space to the prefix for Unite
 nnoremap [unite] <Nop>
 nmap <space> [unite]
-nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file buffer<cr>
-imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-imap <silent><buffer><expr> <C-x> unite#do_action('split')
-imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-nnoremap [unite]f :Unite -buffer-name=files -start-insert file_rec/async file<cr>
-nnoremap [unite]/ :Unite -buffer-name=search -start-insert grep:.<cr>
-nnoremap [unite]s :Unite -buffer-name=buffer -start-insert buffer<cr>
-nnoremap [unite]r :Unite -buffer-name=recent -start-insert file_mru<cr>
-nmap <buffer> <ESC> <Plug>(unite_exit)
+
+autocmd FileType unite call s:unite_settings()
+
+function! s:unite_settings()
+    let b:SuperTabDisabled=1
+    nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file<cr>
+    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+    imap <silent><buffer><expr> <C-x> unite#do_action('split')
+    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+    imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+    nnoremap [unite]f :Unite -buffer-name=files -start-insert file_rec/async file<cr>
+    nnoremap [unite]/ :Unite -buffer-name=search -start-insert grep:.<cr>
+    nnoremap [unite]s :Unite -buffer-name=buffer -start-insert buffer<cr>
+    nnoremap [unite]r :Unite -buffer-name=recent -start-insert file_mru<cr>
+    nmap <buffer> <ESC> <Plug>(unite_exit)
+endfunction
 
 " Use ag for search
 if executable('ag')
