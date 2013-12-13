@@ -10,7 +10,7 @@ if has("autocmd")
     filetype indent on
 endif
 
-language 'pl_PL.UTF-8'
+"language 'pl_PL.UTF-8'
 
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
@@ -100,15 +100,27 @@ set t_Co=256
 " CDC = Change to Directory of Current file
 command CDC cd %:p:h
 
+" sane regexes
+nnoremap / /\v
+vnoremap / /\v
+
 map <tab> %
+
+" easier block indentation
+vnoremap < <gv
+vnoremap > >gv
 
 " turn off annoying bindings
 nnoremap <F1> <nop>
 nnoremap Q <nop>
 nnoremap K <nop>
+nnoremap q: <nop>
 
 " turn off search highlight
 nnoremap <leader>h :noh<cr>
+
+nnoremap <CR> :nohlsearch<cr>
+" clear the search buffer when hitting return
 
 " copy paste
 nmap <C-V> "+gP
@@ -245,7 +257,7 @@ let g:unite_source_file_ignore_pattern =
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
-call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+call unite#custom_source('buffer,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
       \ '\.git/',
       \ 'git5/.*/review/',
@@ -262,13 +274,13 @@ autocmd FileType unite call s:unite_settings()
 
 function! s:unite_settings()
     let b:SuperTabDisabled=1
-    nnoremap <C-P> :<C-u>Unite  -buffer-name=files  -start-insert buffer file_rec/async:! file<cr>
+    nnoremap <C-p> :Unite -buffer-name=files -start-insert file_rec/async file<cr>
     imap <buffer> <C-j>   <Plug>(unite_select_next_line)
     imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-    imap <silent><buffer><expr> <C-x> unite#do_action('split')
+    imap <silent><buffer><expr> <C-s> unite#do_action('split')
     imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
     imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-    nnoremap [unite]f :Unite -buffer-name=files -start-insert file_rec/async file<cr>
+    nnoremap [unite]d :Unite -buffer-name=file -start-insert file_rec/async file<cr>
     nnoremap [unite]/ :Unite -buffer-name=search -start-insert grep:.<cr>
     nnoremap [unite]s :Unite -buffer-name=buffer -start-insert buffer<cr>
     nnoremap [unite]r :Unite -buffer-name=recent -start-insert file_mru<cr>
@@ -307,3 +319,5 @@ nnoremap <F5> :GundoToggle<CR>
 let g:ycm_add_preview_to_completeopt=0
 let g:ycm_confirm_extra_conf=0
 set completeopt-=preview
+
+syntax on

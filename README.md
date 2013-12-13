@@ -22,12 +22,31 @@ Post dotvim clone
 git submodule init (check for errors)
 git submodule update
 
-cd to YouCompleteMe plugin folder and build necessary things:
+cd to bundle/YouCompleteMe plugin folder and build necessary things:
   sudo ./install.sh
-
-cd to tern plugin folder and do: 
-  npm install
 
 cd to vimproc (Unite dependency for asynchronous file search) and build things:
   # for Mac
   make -f make_mac.mak
+
+cd to bundle/tern plugin folder and do: 
+  npm install
+
+
+Windows
+=======
+Install Python
+
+Install Node
+
+install jshint - Syntastic plugin uses this for checking syntax errors
+  npm install -g jshint
+
+cd to bundle/YouCompleteMe 
+Find built ycm_core.pyd and copy it to YouCompleteMe\python folder
+
+cd to vimproc (Unite dependency for asynchronous file search). 
+Find vimproc_win32.dll builds in vimproc's readme and copy it to bundle\vimproc\autoload
+
+cd to bundle/tern plugin folder and do: 
+  npm install
