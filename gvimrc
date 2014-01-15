@@ -16,10 +16,14 @@ endif
 "set omnifunc=syntaxcomplete#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType php set omnifunc=phpcomplete_extended#CompletePHP
 autocmd FileType javascript set omnifunc=tern#Complete
 "autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 "autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 "autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
+
+" vim php settings
+let g:phpcomplete_index_composer_command="composer.phar"
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"

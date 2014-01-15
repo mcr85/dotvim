@@ -70,3 +70,12 @@
 [submodule "bundle/vim-node"]
 	path = bundle/vim-node
 	url = https://github.com/moll/vim-node.git
+[submodule "bundle/phpcomplete-extended"]
+	path = bundle/phpcomplete-extended
+	url = https://github.com/m2mdas/phpcomplete-extended.git
+[submodule "bundle/phpcomplete-extended-laravel"]
+	path = bundle/phpcomplete-extended-laravel
+	url = https://github.com/m2mdas/phpcomplete-extended-laravel.git
+[submodule "bundle/vim-blade"]
+	path = bundle/vim-blade
+	url = https://github.com/xsbeats/vim-blade.git
