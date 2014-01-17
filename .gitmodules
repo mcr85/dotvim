@@ -52,9 +52,6 @@
 [submodule "bundle/move"]
 	path = bundle/move
 	url = https://github.com/matze/vim-move.git
-[submodule "bundle/vim-pasta"]
-	path = bundle/vim-pasta
-	url = git://github.com/sickill/vim-pasta.git
 [submodule "bundle/tcomment"]
 	path = bundle/tcomment
 	url = https://github.com/tomtom/tcomment_vim.git
