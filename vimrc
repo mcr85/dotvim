@@ -14,16 +14,14 @@ endif
 
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
+autocmd FileType python set omnifunc=pythoncomplete#Complete
 "autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType php set omnifunc=phpcomplete_extended#CompletePHP
 autocmd FileType javascript set omnifunc=tern#Complete
-"autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-"autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-"autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
-
-" vim php settings
-let g:phpcomplete_index_composer_command="composer.phar"
+autocmd FileType javascript setlocal omnifunc=phpcomplete_extended#CompletePHP
+autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -86,7 +84,8 @@ set splitright
 set cursorline
 
 "colors Tomorrow-Night   " color scheme
-colors base16-tomorrow  " color scheme
+"colors base16-tomorrow  " color scheme
+colorscheme hybrid
 
 " Font
 if has('win32')
@@ -98,9 +97,13 @@ elseif has('unix')
 endif
 
 set t_Co=256
+set term=screen-256color
 
 " KEYMAPS & COMMANDS -----------------------------------------------------------
-"
+
+" quick escape
+imap jj <Esc>
+
 " CDC = Change to Directory of Current file
 command CDC cd %:p:h
 
@@ -122,9 +125,6 @@ nnoremap q: <nop>
 
 " turn off search highlight
 nnoremap <leader>h :noh<cr>
-
-nnoremap <CR> :nohlsearch<cr>
-" clear the search buffer when hitting return
 
 " copy paste
 nmap <C-V> "+gP
@@ -244,6 +244,7 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
 " EasyMotion
+let g:EasyMotion_leader_key = '<Leader>'
 let g:EasyMotion_leader_key = '<leader>'
 
 " Number Toggle - relative numbers on sidebar
