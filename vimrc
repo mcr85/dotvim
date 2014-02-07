@@ -171,6 +171,10 @@ set tags=./tags,tags
 " Toggle [i]nvisible characters
 nnoremap <leader>i :set list!<cr>
 
+" vimux - running test
+map <leader>rt :call RunTests()<CR>
+map <leader>rl :VimuxRunLastCommand<CR>
+
 
 " SEARCH OPTIONS ----------------------------------------------------------------
 
@@ -301,8 +305,18 @@ endif
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
+" YouCompleteMe
+let g:ycm_add_preview_to_completeopt=0
+let g:ycm_confirm_extra_conf=0
+let g:ycm_key_list_previous_completion=['<Up>']
+set completeopt-=preview
+
 " UltiSnippets
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+let g:UltiSnipsExpandTrigger="<c-l>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" let g:UltiSnipsListSnippets="<c-m>"
 
 " Gundo
 nnoremap <F5> :GundoToggle<CR>
@@ -320,9 +334,15 @@ nnoremap <F5> :GundoToggle<CR>
 "let php_noShortTags=1
 "let php_folding=1
 
-" YouCompleteMe
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
-set completeopt-=preview
+
+" FUNCTIONS ------------------------------------------------------------------
+
+function! RunTests()
+    let ft = &filetype
+    if ft == 'javascript'
+        :call VimuxRunCommand("clear; karma run")
+    endif
+endfunction
+
 
 syntax on
