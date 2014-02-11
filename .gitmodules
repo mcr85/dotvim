@@ -79,3 +79,9 @@
 [submodule "bundle/vimux"]
 	path = bundle/vimux
 	url = https://github.com/benmills/vimux.git
+[submodule "bundle/vim-coffee-script"]
+	path = bundle/vim-coffee-script
+	url = https://github.com/kchmck/vim-coffee-script.git
+[submodule "bundle/vim-whitespace"]
+	path = bundle/vim-whitespace
+	url = https://github.com/ntpeters/vim-better-whitespace.git
