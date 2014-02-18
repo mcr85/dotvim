@@ -83,10 +83,6 @@ set splitbelow
 set splitright
 set cursorline
 
-"colors Tomorrow-Night   " color scheme
-"colors base16-tomorrow  " color scheme
-colorscheme hybrid
-
 " Font
 if has('win32')
     set guifont=Powerline_Consolas:h10:cANSI
@@ -96,8 +92,12 @@ elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12 
 endif
 
+" colors
 set t_Co=256
-set term=screen-256color
+if !has('win32')
+	set term=screen-256color
+endif
+colorscheme hybrid
 
 " KEYMAPS & COMMANDS -----------------------------------------------------------
 
@@ -105,7 +105,7 @@ set term=screen-256color
 imap jj <Esc>
 
 " CDC = Change to Directory of Current file
-command CDC cd %:p:h
+" command CDC cd %:p:h
 
 " sane regexes
 nnoremap / /\v
@@ -218,8 +218,8 @@ set showmatch
 set ts=4
 set sw=4
 set sts=4
-"set smarttab
-set autoindent
+set smarttab
+" set autoindent
 "set textwidth=80
 set expandtab
 

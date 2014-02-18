@@ -94,7 +94,9 @@ endif
 
 " colors
 set t_Co=256
-set term=screen-256color
+if !has('win32')
+	set term=screen-256color
+endif
 colorscheme hybrid
 
 " KEYMAPS & COMMANDS -----------------------------------------------------------
@@ -103,7 +105,7 @@ colorscheme hybrid
 imap jj <Esc>
 
 " CDC = Change to Directory of Current file
-command CDC cd %:p:h
+" command CDC cd %:p:h
 
 " sane regexes
 nnoremap / /\v
