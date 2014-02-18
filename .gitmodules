@@ -49,9 +49,6 @@
 [submodule "bundle/visual-star-search"]
 	path = bundle/visual-star-search
 	url = https://github.com/nelstrom/vim-visual-star-search.git
-[submodule "bundle/move"]
-	path = bundle/move
-	url = https://github.com/matze/vim-move.git
 [submodule "bundle/tcomment"]
 	path = bundle/tcomment
 	url = https://github.com/tomtom/tcomment_vim.git
@@ -88,3 +85,6 @@
 [submodule "bundle/neomru"]
 	path = bundle/neomru
 	url = https://github.com/Shougo/neomru.vim.git
+[submodule "bundle/wildfire"]
+	path = bundle/wildfire
+	url = https://github.com/gcmt/wildfire.vim.git

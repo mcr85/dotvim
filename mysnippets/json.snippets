@@ -1,0 +1,19 @@
+snippet tern "tern project config" b
+{
+    "libs": [
+        "browser",
+        "${1:jquery}"
+    ],
+    "loadEagerly": [
+        "${2:importantfile.js}"
+    ],
+    "plugins": {
+        "requirejs": {
+            "baseURL": "./",
+            "paths": {
+                "${3:acron}": "${4:lib/acron/}"
+            }
+        }
+    }
+}
+endsnippet
