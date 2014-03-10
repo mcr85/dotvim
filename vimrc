@@ -15,8 +15,8 @@ endif
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -235,6 +235,7 @@ let g:tern_map_keys=1
 set laststatus=2
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
+let g:airline_theme="dark"
 
 " NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -323,6 +324,9 @@ let g:UltiSnipsExpandTrigger="<c-l>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 " let g:UltiSnipsListSnippets="<c-m>"
+
+" Emmet
+let g:user_emmet_expandabbr_key='<c-h>'
 
 " Gundo
 nnoremap <F5> :GundoToggle<CR>
