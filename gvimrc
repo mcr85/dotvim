@@ -15,9 +15,8 @@ endif
 " auto completion
 "set omnifunc=syntaxcomplete#Complete
 autocmd FileType python set omnifunc=pythoncomplete#Complete
-"autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript set omnifunc=tern#Complete
-autocmd FileType javascript setlocal omnifunc=phpcomplete_extended#CompletePHP
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript setlocal omnifunc=tern#Complete
 autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -111,7 +110,7 @@ imap jj <Esc>
 nnoremap / /\v
 vnoremap / /\v
 
-map <tab> %
+" nnoremap <tab> %
 
 " easier block indentation
 vnoremap < <gv
@@ -305,11 +304,18 @@ endif
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
 
-" YouCompleteMe
-let g:ycm_add_preview_to_completeopt=0
-let g:ycm_confirm_extra_conf=0
-let g:ycm_key_list_previous_completion=['<Up>']
-set completeopt-=preview
+set completeopt+=preview
+
+" neocomplcache
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_smart_case = 1
+inoremap <expr><C-g> neocomplcache#undo_completion()
+inoremap <expr><C-l> neocomplcache#complete_common_string()
+noremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><C-h> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplcache#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplcache#close_popup()
+inoremap <expr><C-e> neocomplcache#cancel_popup()
 
 " UltiSnippets
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
