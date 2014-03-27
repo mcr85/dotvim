@@ -1,2 +1,4 @@
+.netrwhist
 .gvimrc.swp
 vimproc_win32.dll
+bundle/YouCompleteMe
