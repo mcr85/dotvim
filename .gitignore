@@ -2,3 +2,4 @@
 .gvimrc.swp
 vimproc_win32.dll
 bundle/YouCompleteMe
+bundle/vim-colors-solarized
