@@ -13,15 +13,15 @@ endif
 "language 'pl_PL.UTF-8'
 
 " auto completion
-"set omnifunc=syntaxcomplete#Complete
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+    "set omnifunc=syntaxcomplete#Complete
+" autocmd FileType python set omnifunc=pythoncomplete#Complete
+    " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript set omnifunc=tern#Complete
-" autocmd FileType javascript setlocal omnifunc=tern#Complete
-autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+    " autocmd FileType javascript setlocal omnifunc=tern#Complete
+" autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
+" autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -35,13 +35,6 @@ setlocal foldlevel=99
 
 
 " BASIC OPTIONS -----------------------------------------------------------------
-
-" Auto-Reload vimrc
-augroup reload_vimrc " {
-    autocmd!
-    autocmd BufWritePost $MYVIMRC source $MYVIMRC
-augroup END " }
-
 
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup 
@@ -64,11 +57,6 @@ set bs=2
 
 
 " APPEARANCE & UI --------------------------------------------------------------
-
-"window size
-" if has('win32') && has('gui_running')
-"     set lines=50 columns=200
-" endif
 
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
@@ -186,14 +174,6 @@ set magic       " magic for regular expresion
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-" Ack
-" let g:ackprg="Ack -H --nocolor --nogroup --column"
-"let g:ackprg="Ack"
-" Open a Quickfix window for the last search.
-nnoremap <silent> <leader>? :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-" Ack for the last search.
-nnoremap <silent> <leader>/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\\<", "\\\\b", ""), "\\\\>", "\\\\b", ""), "\\\\v", "", "") . "'"<CR>
-"nnoremap <silent> <leader>/ :execute "Ack! '" . substitute(substitute(substitute(@/, "\\<", "\\b", ""), "\\>", "\\b", ""), "\\v", "", "") . "'"<CR>
 
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
@@ -245,7 +225,7 @@ let NERDTreeWinSize=36
 " Syntastic
 let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
 let g:syntastic_enable_signs = 1
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
 " EasyMotion
@@ -323,20 +303,6 @@ let g:user_emmet_expandabbr_key='<c-h>'
 " Gundo
 nnoremap <F5> :GundoToggle<CR>
 
-" Multiple cursors
-"let g:multi_cursor_use_default_mapping=0
-"let g:multi_cursor_next_key='<C-d>'
-"let g:multi_cursor_prev_key='<C-p>'
-"let g:multi_cursor_skip_key='<C-x>'
-"let g:multi_cursor_quit_key='<Esc>'
-
-" PHP
-"let php_sql_query=1
-"let php_htmlInStrings=1
-"let php_noShortTags=1
-"let php_folding=1
-
-
 " FUNCTIONS ------------------------------------------------------------------
 
 function! RunTests()
@@ -348,3 +314,13 @@ endfunction
 
 
 syntax on
+
+" disabling plugins
+
+let g:loaded_fugitive = 1
+let loaded_gundo = 1
+let g:loaded_better_whitespace_plugin = 1
+let g:loaded_wildfire = 1
+let g:loaded_phpcomplete_extended = 1
+let g:loaded_phpcomplete_extended_laravel = 1
+
