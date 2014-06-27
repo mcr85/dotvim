@@ -13,15 +13,27 @@ endif
 "language 'pl_PL.UTF-8'
 
 " auto completion
-    "set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete
 " autocmd FileType python set omnifunc=pythoncomplete#Complete
-    " autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript set omnifunc=tern#Complete
-    " autocmd FileType javascript setlocal omnifunc=tern#Complete
+" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType javascript set omnifunc=tern#Complete
+" autocmd FileType javascript setlocal omnifunc=tern#Complete
+" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 " autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
 " autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
 " autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 " autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+" auto complete settings
+augroup omnicomplete
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup END
 
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
@@ -34,7 +46,7 @@ setlocal foldmethod=syntax
 setlocal foldlevel=99
 
 
-" BASIC OPTIONS -----------------------------------------------------------------
+" basic settings
 
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup 
@@ -47,7 +59,7 @@ set wildmenu        " Better command completion
 
 au VimResized * :wincmd =
 
-" Leader
+" map Leader
 let mapleader = ","
 let maplocalleader = ","
 
@@ -56,7 +68,7 @@ set mouse=a
 set bs=2
 
 
-" APPEARANCE & UI --------------------------------------------------------------
+" appearance and ui
 
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
@@ -71,7 +83,7 @@ set splitbelow
 set splitright
 set cursorline
 
-" Font
+" font
 if has('win32')
     set guifont=Powerline_Consolas:h10:cANSI
 elseif has('mac')
@@ -87,7 +99,8 @@ if !has('win32')
 endif
 colorscheme hybrid
 
-" KEYMAPS & COMMANDS -----------------------------------------------------------
+
+" keymaps & commands
 
 " quick escape
 imap jj <Esc>
@@ -138,7 +151,7 @@ nnoremap <C-t> :tabnew<CR>
 nnoremap <C-t>c :tabclose<CR>
 
 " buffer kill
-nnoremap <leader>bd :bd<cr>
+nnoremap <leader>dd :bd<cr>
 
 " Quickfix open/close
 nnoremap <leader>co :copen<cr>
@@ -164,7 +177,7 @@ map <leader>rt :call RunTests()<CR>
 map <leader>rl :VimuxRunLastCommand<CR>
 
 
-" SEARCH OPTIONS ----------------------------------------------------------------
+" search options
 
 set hlsearch    " highlight search
 set incsearch   " incremental search, don't have to type whole word
@@ -184,7 +197,7 @@ function! s:VSetSearch()
 endfunction
 
 
-" BEHAVIOUR --------------------------------------------------------------------
+" behaviour
 
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
@@ -204,7 +217,7 @@ set smarttab
 set expandtab
 
 
-" PLUGINS --------------------------------------------------------------------
+" plugins
 
 " TernJS (javascript intelligence engine)
 let g:tern_show_argument_hints='on_hold'
@@ -277,6 +290,35 @@ function! s:unite_settings()
     nmap <buffer> <ESC> <Plug>(unite_exit)
 endfunction
 
+" neocomplete
+set completeopt-=preview
+let g:neocomplete#use_vimproc=1
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#auto_completion_start_length = 1
+let g:neocomplete#sources#buffer#cache_limit_size = 50000
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#sources#syntax#min_keyword_length = 2
+inoremap <expr><C-g>     neocomplete#undo_completion()
+inoremap <expr><C-l>     neocomplete#complete_common_string()
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y>  neocomplete#close_popup()
+inoremap <expr><C-e>  neocomplete#cancel_popup()
+
+if !exists('g:neocomplete#keyword_patterns')
+    let g:neocomplete#keyword_patterns = {}
+endif
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
+let g:neocomplete#force_omni_input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
+let g:neocomplete#force_omni_input_patterns.python ='\h\w*\|[^. \t]\.\w*'
+" let g:neocomplete#sources#omni#input_patterns.python='\h\w*\|[^. \t]\.\w*'
+
 " Use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
@@ -285,10 +327,6 @@ if executable('ag')
 endif
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
-
-set completeopt+=preview
-
-" YouCompleteMe
 
 " UltiSnippets
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
@@ -303,7 +341,8 @@ let g:user_emmet_expandabbr_key='<c-h>'
 " Gundo
 nnoremap <F5> :GundoToggle<CR>
 
-" FUNCTIONS ------------------------------------------------------------------
+
+" functions
 
 function! RunTests()
     let ft = &filetype
@@ -312,15 +351,12 @@ function! RunTests()
     endif
 endfunction
 
-
 syntax on
 
 " disabling plugins
-
 let g:loaded_fugitive = 1
 let loaded_gundo = 1
 let g:loaded_better_whitespace_plugin = 1
 let g:loaded_wildfire = 1
 let g:loaded_phpcomplete_extended = 1
 let g:loaded_phpcomplete_extended_laravel = 1
-

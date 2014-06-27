@@ -6,14 +6,12 @@ Get Homebrew and make sure it's updated.
 Using brew get latest python and update $PATH to point to new python installation.
 brew install macvim --override-system-vim
 
-
 Clone dotvim to vim config folder
 	git clone git://github.com/mcr85/dotvim.git ~/.vim
 
 Create symlinks
 	ln -s ~/dotfiles/vimrc ~/.vimrc
 	ln -s ~/dotfiles/gvimrc ~/.givimrc
-
 
 
 Post dotvim clone
@@ -35,15 +33,16 @@ cd to bundle/tern plugin folder and do:
 
 Windows
 =======
+Requirements:
+
+Vim with Lua support
+
 Install Python
 
 Install Node
 
 install jshint - Syntastic plugin uses this for checking syntax errors
   npm install -g jshint
-
-cd to bundle/YouCompleteMe 
-Find built ycm_core.pyd and copy it to YouCompleteMe\python folder
 
 cd to vimproc (Unite dependency for asynchronous file search). 
 Find vimproc_win32.dll builds in vimproc's readme and copy it to bundle\vimproc\autoload
