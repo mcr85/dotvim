@@ -201,7 +201,7 @@ endfunction
 
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
-set nowrap                  " do not wrap lines
+" set nowrap                  " do not wrap lines
 
 " pasting - set paste or set nopaste
 
@@ -300,23 +300,23 @@ let g:neocomplete#sources#buffer#cache_limit_size = 50000
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 inoremap <expr><C-g>     neocomplete#undo_completion()
-inoremap <expr><C-l>     neocomplete#complete_common_string()
+" inoremap <expr><C-l>     neocomplete#complete_common_string()
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
-let g:neocomplete#force_omni_input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
-let g:neocomplete#force_omni_input_patterns.python ='\h\w*\|[^. \t]\.\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+"     let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
+" let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
+" let g:neocomplete#force_omni_input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
+" let g:neocomplete#force_omni_input_patterns.python ='\h\w*\|[^. \t]\.\w*'
 " let g:neocomplete#sources#omni#input_patterns.python='\h\w*\|[^. \t]\.\w*'
 
 " Use ag for search
@@ -324,6 +324,7 @@ if executable('ag')
   let g:unite_source_grep_command = 'ag'
   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
   let g:unite_source_grep_recursive_opt = ''
+  let g:unite_source_rec_async_command='ag --nocolor --nogroup -g ""'
 endif
 
 " Sparkup - gives zen coding - shortcut is Ctrl + E
