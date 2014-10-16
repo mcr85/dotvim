@@ -91,3 +91,9 @@
 [submodule "bundle/neocomplete"]
 	path = bundle/neocomplete
 	url = https://github.com/Shougo/neocomplete.vim.git
+[submodule "bundle/AsyncCommand"]
+	path = bundle/AsyncCommand
+	url = https://github.com/idbrii/AsyncCommand.git
+[submodule "bundle/checksyntax_vim"]
+	path = bundle/checksyntax_vim
+	url = https://github.com/tomtom/checksyntax_vim.git

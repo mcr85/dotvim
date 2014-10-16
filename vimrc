@@ -12,25 +12,14 @@ endif
 
 "language 'pl_PL.UTF-8'
 
-" auto completion
-" set omnifunc=syntaxcomplete#Complete
-" autocmd FileType python set omnifunc=pythoncomplete#Complete
-" autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType javascript set omnifunc=tern#Complete
-" autocmd FileType javascript setlocal omnifunc=tern#Complete
-" autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-" autocmd FileType php setlocal omnifunc=phpcomplete_extended#CompletePHP
-" autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-" autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-" autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
 " auto complete settings
 augroup omnicomplete
   autocmd!
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript setlocal omnifunc=tern#Complete
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
@@ -45,9 +34,7 @@ syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 setlocal foldmethod=syntax
 setlocal foldlevel=99
 
-
 " basic settings
-
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup 
 set noswapfile      " swap
@@ -67,9 +54,7 @@ let maplocalleader = ","
 set mouse=a
 set bs=2
 
-
 " appearance and ui
-
 set listchars=tab:│\ ,trail:•,extends:❯,precedes:❮
 set linebreak
 let &showbreak='↪ '
@@ -103,7 +88,7 @@ colorscheme hybrid
 " keymaps & commands
 
 " quick escape
-imap jj <Esc>
+imap jk <Esc>
 
 " CDC = Change to Directory of Current file
 " command CDC cd %:p:h
@@ -178,12 +163,12 @@ map <leader>rl :VimuxRunLastCommand<CR>
 
 
 " search options
-
 set hlsearch    " highlight search
 set incsearch   " incremental search, don't have to type whole word
 set ignorecase  " ignore casing when searching
 set smartcase   " don't ignore casing when at least one letter is upper-case
 set magic       " magic for regular expresion
+
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -236,10 +221,13 @@ map <F2> :NERDTreeToggle<CR>
 let NERDTreeWinSize=36
 
 " Syntastic
-let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
-let g:syntastic_enable_signs = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+" let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['js', 'php'], 'passive_filetypes': [] }
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+
+" CheckSytnax
+let g:checksyntax#auto_enable_rx = "."
 
 " EasyMotion
 let g:EasyMotion_leader_key = '<Leader>'
@@ -253,12 +241,13 @@ let g:unite_enable_start_insert = 1
 let g:unite_split_rule = "botright"
 let g:unite_force_overwrite_statusline = 0
 let g:unite_winheight = 10
-let g:unite_source_file_mru_limit = 100
+let g:unite_source_file_mru_limit = 20
 let g:unite_source_file_ignore_pattern = 
-            \'^\%(/\|\a\+:/\)$\|\~$\|\.\%(o|exe|dll|bak|sw[po]\)$'
+            \ '^\%(/\|\a\+:/\)$\|\~$\|\.\%(jpg|png|gif|o|exe|dll|bak|sw[po]\)$'
 
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#filters#sorter_default#use(['sorter_selecta'])
 
 call unite#custom_source('buffer,file_rec/async,file_mru,file,buffer,grep',
       \ 'ignore_pattern', join([
@@ -307,18 +296,6 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-" if !exists('g:neocomplete#keyword_patterns')
-"     let g:neocomplete#keyword_patterns = {}
-" endif
-" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-" if !exists('g:neocomplete#force_omni_input_patterns')
-"   let g:neocomplete#force_omni_input_patterns = {}
-" endif
-" let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
-" let g:neocomplete#force_omni_input_patterns.javascript = '\h\w*\|[^. \t]\.\w*'
-" let g:neocomplete#force_omni_input_patterns.python ='\h\w*\|[^. \t]\.\w*'
-" let g:neocomplete#sources#omni#input_patterns.python='\h\w*\|[^. \t]\.\w*'
-
 " Use ag for search
 if executable('ag')
   let g:unite_source_grep_command = 'ag'
@@ -361,3 +338,4 @@ let g:loaded_better_whitespace_plugin = 1
 let g:loaded_wildfire = 1
 let g:loaded_phpcomplete_extended = 1
 let g:loaded_phpcomplete_extended_laravel = 1
+let g:loaded_syntastic_plugin = 1
