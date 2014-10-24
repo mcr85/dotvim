@@ -97,3 +97,6 @@
 [submodule "bundle/checksyntax_vim"]
 	path = bundle/checksyntax_vim
 	url = https://github.com/tomtom/checksyntax_vim.git
+[submodule "bundle/incsearch"]
+	path = bundle/incsearch
+	url = https://github.com/haya14busa/incsearch.vim.git

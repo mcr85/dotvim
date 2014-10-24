@@ -163,15 +163,19 @@ map <leader>rl :VimuxRunLastCommand<CR>
 
 
 " search options
-set hlsearch    " highlight search
-set incsearch   " incremental search, don't have to type whole word
-set ignorecase  " ignore casing when searching
-set smartcase   " don't ignore casing when at least one letter is upper-case
-set magic       " magic for regular expresion
+"set hlsearch    " highlight search
+"set incsearch   " incremental search, don't have to type whole word
+"set ignorecase  " ignore casing when searching
+"set smartcase   " don't ignore casing when at least one letter is upper-case
+" set magic       " magic for regular expresion
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+let g:incsearch#magic = '\v'
 
 " Keep search matches in the middle of the window.
-nnoremap n nzzzv
-nnoremap N Nzzzv
+"nnoremap n nzzzv
+"nnoremap N Nzzzv
 
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
