@@ -176,6 +176,7 @@ let g:incsearch#magic = '\v'
 " Keep search matches in the middle of the window.
 "nnoremap n nzzzv
 "nnoremap N Nzzzv
+cnoremap s/ s/\v
 
 " Visual Mode */# from Scrooloose
 function! s:VSetSearch()
@@ -260,6 +261,8 @@ call unite#custom_source('buffer,file_rec/async,file_mru,file,buffer,grep',
       \ 'google/obj/',
       \ 'tmp/',
       \ '.sass-cache',
+      \ '.jpg',
+      \ ".jpg", ".png", ".gif", ".exe", ".dll", ".bak", ".sw[po]",
       \ ], '\|'))
 
 " Map space to the prefix for Unite
