@@ -129,6 +129,12 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 nnoremap <c-h> <c-w>h
 
+" window resizing
+map <S-Left> <C-w><
+map <S-Down> <C-w>-
+map <S-Up> <C-w>+
+map <S-Right> <C-w>>
+
 " tabs management
 nnoremap <A-k> :tabnext<CR>
 nnoremap <A-j> :tabprevious<CR>
@@ -346,3 +352,4 @@ let g:loaded_wildfire = 1
 let g:loaded_phpcomplete_extended = 1
 let g:loaded_phpcomplete_extended_laravel = 1
 let g:loaded_syntastic_plugin = 1
+let g:loaded_numbertoggle = 1
