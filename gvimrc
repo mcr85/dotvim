@@ -195,6 +195,7 @@ endfunction
 
 " behaviour
 
+set number
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 " set nowrap                  " do not wrap lines
@@ -243,9 +244,6 @@ let g:checksyntax#auto_enable_rx = "."
 " EasyMotion
 let g:EasyMotion_leader_key = '<Leader>'
 let g:EasyMotion_leader_key = '<leader>'
-
-" Number Toggle - relative numbers on sidebar
-" <C-n>
 
 " Unite (CtrlP alternative)
 let g:unite_enable_start_insert = 1
@@ -352,4 +350,3 @@ let g:loaded_wildfire = 1
 let g:loaded_phpcomplete_extended = 1
 let g:loaded_phpcomplete_extended_laravel = 1
 let g:loaded_syntastic_plugin = 1
-let g:loaded_numbertoggle = 1
