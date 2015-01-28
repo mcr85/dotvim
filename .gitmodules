@@ -96,3 +96,6 @@
 [submodule "bundle/incsearch"]
 	path = bundle/incsearch
 	url = https://github.com/haya14busa/incsearch.vim.git
+[submodule "bundle/jsbeautify"]
+	path = bundle/jsbeautify
+	url = https://github.com/maksimr/vim-jsbeautify.git
