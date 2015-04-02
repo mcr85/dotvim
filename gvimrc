@@ -18,8 +18,8 @@ endif
 call plug#begin('~/vimfiles/plugged') 		       " TODO: fix for unix .vim
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'Shougo/neocomplete.vim'                          " code completion
-Plug 'Shougo/unite.vim'                                " CtrlP like on steroids
-Plug 'Shougo/neomru.vim'                               " recent files for Unite
+Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
+Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
@@ -31,11 +31,14 @@ Plug 'bronson/vim-visual-star-search'                  " better search with * an
 Plug 'godlygeek/tabular'                               " text line up
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
+Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
+Plug 'burnettk/vim-angular'                            " angularjs plugin
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node'                                   " node.js goodies
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 Plug 'Rykka/InstantRst'                                " reStructuredText live preview
+Plug 'airblade/vim-gitgutter'                          " git helper
 call plug#end()
 
 
@@ -46,6 +49,7 @@ call plug#end()
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup
 set noswapfile      " swap
+set noundofile      " do not create .un~ files
 set nowb
 set encoding=utf-8  " encoding
 set ttyfast         " fast scrolling
@@ -195,6 +199,7 @@ syntax on
  let g:airline_powerline_fonts=1
  let g:bufferline_echo=0
  let g:airline_theme="dark"
+" let g:airline#extensions#tabline#enabled = 1
 
 "-------------------------------------------------------------------------------
 " NERDTree
@@ -259,60 +264,10 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 let g:user_emmet_expandabbr_key='<c-h>'
 
 "-------------------------------------------------------------------------------
-" Unite
+" CtrlP
 "-------------------------------------------------------------------------------
-let g:unite_enable_start_insert = 1
-let g:unite_split_rule = "botright"
-let g:unite_force_overwrite_statusline = 0
-let g:unite_winheight = 10
-let g:unite_source_file_mru_limit = 20
-let g:unite_prompt = '➜ '
-let g:unite_marked_icon = '✓'
-let g:unite_source_file_ignore_pattern =
-            \ '^\%(/\|\a\+:/\)$\|\~$\|\.\%(jpg|png|gif|o|exe|dll|bak|sw[po]\)$'
-
-
-call unite#custom_source('buffer,file_rec/async,file_mru,file,buffer,grep',
-      \ 'ignore_pattern', join([
-      \ '\.git/',
-      \ 'tmp/',
-      \ 'node_modules',
-      \ 'bower_components',
-      \ '.sass-cache',
-      \ ".jpg", ".png", ".gif", ".exe", ".dll", ".bak", ".sw[po]",
-      \ ], '\|'))
-
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#filters#sorter_default#use(['sorter_selecta'])
-
-" Map space to the prefix for Unite
-nnoremap [unite] <Nop>
-nmap <space> [unite]
-
-autocmd FileType unite call s:unite_settings()
-
-nnoremap <silent> ,g :<C-u>Unite grep:. -buffer-name=search-buffer<CR>
-if executable('pt')
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '--nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-    let g:unite_source_grep_encoding = 'utf-8'
-endif
-
-
-function! s:unite_settings()
-    nnoremap <C-p> :Unite -buffer-name=files -start-insert file_rec file<cr>
-    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-    imap <silent><buffer><expr> <C-s> unite#do_action('split')
-    imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-    imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-    nnoremap [unite]/ :Unite -buffer-name=search -start-insert grep:.<cr>
-    nnoremap [unite]s :Unite -buffer-name=buffer -start-insert buffer<cr>
-    nnoremap [unite]r :Unite -buffer-name=recent -start-insert file_mru<cr>
-    nmap <buffer> <ESC> <Plug>(unite_exit)
-endfunction
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor -g "" %s '
 
 "-------------------------------------------------------------------------------
 " Syntastic (syntax checker)
