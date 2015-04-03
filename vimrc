@@ -55,6 +55,8 @@ set encoding=utf-8  " encoding
 set ttyfast         " fast scrolling
 set history=700     " history
 set wildmenu        " Better command completion
+set incsearch       " jump to search
+set ignorecase      " ignore case when searching
 
 " map Leader
 let mapleader = ","
@@ -195,11 +197,12 @@ syntax on
 "-------------------------------------------------------------------------------
 " Airline
 "-------------------------------------------------------------------------------
- set laststatus=2
- let g:airline_powerline_fonts=1
- let g:bufferline_echo=0
- let g:airline_theme="dark"
-" let g:airline#extensions#tabline#enabled = 1
+set laststatus=2
+let g:airline_powerline_fonts=1
+let g:bufferline_echo=0
+let g:airline_theme="dark"
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme="tomorrow"
 
 "-------------------------------------------------------------------------------
 " NERDTree
@@ -261,7 +264,7 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
-let g:user_emmet_expandabbr_key='<c-h>'
+let g:user_emmet_expandabbr_key='<c-e>'
 
 "-------------------------------------------------------------------------------
 " CtrlP
