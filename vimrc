@@ -9,16 +9,22 @@ if has("autocmd")
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown " .md for markdown
 endif
 
+if has('win32')
+    let vim_home = 'vimfiles'
+else
+    let vim_home = '.vim'
+
 "-------------------------------------------------------------------------------
 " Plugins
 " Install vim-plug: https://github.com/junegunn/vim-plug
 " use vim-plug's :PlugInstall to install below plugins
 "-------------------------------------------------------------------------------
 
-call plug#begin('~/vimfiles/plugged') 		       " TODO: fix for unix .vim
+call plug#begin('~/' . vim_home . '/plugged')
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'Shougo/neocomplete.vim'                          " code completion
 Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
+Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'scrooloose/syntastic'                            " syntax checker
@@ -35,6 +41,7 @@ Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
 Plug 'burnettk/vim-angular'                            " angularjs plugin
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node'                                   " node.js goodies
+Plug 'jaxbot/browserlink.vim'                          " web live coding
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 Plug 'Rykka/InstantRst'                                " reStructuredText live preview
@@ -97,12 +104,6 @@ elseif has('mac')
     set guifont=Inconsolata\ for\ Powerline:h16
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
-endif
-
-" colors
-set t_Co=256
-if !has('win32')
-	set term=screen-256color
 endif
 
 "-------------------------------------------------------------------------------
@@ -264,7 +265,7 @@ inoremap <expr><C-e>  neocomplete#cancel_popup()
 "-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
-let g:user_emmet_expandabbr_key='<c-e>'
+let g:user_emmet_expandabbr_key='<c-x>'
 
 "-------------------------------------------------------------------------------
 " CtrlP
