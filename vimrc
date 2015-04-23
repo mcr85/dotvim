@@ -49,6 +49,7 @@ Plug 'vim-voom/VOoM'                                   " outliner (generally for
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 Plug 'Rykka/InstantRst'                                " reStructuredText live preview
 Plug 'airblade/vim-gitgutter'                          " git helper
+Plug 'KabbAmine/vCoolor.vim'                           " color picker
 call plug#end()
 
 
