@@ -36,7 +36,7 @@ Plug 'honza/vim-snippets'                              " snippets
 Plug 'tpope/vim-commentary'                            " commenting plugin
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
-" Plug 'bling/vim-airline'                               " fancy status bar
+Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'godlygeek/tabular'                               " text line up
@@ -93,6 +93,7 @@ set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
+set showtabline=0
 
 " switching buffers
 nnoremap <leader>l :ls <CR> :b<space>
@@ -104,17 +105,6 @@ set cursorline
 
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
-
-" status line
-set statusline=
-set statusline +=%1*\ %n\ %*            "buffer number
-set statusline +=%5*%{&ff}%*            "file format
-set statusline +=%3*%y%*                "file type
-set statusline +=%4*\ %<%F%*            "full path
-set statusline +=%2*%m%*                "modified flag
-set statusline +=%1*%=%5l%*             "current line
-set statusline +=%2*/%L%*               "total lines
-set statusline +=%1*%4v\ %*             "virtual column number
 
 colorscheme monokai
 let g:monokai_italic = 1
@@ -222,11 +212,10 @@ syntax on
 "-------------------------------------------------------------------------------
 " Airline
 "-------------------------------------------------------------------------------
-" set laststatus=2
-" let g:airline_powerline_fonts=1
-" let g:bufferline_echo=0
+set laststatus=2
+let g:airline_powerline_fonts=1
+let g:bufferline_echo=0
 " let g:airline#extensions#tabline#enabled = 1
-" let g:airline_theme="tomorrow"
 
 "-------------------------------------------------------------------------------
 " NERDTree
@@ -324,11 +313,7 @@ let g:ctrlspace_glob_command = 'ag --nogroup --nobreak --noheading --nocolor
                             \ -g ""'
 
 " Colors
-" hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
-" hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
-" hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
-" hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
-
+hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
 hi CtrlSpaceSelected ctermfg=NONE ctermbg=237 cterm=NONE guifg=NONE guibg=#3c3d37 gui=reverse,bold
 hi CtrlSpaceNormal ctermfg=102 ctermbg=237 cterm=NONE guifg=#90908a guibg=#3c3d37 gui=bold 
 hi CtrlSpaceSearch ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=NONE
