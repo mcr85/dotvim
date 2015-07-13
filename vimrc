@@ -141,6 +141,9 @@ command! CDC cd %:p:h
 
 nnoremap <tab> %
 
+" override plugin mapping
+nunmap <C-I>
+
 " easier block indentation
 vnoremap < <gv
 vnoremap > >gv
@@ -158,8 +161,8 @@ nnoremap <leader>h :noh<cr>
 nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
-:nnoremap <Esc>P  P'[v']=
-:nnoremap <Esc>p  p'[v']=
+nnoremap <Esc>P  P'[v']=
+nnoremap <Esc>p  p'[v']=
 
 " file saving
 map <C-S> <ESC>:w<CR>
@@ -172,10 +175,10 @@ nnoremap <c-l> <c-w>l
 nnoremap <c-h> <c-w>h
 
 " window resizing
-map <S-Left> <C-w><
-map <S-Down> <C-w>-
-map <S-Up> <C-w>+
-map <S-Right> <C-w>>
+map <S-Left> <C-w>5<
+map <S-Down> <C-w>5-
+map <S-Up> <C-w>5+
+map <S-Right> <C-w>5>
 
 " tabs
 nnoremap <A-k> :tabnext<CR>
