@@ -121,7 +121,7 @@ let g:monokai_zentree = 1
 
 " font
 if has('win32')
-    set guifont=Consolas:h11:cANSI
+    set guifont=Droid_Sans_Mono_Slashed_for_Pow:h10:cEASTEUROPE
 elseif has('mac')
     set guifont=Inconsolata-g\ for\ Powerline:h12
 elseif has('unix')
