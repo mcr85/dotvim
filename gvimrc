@@ -28,7 +28,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
-Plug 'sickill/vim-pasta'			       " context aware paste
+Plug 'sickill/vim-pasta'			                   " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
@@ -43,18 +43,20 @@ Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
+Plug 'jordwalke/VimCompleteLikeAModernEditor'          " tab completion helper
+Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Shougo/neocomplete.vim'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
-Plug 'othree/yajs.vim'                                 " JavaScript syntax
+Plug 'othree/yajs.vim', { 'for': 'javascript' }        " JavaScript syntax
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
 "Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
 "Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs - pangloss companion
-Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
-Plug 'burnettk/vim-angular'                            " angularjs plugin
-Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
-Plug 'moll/vim-node'                                   " node.js goodies
+Plug 'burnettk/vim-angular', { 'for': 'javascript' }                            " angularjs plugin
+Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module
+Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
 " orginizer --------------------------------------------------------------------
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
@@ -104,6 +106,7 @@ set guioptions-=L  "remove left-hand scroll bar
 set showtabline=0
 
 " switching buffers
+nnoremap ,, *<C-^>
 nnoremap <leader>l :ls <CR> :b<space>
 
 " opening new splits
@@ -121,7 +124,7 @@ let g:monokai_zentree = 1
 
 " font
 if has('win32')
-    set guifont=Droid_Sans_Mono_Slashed_for_Pow:h10:cEASTEUROPE
+    set guifont=Consolas:h11:cEASTEUROPE
 elseif has('mac')
     set guifont=Inconsolata-g\ for\ Powerline:h12
 elseif has('unix')
@@ -227,6 +230,19 @@ set laststatus=2
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
 " let g:airline#extensions#tabline#enabled = 1
+let g:airline_mode_map = {
+  \ '__' : '-',
+  \ 'n'  : 'N',
+  \ 'i'  : 'I',
+  \ 'R'  : 'R',
+  \ 'c'  : 'C',
+  \ 'v'  : 'V',
+  \ 'V'  : 'V',
+  \ '' : 'V',
+  \ 's'  : 'S',
+  \ 'S'  : 'S',
+  \ '' : 'S',
+  \ }
 
 "-------------------------------------------------------------------------------
 " NERDTree
@@ -245,6 +261,9 @@ map <F4> :VoomToggle<CR>
 " UltiSnips
 "-------------------------------------------------------------------------------
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 "-------------------------------------------------------------------------------
 " EasyMotion
@@ -271,14 +290,11 @@ augroup END
 "-------------------------------------------------------------------------------
 set completeopt-=preview
 let g:neocomplete#use_vimproc=1
-" let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#auto_completion_start_length = 1
 let g:neocomplete#sources#buffer#cache_limit_size = 50000
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 1
 inoremap <expr><C-g>  neocomplete#undo_completion()
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
@@ -354,6 +370,12 @@ set statusline+=%*
 "-------------------------------------------------------------------------------
 " JavaScript & WEB
 "-------------------------------------------------------------------------------
+autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
+
 " vim-javascript settings
 let g:html_inndent_inctags = "html,body,head,tbody"
 let g:html_indent_script1 = "inc"
