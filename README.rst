@@ -22,5 +22,3 @@ requirements:
 - run: make
 - run: make install
 
-Having trouble with running command-t? Check out this insctructions:
-http://blog.parkermoore.de/2014/01/02/installing-command-t-with-os-x-mavericks-built-in-vim/

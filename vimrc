@@ -130,7 +130,7 @@ let g:monokai_zentree = 1
 if has('win32')
     set guifont=Consolas:h11:cEASTEUROPE
 elseif has('mac')
-    set guifont=Inconsolata-g\ for\ Powerline:h12
+    set guifont=Menlo\ for\ Powerline:h12
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
 endif
