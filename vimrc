@@ -24,7 +24,6 @@ endif
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 Plug 'crusoexia/vim-monokai'                           " monokai theme
-"Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'editorconfig/editorconfig-vim'                   " editor
@@ -39,19 +38,22 @@ Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
 " searching & project traversal ------------------------------------------------
 Plug 'rking/ag.vim'
-Plug 'wincent/command-t'                               " fuzzy find files
-Plug 'szw/vim-ctrlspace'                               " files, buffers and sessions management
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'jasoncodes/ctrlp-modified.vim'
+Plug 'ivalkeen/vim-ctrlp-tjump'
+Plug 'sgur/ctrlp-extensions.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
-"Plug 'jordwalke/VimCompleteLikeAModernEditor'          " tab completion helper
 Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Valloric/YouCompleteMe'                          " code completion
-" Plug 'Shougo/neocomplete.vim'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
@@ -64,6 +66,7 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file -
 Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
 Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'digitaltoad/vim-jade'
+Plug 'groenewege/vim-less'
 Plug 'wavded/vim-stylus'
 " orginizer --------------------------------------------------------------------
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
@@ -331,45 +334,17 @@ let g:user_emmet_expandabbr_key='<c-l>'
 nnoremap <leader>l :ls <CR> :b<space>
 
 "-------------------------------------------------------------------------------
-" CtrlSpace
+" CtrlP
 "-------------------------------------------------------------------------------
-let g:ctrlspace_use_ruby_bindings = 1
-let g:ctrlspace_ignored_files = "\v(tmp|temp|.git|.DS_Sstore|dist|node_modules)[\/]"
-" let g:ctrlspace_search_timing = [10,10]
-let g:ctrlspace_glob_command = 'ag --nogroup --nobreak --noheading --nocolor 
-                            \ --ignore .git
-                            \ --ignore .DS_Store
-                            \ --ignore dist
-                            \ --ignore node_modules
-                            \ -g ""'
+call ctrlp_bdelete#init()
 
-" Colors
-hi CtrlSpaceStatus ctermbg=4 guibg=#383a3e
-hi CtrlSpaceSelected ctermbg=8 guibg=#383a3e gui=bold
-hi CtrlSpaceNormal ctermfg=14 guifg=#8F908A guibg=#2F312B
-hi CtrlSpaceSearch cterm=bold ctermfg=11 guifg=#A6E22D
+let g:ctrlp_working_path_mode = 'c'
 
-let g:ctrlspace_symbols = {
-      \ "cs":      "⌗",
-      \ "tab":     "∙",
-      \ "all":     "፨",
-      \ "vis":     "★",
-      \ "file":    "⊚",
-      \ "tabs":    "○ ",
-      \ "c_tab":   "● ",
-      \ "ntm":     " ⁺",
-      \ "load":    "|∷|",
-      \ "save":    "[∷]",
-      \ "zoom":    "⌕",
-      \ "s_left":  "›",
-      \ "s_right": "‹",
-      \ "bm":      "♥",
-      \ "help":    "?",
-      \ "iv":      "☆",
-      \ "ia":      "★",
-      \ "im":      "+",
-      \ "dots":    "…"
-      \ }
+nnoremap <C-P> :CtrlPRoot<CR>
+nnoremap <A-Up> :CtrlP<CR>
+nnoremap <C-Space> :CtrlPBuffer<CR>
+nmap <Leader>o :CtrlPFunky<CR>
+command! RECENT :CtrlPMRU<CR>
 
 "-------------------------------------------------------------------------------
 " CtrlSF
