@@ -23,6 +23,8 @@ endif
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
+Plug 'jnurmine/Zenburn'                                " zenburn theme
+Plug 'altercation/vim-colors-solarized'                " solarized theme
 Plug 'crusoexia/vim-monokai'                           " monokai theme
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
@@ -36,6 +38,7 @@ Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'godlygeek/tabular'                               " text line up
 Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 " searching & project traversal ------------------------------------------------
 Plug 'rking/ag.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -129,16 +132,17 @@ set cursorline
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 
-colorscheme monokai
-let g:monokai_italic = 1
-let g:monokai_thick_border = 1
-let g:monokai_zentree = 1
+colorscheme zenburn
+" let g:solarized_visibility = 'high'
+" let g:monokai_italic = 1
+" let g:monokai_thick_border = 1
+" let g:monokai_zentree = 1
 
 " font
 if has('win32')
     set guifont=Consolas:h11:cEASTEUROPE
 elseif has('mac')
-    set guifont=Menlo\ for\ Powerline:h12
+    set guifont=Monaco\ for\ Powerline:h13
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
 endif
