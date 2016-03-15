@@ -24,8 +24,6 @@ endif
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 Plug 'jnurmine/Zenburn'                                " zenburn theme
-Plug 'altercation/vim-colors-solarized'                " solarized theme
-Plug 'crusoexia/vim-monokai'                           " monokai theme
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'editorconfig/editorconfig-vim'                   " editor
@@ -40,6 +38,7 @@ Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " searching & project traversal ------------------------------------------------
+Plug 'haya14busa/incsearch.vim'
 Plug 'rking/ag.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher'
@@ -62,7 +61,8 @@ Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 Plug 'othree/yajs.vim', { 'for': 'javascript' }        " JavaScript syntax
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
+" Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
+Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
 Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
 Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin 
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
@@ -72,10 +72,10 @@ Plug 'digitaltoad/vim-jade'
 Plug 'groenewege/vim-less'
 Plug 'wavded/vim-stylus'
 " orginizer --------------------------------------------------------------------
-Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
+" Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
-Plug 'Rykka/InstantRst'                                " reStructuredText live preview
-Plug 'KabbAmine/vCoolor.vim'                           " color picker
+" Plug 'Rykka/InstantRst'                                " reStructuredText live preview
+" Plug 'KabbAmine/vCoolor.vim'                           " color picker
 call plug#end()
 
 
@@ -175,6 +175,9 @@ nnoremap K <nop>
 nnoremap q: <nop>
 
 " search & replace
+map /  <Plug>(incsearch-forward)
+map ?  <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
 
 " nnoremap <leader>l :ls <CR> :b<space>
 nnoremap <Leader>r :OverCommandLine <CR>:%s/
@@ -392,3 +395,8 @@ setlocal foldlevel=99
 
 " JsBeautify
 command! Beautify call JsBeautify()
+
+let g:dko_js_indent = 'gavocanov/vim-js-indent'
+if exists("g:plugs['yajs.vim']")
+    Plug g:dko_js_indent, { 'for': 'javascript' }
+endif
