@@ -51,6 +51,7 @@ Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searc
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
+Plug 'ludovicchabant/vim-gutentags'                    " tags generator
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
@@ -58,9 +59,10 @@ Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
+Plug 'sheerun/vim-polyglot'                            " syntax highlighting and identation for many languages
 " javascript -------------------------------------------------------------------
-Plug 'othree/yajs.vim', { 'for': 'javascript' }        " JavaScript syntax
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
+Plug 'othree/javascript-libraries-syntax.vim',         " More JavaScript goodies
+Plug 'othree/jspc.vim'                                 " funciton parameter completion
 " Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
 Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
 Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
@@ -68,14 +70,11 @@ Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
 Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
 Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
-Plug 'digitaltoad/vim-jade'
-Plug 'groenewege/vim-less'
-Plug 'wavded/vim-stylus'
+Plug 'ternjs/tern_for_vim'
+Plug 'clausreinke/typescript-tools.vim'
 " orginizer --------------------------------------------------------------------
-" Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
-" Plug 'Rykka/InstantRst'                                " reStructuredText live preview
-" Plug 'KabbAmine/vCoolor.vim'                           " color picker
+Plug 'vimwiki/vimwiki'
 call plug#end()
 
 
@@ -133,16 +132,12 @@ set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 
 colorscheme zenburn
-" let g:solarized_visibility = 'high'
-" let g:monokai_italic = 1
-" let g:monokai_thick_border = 1
-" let g:monokai_zentree = 1
 
 " font
 if has('win32')
     set guifont=Consolas:h11:cEASTEUROPE
 elseif has('mac')
-    set guifont=Monaco\ for\ Powerline:h13
+    set guifont=Sauce\ Code\ Powerline:h13
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
 endif
@@ -241,9 +236,9 @@ nnoremap N Nzzzv
 "-------------------------------------------------------------------------------
 "set noexpandtab
 set showmatch
-set ts=4
-set sw=4
-set sts=4
+set ts=2
+set sw=2
+set sts=2
 set smarttab
 " set autoindent
 set textwidth=80
@@ -257,7 +252,7 @@ syntax on
 set laststatus=2
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
-" let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 1
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -283,11 +278,6 @@ let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.js.map$']
 
 "-------------------------------------------------------------------------------
-" Voom
-"-------------------------------------------------------------------------------
-map <F4> :VoomToggle<CR>
-
-"-------------------------------------------------------------------------------
 " UltiSnips
 "-------------------------------------------------------------------------------
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
@@ -298,7 +288,6 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "-------------------------------------------------------------------------------
 " EasyMotion
 "-------------------------------------------------------------------------------
-let g:EasyMotion_leader_key = '<Leader>'
 let g:EasyMotion_leader_key = '<leader>'
 
 "-------------------------------------------------------------------------------
@@ -310,25 +299,19 @@ augroup omnicomplete
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
 "-------------------------------------------------------------------------------
-" neocomplete
+" YouCompleteMe
 "-------------------------------------------------------------------------------
-" set completeopt-=preview
-" let g:neocomplete#use_vimproc=1
-" let g:neocomplete#enable_at_startup = 1
-" let g:neocomplete#sources#buffer#cache_limit_size = 50000
-" let g:neocomplete#enable_smart_case = 1
-" let g:neocomplete#sources#syntax#min_keyword_length = 1
-" inoremap <expr><C-g>  neocomplete#undo_completion()
-" inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><C-y>  neocomplete#close_popup()
-" inoremap <expr><C-e>  neocomplete#cancel_popup()
+if !exists("g:ycm_semantic_triggers")
+   let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers['typescript'] = ['.']
+set completeopt-=preview
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -345,12 +328,13 @@ nnoremap <leader>l :ls <CR> :b<space>
 "-------------------------------------------------------------------------------
 call ctrlp_bdelete#init()
 
-let g:ctrlp_working_path_mode = 'c'
+" let g:ctrlp_working_path_mode = 'c'
 
 nnoremap <C-P> :CtrlPRoot<CR>
-nnoremap <A-Up> :CtrlP<CR>
+nnoremap <A-Up> :CtrlPCurFile<CR>
 nnoremap <C-Space> :CtrlPBuffer<CR>
-nmap <Leader>o :CtrlPFunky<CR>
+nnoremap <Leader>o :CtrlPFunky<CR>
+nnoremap <Leader>t :CtrlPTag<CR>
 command! RECENT :CtrlPMRU<CR>
 
 "-------------------------------------------------------------------------------
@@ -370,6 +354,7 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 let g:syntastic_error_symbol = "✗"
 let g:syntastic_warning_symbol = "⚠"
+let g:syntastic_javascript_checkers = ['eslint']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -383,11 +368,6 @@ autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
-" vim-javascript settings
-let g:html_inndent_inctags = "html,body,head,tbody"
-let g:html_indent_script1 = "inc"
-let g:html_indent_style1 = "inc"
-
 " Javascript Code Folding
 syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 setlocal foldmethod=syntax
@@ -395,8 +375,3 @@ setlocal foldlevel=99
 
 " JsBeautify
 command! Beautify call JsBeautify()
-
-let g:dko_js_indent = 'gavocanov/vim-js-indent'
-if exists("g:plugs['yajs.vim']")
-    Plug g:dko_js_indent, { 'for': 'javascript' }
-endif
