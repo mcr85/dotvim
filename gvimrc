@@ -63,22 +63,23 @@ Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
-"Plug 'sheerun/vim-polyglot'                            " syntax highlighting and identation for many languages
 " javascript -------------------------------------------------------------------
-Plug 'othree/javascript-libraries-syntax.vim',         " More JavaScript goodies
-Plug 'othree/jspc.vim'                                 " funciton parameter completion
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
+Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
 " Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
 Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
 Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
+Plug 'mxw/vim-jsx'
+Plug 'jaxbot/syntastic-react'
 Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin 
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
-Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
+"Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
 Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'ternjs/tern_for_vim'
-Plug 'clausreinke/typescript-tools.vim'
+Plug 'groenewege/vim-less'
 " orginizer --------------------------------------------------------------------
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
-Plug 'vimwiki/vimwiki'
 call plug#end()
 
 
@@ -295,7 +296,6 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 " NERDTree
 "-------------------------------------------------------------------------------
 map <F2> :NERDTreeToggle<CR>
-map <F3> :NERDTreeMirror<CR>
 let NERDTreeWinSize=36
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
@@ -331,10 +331,6 @@ augroup END
 "-------------------------------------------------------------------------------
 " YouCompleteMe
 "-------------------------------------------------------------------------------
-if !exists("g:ycm_semantic_triggers")
-   let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers['typescript'] = ['.']
 set completeopt-=preview
 "
 "-------------------------------------------------------------------------------
@@ -358,10 +354,13 @@ nnoremap <leader>l :ls <CR> :b<space>
 call ctrlp_bdelete#init()
 
 " let g:ctrlp_working_path_mode = 'c'
+let g:ctrlp_working_path_mode = ''
 
-let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:20'
+let g:ctrlp_max_files = 0
+let g:ctrlp_max_depth = 40
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-nnoremap <C-P> :CtrlPRoot<CR>
+nnoremap <C-P> :CtrlP<CR>
 nnoremap <A-Up> :CtrlPCurFile<CR>
 nnoremap <C-Space> :CtrlPBuffer<CR>
 nnoremap <Leader>o :CtrlPFunky<CR>
@@ -371,6 +370,7 @@ command! RECENT :CtrlPMRU<CR>
 "-------------------------------------------------------------------------------
 " CtrlSF
 "-------------------------------------------------------------------------------
+map <F3> :CtrlSFToggle<CR>
 nmap <Leader>sf <Plug>CtrlSFPrompt
 nmap <Leader>sw <Plug>CtrlSFCwordExec<cr>
 nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
