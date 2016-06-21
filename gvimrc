@@ -64,10 +64,10 @@ Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
-" Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
+" Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
 Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
 Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
 Plug 'mxw/vim-jsx'
@@ -75,7 +75,7 @@ Plug 'jaxbot/syntastic-react'
 Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin 
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
 "Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
-Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
+"Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'ternjs/tern_for_vim'
 Plug 'groenewege/vim-less'
 " orginizer --------------------------------------------------------------------
@@ -318,25 +318,25 @@ let g:EasyMotion_leader_key = '<leader>'
 " AutoComplete
 "-------------------------------------------------------------------------------
 " auto complete settings
-augroup omnicomplete
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup END
+" augroup omnicomplete
+"   autocmd!
+"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+"   autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
+"   autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" augroup END
 
 "-------------------------------------------------------------------------------
 " YouCompleteMe
 "-------------------------------------------------------------------------------
 set completeopt-=preview
-"
+
 "-------------------------------------------------------------------------------
 " Easytags
 "-------------------------------------------------------------------------------
-let g:easytags_cmd = 'C:\Programy\ctags\ctags.exe'
+" let g:easytags_cmd = 'C:\Programy\ctags\ctags.exe'
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -366,6 +366,18 @@ nnoremap <C-Space> :CtrlPBuffer<CR>
 nnoremap <Leader>o :CtrlPFunky<CR>
 nnoremap <Leader>t :CtrlPTag<CR>
 command! RECENT :CtrlPMRU<CR>
+
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+set
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_modules,*/bower_components
+
+" let g:ctrlp_custom_ignore = {
+"   \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|bower_components)$',
+"   \ 'file': '\v\.(exe|so|dll)$',
+"   \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+"   \ }
 
 "-------------------------------------------------------------------------------
 " CtrlSF
@@ -401,3 +413,9 @@ autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
 " JsBeautify
 command! Beautify call JsBeautify()
+
+"-------------------------------------------------------------------------------
+" riv.vim (reStructuredText)
+"-------------------------------------------------------------------------------
+let main_project = { 'Name': 'Notes', 'path': '~/Dropbox/Notes',}
+let g:riv_projects = [main_project]
