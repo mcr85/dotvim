@@ -1,19 +1,12 @@
-set nocompatible
-
-"language 'pl_PL.UTF-8'
-
-if has("autocmd")
-    filetype on
-    filetype plugin on
-    filetype indent on
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown " .md for markdown
-endif
-
 if has('win32')
     let vim_home = 'vimfiles'
 else
     let vim_home = '.vim'
 endif
+
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
 
 "-------------------------------------------------------------------------------
 " Plugins
@@ -23,27 +16,32 @@ endif
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
+Plug 'neomake/neomake'
 Plug 'xolox/vim-session'                               " session management
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'jnurmine/Zenburn'                                " zenburn theme
-Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
+Plug 'mhartington/oceanic-next'
+" Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
-Plug 'editorconfig/editorconfig-vim'                   " editor
 " editing ----------------------------------------------------------------------
 Plug 'sickill/vim-pasta'			                   " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
+Plug 'matze/vim-move'                                  " move selection and maintain indentation
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'godlygeek/tabular'                               " text line up
 Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
+Plug 'tpope/vim-repeat'
 " searching & project traversal ------------------------------------------------
 Plug 'tpope/vim-fugitive'                             " git integration
-Plug 'haya14busa/incsearch.vim'
-Plug 'rking/ag.vim'
+Plug 'wincent/loupe'
+Plug 'wincent/ferret'
+" Plug 'haya14busa/incsearch.vim'
+" Plug 'rking/ag.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher'
 Plug 'jasoncodes/ctrlp-modified.vim'
@@ -55,33 +53,24 @@ Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searc
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
-Plug 'xolox/vim-easytags'                              " tags generator
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Valloric/YouCompleteMe'                          " code completion
-Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
-" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-" Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
+Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
 Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
-Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
 Plug 'mxw/vim-jsx'
-Plug 'jaxbot/syntastic-react'
-Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin 
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
-"Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
-"Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
 Plug 'ternjs/tern_for_vim'
 Plug 'groenewege/vim-less'
 " orginizer --------------------------------------------------------------------
-Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
+" Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 call plug#end()
-
 
 "-------------------------------------------------------------------------------
 " GENERAL
@@ -97,8 +86,10 @@ set ttyfast         " fast scrolling
 set nolazyredraw    " don't redraw while executing macros
 set history=700     " history
 set wildmenu        " Better command completion
+set wildignorecase
 set incsearch       " jump to search
-set ignorecase      " ignore case when searching
+set smartcase
+" set ignorecase      " ignore case when searching
 set virtualedit=block " visual edit block
 
 " map Leader
@@ -123,10 +114,18 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set showtabline=0
+set t_Co=256
+syntax enable
+colorscheme OceanicNext
+
+if (has("termguicolors"))
+   set termguicolors
+ endif
 
 " switching buffers
-nnoremap ,, *<C-^>
 nnoremap <leader>l :ls <CR> :b<space>
+nnoremap <C-S-L> :bnext<CR>
+nnoremap <C-S-H> :bprev<CR>
 
 " opening new splits
 set splitbelow
@@ -136,13 +135,11 @@ set cursorline
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 
-colorscheme zenburn
-
 " font
 if has('win32')
     set guifont=Consolas:h11:cEASTEUROPE
 elseif has('mac')
-    set guifont=Sauce\ Code\ Powerline:h13
+    set guifont=Sauce\ Code\ Powerline:h14
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
 endif
@@ -152,6 +149,9 @@ endif
 "-------------------------------------------------------------------------------
 " quick escape
 imap jk <Esc>
+
+" supercharged dot
+nnoremap . *Ncgn
 
 " repeat and go back to beginnig
 nmap . .`[
@@ -201,10 +201,15 @@ map <C-S> <ESC>:w<CR>
 imap <C-S> <ESC>:w<CR>
 
 " move around windows
+ if has('nvim')
+  " Hack to get C-h working in NeoVim
+  nmap <BS> <C-W>h
+endif
+
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
-nnoremap <c-h> <c-w>h
+" nnoremap <c-h> <c-w>h
 
 " window resizing
 map <S-Left> <C-w>5<
@@ -213,8 +218,8 @@ map <S-Up> <C-w>5+
 map <S-Right> <C-w>5>
 
 " tabs
-nnoremap <A-k> :tabnext<CR>
-nnoremap <A-j> :tabprevious<CR>
+nnoremap <M-S-k> :tabnext<CR>
+nnoremap <M-S-j> :tabprevious<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-t>c :tabclose<CR>
 
@@ -234,7 +239,6 @@ nnoremap <leader>i :set list!<cr>
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-"cnoremap s/ s/\v
 
 "-------------------------------------------------------------------------------
 " whitespace
@@ -245,22 +249,22 @@ set ts=2
 set sw=2
 set sts=2
 set smarttab
-" set autoindent
+set autoindent
+filetype plugin indent on
 set textwidth=80
 set expandtab
-
-syntax on
 
 "-------------------------------------------------------------------------------
 " vim-session
 "-------------------------------------------------------------------------------
 let g:session_autoload = 'no'
-let g:session_autosave = 'no'
+let g:session_autosave = 'yes'
 
 "-------------------------------------------------------------------------------
 " Airline
 "-------------------------------------------------------------------------------
 set laststatus=2
+let g:airline_theme='oceanicnext'
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
 let g:airline#extensions#tabline#enabled = 1
@@ -295,7 +299,7 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 "-------------------------------------------------------------------------------
 " NERDTree
 "-------------------------------------------------------------------------------
-map <F2> :NERDTreeToggle<CR>
+map <F1> :NERDTreeToggle<CR>
 let NERDTreeWinSize=36
 let NERDTreeMouseMode=2
 let NERDTreeShowHidden=1
@@ -315,28 +319,24 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 let g:EasyMotion_leader_key = '<leader>'
 
 "-------------------------------------------------------------------------------
-" AutoComplete
-"-------------------------------------------------------------------------------
-" auto complete settings
-" augroup omnicomplete
-"   autocmd!
-"   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-"   autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
-"   autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-"   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-"   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-"   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" augroup END
-
-"-------------------------------------------------------------------------------
 " YouCompleteMe
 "-------------------------------------------------------------------------------
-set completeopt-=preview
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
 
 "-------------------------------------------------------------------------------
-" Easytags
+" Deoplete
 "-------------------------------------------------------------------------------
-" let g:easytags_cmd = 'C:\Programy\ctags\ctags.exe'
+" set completeopt-=preview
+
+" let g:deoplete#enable_at_startup = 1
+" let g:tern_request_timeout = 1
+" let g:tern_show_signature_in_pum = 0
+" let g:tern#command = ["tern"]
+" let g:tern#arguments = ["--persistent"]
+
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<S-tab>"
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -353,31 +353,20 @@ nnoremap <leader>l :ls <CR> :b<space>
 "-------------------------------------------------------------------------------
 call ctrlp_bdelete#init()
 
-" let g:ctrlp_working_path_mode = 'c'
 let g:ctrlp_working_path_mode = ''
-
 let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 nnoremap <C-P> :CtrlP<CR>
-nnoremap <A-Up> :CtrlPCurFile<CR>
-nnoremap <C-Space> :CtrlPBuffer<CR>
+nnoremap <C-A-P> :CtrlPCurFile<CR>
+nnoremap <M-Space> :CtrlPBuffer<CR>
 nnoremap <Leader>o :CtrlPFunky<CR>
 nnoremap <Leader>t :CtrlPTag<CR>
 command! RECENT :CtrlPMRU<CR>
 
-if exists("g:ctrlp_user_command")
-  unlet g:ctrlp_user_command
-endif
-set
+" set
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_modules,*/bower_components
-
-" let g:ctrlp_custom_ignore = {
-"   \ 'dir':  '\v[\/]\.(git|hg|svn|node_modules|bower_components)$',
-"   \ 'file': '\v\.(exe|so|dll)$',
-"   \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
-"   \ }
 
 "-------------------------------------------------------------------------------
 " CtrlSF
@@ -390,25 +379,25 @@ nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 "-------------------------------------------------------------------------------
 " Syntastic (syntax checker)
 "-------------------------------------------------------------------------------
-let g:syntastic_auto_jump = 3
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
-let g:syntastic_javascript_checkers = ['eslint']
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+map <F2> :lnext<CR>
+
+function! neomake#makers#ft#javascript#eslint()
+    return {
+        \ 'args': ['-f', 'compact'],
+        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
+        \ '%W%f: line %l\, col %c\, Warning - %m'
+        \ }
+endfunction
+
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_open_list = 1
+autocmd! BufWritePost * Neomake
 
 "-------------------------------------------------------------------------------
 " JavaScript & WEB
 "-------------------------------------------------------------------------------
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
-autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 
 " JsBeautify
