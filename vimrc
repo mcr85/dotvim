@@ -62,9 +62,10 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More Ja
 Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
 Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
 Plug 'mxw/vim-jsx'
-Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
-Plug 'ternjs/tern_for_vim'
-Plug 'groenewege/vim-less'
+Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
+" css/sass
+Plug 'ap/vim-css-color'
+
 " orginizer --------------------------------------------------------------------
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 call plug#end()
