@@ -4,6 +4,9 @@ else
     let vim_home = '.config/nvim'
 endif
 
+set timeoutlen=1000
+set ttimeoutlen=0
+
 function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
@@ -17,18 +20,20 @@ endfunction
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 " Plug 'Shougo/vimproc.vim'
-Plug 'xolox/vim-session'                               " session management
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-shell'
+" Plug 'xolox/vim-session'                               " session management
+" Plug 'xolox/vim-misc'
+" Plug 'xolox/vim-shell'
 Plug 'mhartington/oceanic-next'
 Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
+Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
 Plug 'sickill/vim-pasta'			                         " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
 Plug 'matze/vim-move'                                  " move selection and maintain indentation
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
+Plug 'justinmk/vim-sneak'                              " fast char navigation to first two chars
 Plug 'godlygeek/tabular'                               " text line up
 Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
@@ -38,33 +43,40 @@ Plug 'tpope/vim-repeat'
 " searching & project traversal ------------------------------------------------
 Plug 'tpope/vim-fugitive'                              " git integration
 Plug 'wincent/loupe'
-Plug 'wincent/ferret'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'JazzCore/ctrlp-cmatcher'
-Plug 'jasoncodes/ctrlp-modified.vim'
-Plug 'ivalkeen/vim-ctrlp-tjump'
-Plug 'sgur/ctrlp-extensions.vim'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'd11wtq/ctrlp_bdelete.vim'
+Plug 'wincent/ferret'                                  " multi file search
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+Plug 'pbogut/fzf-mru.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+" Plug 'JazzCore/ctrlp-cmatcher'
+" Plug 'jasoncodes/ctrlp-modified.vim'
+" Plug 'ivalkeen/vim-ctrlp-tjump'
+" Plug 'sgur/ctrlp-extensions.vim'
+" Plug 'tacahiroy/ctrlp-funky'
+" Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 " coding -----------------------------------------------------------------------
+Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
-Plug 'othree/yajs.vim', { 'for': 'javascript' }
-Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
-Plug 'davidosomething/vim-jsdoc', { 'for': 'javascript' } " Helps creating JSDoc comments
-Plug 'mxw/vim-jsx'
-Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
+Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-" Plug 'Quramy/tsuquyomi'
+" Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
+" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+" Plug 'othree/yajs.vim', { 'for': 'javascript' }
+" Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
+" Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
+" Plug 'davidosomething/vim-jsdoc', { 'for': 'javascript' } " Helps creating JSDoc comments
+" Plug 'mxw/vim-jsx'
+Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
 " css/sass
 Plug 'ap/vim-css-color'
 
@@ -76,6 +88,10 @@ call plug#end()
 " GENERAL
 "-------------------------------------------------------------------------------
 " basic settings
+set nocompatible
+set ai              " auto indent
+set si              " smart indent
+set sc
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup
 set noswapfile      " swap
@@ -83,6 +99,7 @@ set noundofile      " do not create .un~ files
 set nowb
 set encoding=utf-8  " encoding
 set ttyfast         " fast scrolling
+set lazyredraw
 set history=700     " history
 set wildmenu        " Better command completion
 set wildignorecase
@@ -132,9 +149,9 @@ if (has("termguicolors"))
  endif
 
 " switching buffers
-nnoremap <leader>l :ls <CR> :b<space>
-nnoremap <C-S-L> :bnext<CR>
-nnoremap <C-S-H> :bprev<CR>
+" nnoremap <leader>l :ls <CR> :b<space>
+" nnoremap <C-S-L> :bnext<CR>
+" nnoremap <C-S-H> :bprev<CR>
 
 " opening new splits
 set splitbelow
@@ -262,6 +279,8 @@ set autoindent
 filetype plugin indent on
 set textwidth=80
 set expandtab
+setlocal foldmethod=syntax
+setlocal nofoldenable
 
 "-------------------------------------------------------------------------------
 " vim-session
@@ -327,11 +346,24 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 "-------------------------------------------------------------------------------
 let g:EasyMotion_leader_key = '<leader>'
 
+
+"-------------------------------------------------------------------------------
+" vim-move
+"-------------------------------------------------------------------------------
+if has('mac')
+    let g:move_key_modifier = 'M'
+endif
+
+"-------------------------------------------------------------------------------
+" Deoplete
+"-------------------------------------------------------------------------------
+let g:deoplete#enable_at_startup = 1
+
 "-------------------------------------------------------------------------------
 " YouCompleteMe
 "-------------------------------------------------------------------------------
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_autoclose_preview_window_after_insertion = 1
+" let g:ycm_autoclose_preview_window_after_completion = 1
+" let g:ycm_autoclose_preview_window_after_insertion = 1
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -344,23 +376,15 @@ let g:user_emmet_expandabbr_key='<c-l>'
 nnoremap <leader>l :ls <CR> :b<space>
 
 "-------------------------------------------------------------------------------
-" CtrlP
+" FZF
 "-------------------------------------------------------------------------------
-call ctrlp_bdelete#init()
 
-let g:ctrlp_working_path_mode = ''
-let g:ctrlp_lazy_update = 1
-let g:ctrlp_max_files = 0
-let g:ctrlp_max_depth = 40
-let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
-
-nnoremap <C-P> :CtrlP<CR>
-nnoremap <M-up> :CtrlPCurFile<CR>
-nnoremap <A-up> :CtrlPCurFile<CR>
-nnoremap <C-Space> :CtrlPBuffer<CR>
-nnoremap <Leader>o :CtrlPFunky<CR>
-nnoremap <Leader>t :CtrlPTag<CR>
-command! RECENT :CtrlPMRU<CR>
+nnoremap <C-Space> :Buffers<CR>
+nnoremap <Leader>o :Commands<CR>
+nnoremap <C-P> :Files<CR>
+nnoremap <Leader>p :Files <C-R>=expand('%:h')<CR><CR>
+nnoremap <Leader><Leader>r :FZFMru<CR>
+command! RECENT :FZFMru<CR>
 
 " set
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_modules,*/bower_components
