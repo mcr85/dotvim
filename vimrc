@@ -98,6 +98,7 @@ Plug 'mhartington/oceanic-next'
 " Plug 'liuchengxu/vim-which-key'
 Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'glepnir/galaxyline.nvim'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
@@ -152,6 +153,8 @@ luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
 luafile ~/.config/nvim/lua/plugins/compe-config.lua
 luafile ~/.config/nvim/lua/plugins/treesitter.lua
+" luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
+luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
 
 
 "-------------------------------------------------------------------------------
