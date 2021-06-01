@@ -95,7 +95,9 @@ set showtabline=0
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 Plug 'mhartington/oceanic-next'
-Plug 'liuchengxu/vim-which-key'
+" Plug 'liuchengxu/vim-which-key'
+Plug 'folke/which-key.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
@@ -106,7 +108,7 @@ Plug 'matze/vim-move'                                  " move selection and main
 " Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'justinmk/vim-sneak'                              " fast char navigation to first two chars
 Plug 'godlygeek/tabular'                               " text line up
-Plug 'osyo-manga/vim-over'                             " peek search and replace
+" Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
@@ -116,7 +118,8 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'brooth/far.vim'
+Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'brooth/far.vim'
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'tpope/vim-fugitive'                              " git integration
@@ -124,7 +127,10 @@ Plug 'tpope/vim-fugitive'                              " git integration
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'hrsh7th/nvim-compe'
+Plug 'folke/trouble.nvim'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'onsails/lspkind-nvim'
+Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " debugging --------------------------------------------------------------------
 " vimspector
@@ -141,6 +147,7 @@ Plug 'prettier/vim-prettier'
 Plug 'ap/vim-css-color'
 call plug#end()
 
+luafile ~/.config/nvim/lua/config/init.lua
 luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
 luafile ~/.config/nvim/lua/plugins/compe-config.lua
@@ -204,11 +211,11 @@ nnoremap q: <nop>
 " map g/ <Plug>(incsearch-stay)
 
 " nnoremap <leader>l :ls <CR> :b<space>
-nnoremap <Leader>r :OverCommandLine <CR>:%s/
+" nnoremap <Leader>r :OverCommandLine <CR>:%s/
 " substitute word under cursor on current line
-nnoremap <Leader>n :s/\<<C-r><C-w>\>//g<Left><Left>
+" nnoremap <Leader>n :s/\<<C-r><C-w>\>//g<Left><Left>
 " substitute word under cursor in whole document
-nnoremap <Leader>m :%s/\<<C-r><C-w>\>//g<Left><Left>
+" nnoremap <Leader>m :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " toggle search highlight
 nnoremap <leader>h :set hlsearch!<cr>
@@ -254,7 +261,7 @@ nnoremap <leader>dd :bd<cr>
 set backspace=start,indent,eol
 
 " Toggle [i]nvisible characters
-nnoremap <leader>i :set list!<cr>
+nnoremap <leader>i :set list!<CR>
 
 " Keep search matches in the middle of the window.
 nnoremap n nzzzv
@@ -270,13 +277,13 @@ endfunction
 
 " quickfix list
 nnoremap <silent> <C-q> :call ToggleQuickFix()<cr>
-nnoremap <C-j> :cnext<cr>
-nnoremap <C-k> :cprev<cr>
+nnoremap <silent> <C-j> :cnext<cr>
+nnoremap <silent> <C-k> :cprev<cr>
 
 " local list
-nnoremap <leader> q :lopen<cr>
-nnoremap <leader> j :lnext<cr>
-nnoremap <leader> k :lprev<cr>
+nnoremap <silent> <leader>q :lopen<cr>
+nnoremap <silent> <leader>j :lnext<cr>
+nnoremap <silent> <leader>k :lprev<cr>
 
 "-------------------------------------------------------------------------------
 " vim-session
@@ -285,16 +292,9 @@ let g:session_autoload = 'no'
 let g:session_autosave = 'yes'
 
 "-------------------------------------------------------------------------------
-" vim-which-key
-"-------------------------------------------------------------------------------
-
-nnoremap <silent> <leader> :WhichKey ','<CR>
-
-"-------------------------------------------------------------------------------
 " EasyMotion
 "-------------------------------------------------------------------------------
 " let g:EasyMotion_leader_key = '<leader>'
-
 
 "-------------------------------------------------------------------------------
 " vim-move
@@ -306,7 +306,7 @@ endif
 "-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
-let g:user_emmet_expandabbr_key='<c-l>'
+let g:user_emmet_expandabbr_key='<tab>'
 "-------------------------------------------------------------------------------
 
 " over.vim - powered up search & replace
@@ -339,46 +339,37 @@ nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <C-Space> <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 
-" lua << EOF
-" require('telescope').setup {
-"   defaults = {
-"     file_sorter = require('telescope.sorters').get_fzy.sorter,
-"     prompt_prefix = ' >',
-"     color_devicons = true,
-"     file_previewer = require('telescope.previewers').vim_buffer_cat.new,
-"     grep_previewer = require('telescope.previewers').vim_buffer_vimgrep.new,
-"     qflist_previewer = require('telescope.previewers').vim_buffer_qflist.new,
+"-------------------------------------------------------------------------------
+" nvim-tree
+"-------------------------------------------------------------------------------
+nnoremap <silent> <F1> :NvimTreeToggle<CR>
+nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
+nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
+nnoremap <silent> <F12> :NvimTreeFindFile<CR>
 
-"     prompt_position = "top",
-"     sorting_strategy = "ascending",
-"   },
-"   extensions = {
-"     fzf_native = {
-"       fuzzy = true,                    -- false will only do exact matching
-"       override_generic_sorter = false, -- override the generic sorter
-"       override_file_sorter = true,     -- override the file sorter
-"       case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
-"                                        -- the default case_mode is "smart_case"
-"     }
-"   }
-" }
-" -- To get fzf loaded and working with telescope, you need to call
-" -- load_extension, somewhere after setup function:
-" require('telescope').load_extension('fzf_native')
-" EOF
+"-------------------------------------------------------------------------------
+" trouble
+"-------------------------------------------------------------------------------
+nnoremap <leader>xx <cmd>TroubleToggle<cr>
+nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 
 "-------------------------------------------------------------------------------
 " nvim-compe
 "-------------------------------------------------------------------------------
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <C-CR> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <F4> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <S-F4> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> ]e <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
 
 " auto-format
 " autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
@@ -393,10 +384,10 @@ nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
 nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 nnoremap <silent> gs :Lspsaga signature_help<CR>
-nnoremap <silent> gr :Lspsaga rename<CR>
+nnoremap <silent> <F2> :Lspsaga rename<CR>
 nnoremap <silent> gd :Lspsaga preview_definition<CR>
 nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
 nnoremap <silent><leader>cc <cmd>lua require 'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
-nnoremap <silent> [e :Lspsaga diagnostic_jump_next<CR>
-nnoremap <silent> ]e :Lspsaga diagnostic_jump_prev<CR>
+nnoremap <silent> ]e :Lspsaga diagnostic_jump_next<CR>
+nnoremap <silent> [e :Lspsaga diagnostic_jump_prev<CR>
 
