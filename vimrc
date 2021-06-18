@@ -86,6 +86,9 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set showtabline=0
 
+" spell
+set spelllang=en
+
 "-------------------------------------------------------------------------------
 " Plugins
 " Install vim-plug: https://github.com/junegunn/vim-plug
@@ -119,7 +122,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-Plug 'kyazdani42/nvim-tree.lua'
+" Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'brooth/far.vim'
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'airblade/vim-gitgutter'                          " git helper
@@ -129,9 +132,9 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
 Plug 'hrsh7th/nvim-compe'
 Plug 'folke/trouble.nvim'
-Plug 'glepnir/lspsaga.nvim'
-Plug 'onsails/lspkind-nvim'
-Plug 'RRethy/vim-illuminate'
+" Plug 'glepnir/lspsaga.nvim'
+ Plug 'onsails/lspkind-nvim'
+" Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " debugging --------------------------------------------------------------------
 " vimspector
@@ -153,8 +156,8 @@ luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
 luafile ~/.config/nvim/lua/plugins/compe-config.lua
 luafile ~/.config/nvim/lua/plugins/treesitter.lua
-" luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
-luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
+luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
+" luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
 
 
 "-------------------------------------------------------------------------------
@@ -172,10 +175,6 @@ endif
 set t_Co=256
 syntax enable
 colorscheme OceanicNext
-
-if (has("termguicolors"))
-   set termguicolors
- endif
 
 "-------------------------------------------------------------------------------
 " GENERAL KEY BINDINGS
@@ -288,6 +287,10 @@ nnoremap <silent> <leader>q :lopen<cr>
 nnoremap <silent> <leader>j :lnext<cr>
 nnoremap <silent> <leader>k :lprev<cr>
 
+" set spell check on demand
+nnoremap <silent> <F9> :set spell!<cr>
+inoremap <silent> <F9> <C-O>:set spell!<cr>
+
 "-------------------------------------------------------------------------------
 " vim-session
 "-------------------------------------------------------------------------------
@@ -341,14 +344,15 @@ nnoremap <C-P> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
 nnoremap <C-Space> <cmd>lua require('telescope.builtin').buffers()<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 
 "-------------------------------------------------------------------------------
 " nvim-tree
 "-------------------------------------------------------------------------------
-nnoremap <silent> <F1> :NvimTreeToggle<CR>
-nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
-nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
-nnoremap <silent> <F12> :NvimTreeFindFile<CR>
+" nnoremap <silent> <F1> :NvimTreeToggle<CR>
+" nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
+" nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
+" nnoremap <silent> <F10> :NvimTreeFindFile<CR>
 
 "-------------------------------------------------------------------------------
 " trouble
@@ -364,6 +368,7 @@ nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 "-------------------------------------------------------------------------------
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> <C-CR> <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
@@ -380,17 +385,17 @@ nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
 " autocmd BufWritePre *.jsx lua vim.lsp.buf.formatting_sync(nil, 100)
 " autocmd BufWritePre *.py lua vim.lsp.buf.formatting_sync(nil, 100)
 
-nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
-nnoremap <silent><leader>ca :Lspsaga code_action<CR>
-nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
-nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
-nnoremap <silent> gs :Lspsaga signature_help<CR>
-nnoremap <silent> <F2> :Lspsaga rename<CR>
-nnoremap <silent> gd :Lspsaga preview_definition<CR>
-nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
-nnoremap <silent><leader>cc <cmd>lua require 'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
-nnoremap <silent> ]e :Lspsaga diagnostic_jump_next<CR>
-nnoremap <silent> [e :Lspsaga diagnostic_jump_prev<CR>
+" nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+" vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
+" nnoremap <silent><leader>ca :Lspsaga code_action<CR>
+" nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
+" nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
+" nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
+" nnoremap <silent> gs :Lspsaga signature_help<CR>
+" nnoremap <silent> <F2> :Lspsaga rename<CR>
+" nnoremap <silent> gd :Lspsaga preview_definition<CR>
+" nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
+" nnoremap <silent><leader>cc <cmd>lua require 'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>
+" nnoremap <silent> ]e :Lspsaga diagnostic_jump_next<CR>
+" nnoremap <silent> [e :Lspsaga diagnostic_jump_prev<CR>
 

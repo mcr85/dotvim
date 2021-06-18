@@ -4,7 +4,7 @@ require'compe'.setup {
   enabled = true;
   autocomplete = true;
   debug = false;
-  min_length = 1;
+  min_length = 0;
   preselect = 'enable';
   throttle_time = 80;
   source_timeout = 200;
@@ -21,7 +21,7 @@ require'compe'.setup {
     vsnip = true;
     nvim_lsp = true;
     nvim_lua = true;
-    spell = true;
+    spell = false;
     tags = true;
     snippets_nvim = true;
     treesitter = true;
