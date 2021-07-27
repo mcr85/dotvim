@@ -101,7 +101,8 @@ Plug 'mhartington/oceanic-next'
 " Plug 'liuchengxu/vim-which-key'
 Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'glepnir/galaxyline.nvim'
+" Plug 'glepnir/galaxyline.nvim'
+Plug 'famiu/feline.nvim'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
@@ -122,7 +123,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" Plug 'kyazdani42/nvim-tree.lua'
+Plug 'kyazdani42/nvim-tree.lua'
 " Plug 'brooth/far.vim'
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'airblade/vim-gitgutter'                          " git helper
@@ -156,7 +157,8 @@ luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
 luafile ~/.config/nvim/lua/plugins/compe-config.lua
 luafile ~/.config/nvim/lua/plugins/treesitter.lua
-luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
+luafile ~/.config/nvim/lua/plugins/feline.lua
+" luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
 " luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
 
 
@@ -349,10 +351,10 @@ nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()
 "-------------------------------------------------------------------------------
 " nvim-tree
 "-------------------------------------------------------------------------------
-" nnoremap <silent> <F1> :NvimTreeToggle<CR>
-" nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
-" nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
-" nnoremap <silent> <F10> :NvimTreeFindFile<CR>
+nnoremap <silent> <F1> :NvimTreeToggle<CR>
+nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
+nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
+nnoremap <silent> <F10> :NvimTreeFindFile<CR>
 
 "-------------------------------------------------------------------------------
 " trouble
