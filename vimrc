@@ -1,11 +1,7 @@
-if has('win32')
-    let vim_home = 'vimfiles'
-else
-    let vim_home = '.config/nvim'
-endif
+let vim_home = '.config/nvim'
 
 " set notimeout
-set timeoutlen=300
+set timeoutlen=500
 
 function! DoRemote(arg)
   UpdateRemotePlugins
@@ -35,12 +31,14 @@ set smartcase
 set wildignorecase
 set incsearch       " jump to search
 set virtualedit=block " visual edit block
-set completeopt=menuone,noselect
+set completeopt=menu,menuone,noselect
 set number
 set relativenumber
 set signcolumn=yes
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
+set synmaxcol=160
+syntax sync minlines=256
 
 " opening new splits
 set splitbelow
@@ -96,12 +94,16 @@ set spelllang=en
 "-------------------------------------------------------------------------------
 
 call plug#begin('~/' . vim_home . '/plugged')
+Plug 'dstein64/vim-startuptime'
 " vim general ------------------------------------------------------------------
-Plug 'mhartington/oceanic-next'
+" Plug 'mhartington/oceanic-next'
+Plug 'rafamadriz/gruvbox'
 " Plug 'liuchengxu/vim-which-key'
-Plug 'folke/which-key.nvim'
+" Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'glepnir/galaxyline.nvim'
+" https://github.com/akinsho/toggleterm.nvim TODO: investigate
+"
 Plug 'famiu/feline.nvim'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
@@ -115,7 +117,7 @@ Plug 'justinmk/vim-sneak'                              " fast char navigation to
 Plug 'godlygeek/tabular'                               " text line up
 " Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+" Plug 'tpope/vim-unimpaired'
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
 Plug 'tpope/vim-repeat'
 " searching & project traversal ------------------------------------------------
@@ -124,40 +126,57 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'brooth/far.vim'
+" TODO: investigate sidebar.nvim
+Plug 'brooth/far.vim'                                  "project wide search and replace
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
-Plug 'airblade/vim-gitgutter'                          " git helper
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'f-person/git-blame.nvim'
 Plug 'tpope/vim-fugitive'                              " git integration
+" neogit - check it out
+Plug 'wfxr/minimap.vim'
+" hop.nvim - sprawdzić
 " coding -----------------------------------------------------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'kabouzeid/nvim-lspinstall'
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 Plug 'folke/trouble.nvim'
-" Plug 'glepnir/lspsaga.nvim'
- Plug 'onsails/lspkind-nvim'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'onsails/lspkind-nvim'
+Plug 'folke/lsp-colors.nvim'
+" Plug 'mhartington/formatter.nvim'
 " Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" tools ------------------------------------------------------------------------
+"NTBBloodbath/rest.nvim"
 " debugging --------------------------------------------------------------------
 " vimspector
 " nvim-dap
-" Plug 'hrsh7th/vim-vsnip'
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 " Plug 'pangloss/vim-javascript'
 " Plug 'leafgarland/typescript-vim'
-Plug 'prettier/vim-prettier'
-" css/sass
+" Plug 'prettier/vim-prettier'
 Plug 'ap/vim-css-color'
+" css/sass
 call plug#end()
 
 luafile ~/.config/nvim/lua/config/init.lua
 luafile ~/.config/nvim/lua/plugins/telescope.lua
+luafile ~/.config/nvim/lua/plugins/nvim-tree.lua
+luafile ~/.config/nvim/lua/plugins/lsp-config.lua
 luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
 luafile ~/.config/nvim/lua/plugins/compe-config.lua
 luafile ~/.config/nvim/lua/plugins/treesitter.lua
 luafile ~/.config/nvim/lua/plugins/feline.lua
+luafile ~/.config/nvim/lua/plugins/gitsigns.lua
+luafile ~/.config/nvim/lua/plugins/lsp-colors.lua
+" luafile ~/.config/nvim/lua/plugins/formatter.lua
 " luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
 " luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
 
@@ -167,23 +186,28 @@ luafile ~/.config/nvim/lua/plugins/feline.lua
 "-------------------------------------------------------------------------------
 "
 " For Neovim 0.1.3 and 0.1.4
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+" let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 " Or if you have Neovim > 0.1.5
-if (has("termguicolors"))
-  set termguicolors
-endif
+" if (has("termguicolors"))
+"   set termguicolors
+"   print("has term gui colors")
+" endif
+set termguicolors
 
-set t_Co=256
+" set t_Co=256
 syntax enable
-colorscheme OceanicNext
+" colorscheme OceanicNext
+colorscheme gruvbox
+let g:gruvbox_italic_keyword = 1
+let g:gruvbox_italic_function = 1
 
 "-------------------------------------------------------------------------------
 " GENERAL KEY BINDINGS
 "-------------------------------------------------------------------------------
 "
 " quick escape
-imap jk <Esc>
+inoremap jk <Esc>
 
 " supercharged dot
 nnoremap . *Ncgn
@@ -191,17 +215,21 @@ nnoremap . *Ncgn
 " repeat and go back to beginnig
 nmap . .`[
 
+" exit terminal mode
+tnoremap <Esc> <C-\><C-n>
+
 " CDC = Change to Directory of Current file
 command! CDC cd %:p:h
 
-nnoremap <tab> %
+" nnoremap <tab> %
 
 " override plugin mapping
-nunmap <C-I>
+" ununmap <C-I>
 
 " easier block indentation
 vnoremap < <gv
 vnoremap > >gv
+vnoremap q <C-V>
 
 " turn off annoying bindings
 nnoremap <F1> <nop>
@@ -223,6 +251,7 @@ nnoremap q: <nop>
 
 " toggle search highlight
 nnoremap <leader>h :set hlsearch!<cr>
+nnoremap <Space> :noh<cr>
 
 " copy paste
 nmap <C-V> "+gP
@@ -253,8 +282,8 @@ map <S-Up> <C-w>5+
 map <S-Right> <C-w>5>
 
 " tabs
-nnoremap <M-S-k> :tabnext<CR>
 nnoremap <M-S-j> :tabprevious<CR>
+nnoremap <M-S-k> :tabnext<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-t>c :tabclose<CR>
 
@@ -307,6 +336,11 @@ let g:session_autosave = 'yes'
 "-------------------------------------------------------------------------------
 " vim-move
 "-------------------------------------------------------------------------------
+let g:AutoPairsCenterLine = 0
+ 
+"-------------------------------------------------------------------------------
+" vim-move
+"-------------------------------------------------------------------------------
 if has('mac')
     let g:move_key_modifier = 'M'
 endif
@@ -314,9 +348,11 @@ endif
 "-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
-let g:user_emmet_expandabbr_key='<tab>'
-"-------------------------------------------------------------------------------
+augroup EmmetSettings
+  autocmd! FileType html imap <tab> <plug>(emmet-expand-abbr)
+augroup END
 
+"-------------------------------------------------------------------------------
 " over.vim - powered up search & replace
 "-------------------------------------------------------------------------------
 nnoremap <leader>l :ls <CR> :b<space>
@@ -332,6 +368,16 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_
 " nmap <silent> <F3> <Plug>(ale_next_wrap)
 
 "-------------------------------------------------------------------------------
+" Git
+"-------------------------------------------------------------------------------
+let g:gitblame_date_format = '%r, (%d.%m.%Y %H:%M)'
+let g:minimap_width = 5
+let g:minimap_auto_start = 0
+let g:minimap_auto_start_win_enter = 1
+let g:minimap_git_colors = 1
+nnoremap <silent> <F4> :MinimapToggle<CR>
+
+"-------------------------------------------------------------------------------
 " Telescope
 "-------------------------------------------------------------------------------
 
@@ -344,18 +390,30 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_
 " Using lua functions
 nnoremap <C-P> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fu <cmd>lua require('telescope.builtin').lsp_references<cr>
 nnoremap <C-Space> <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader><Space> <cmd>lua require('telescope.builtin').file_browser({ cwd = require('telescope.utils').buffer_dir() })<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 
 "-------------------------------------------------------------------------------
 " nvim-tree
 "-------------------------------------------------------------------------------
+let g:nvim_tree_disable_window_picker = 1
+let g:nvim_tree_auto_resize = 1
+
 nnoremap <silent> <F1> :NvimTreeToggle<CR>
 nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
 nnoremap <silent> <leader>n :NvimTreeFindFile<CR>
 nnoremap <silent> <F10> :NvimTreeFindFile<CR>
 
+"-------------------------------------------------------------------------------
+" fugitive.git
+"-------------------------------------------------------------------------------
+nmap <leader>gj :diffget //3<CR> 
+nmap <leader>gf :diffget //2<CR> 
+nmap <leader>gs :G<CR> 
+ 
 "-------------------------------------------------------------------------------
 " trouble
 "-------------------------------------------------------------------------------
@@ -366,7 +424,7 @@ nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
 nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 
 "-------------------------------------------------------------------------------
-" nvim-compe
+" LSP
 "-------------------------------------------------------------------------------
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -376,10 +434,11 @@ nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> K <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> ]e <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
+nnoremap <silent> <F2> <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
 
 " auto-format
 " autocmd BufWritePre *.ts lua vim.lsp.buf.formatting_sync(nil, 100)
@@ -389,12 +448,13 @@ nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
 
 " nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
 " vnoremap <silent><leader>ca :<C-U>Lspsaga range_code_action<CR>
-" nnoremap <silent><leader>ca :Lspsaga code_action<CR>
+" nnoremap <silent><C-.> :Lspsaga code_action<CR>
 " nnoremap <silent> K <cmd>lua require('lspsaga.hover').render_hover_doc()<CR>
 " nnoremap <silent> <C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
 " nnoremap <silent> <C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
 " nnoremap <silent> gs :Lspsaga signature_help<CR>
 " nnoremap <silent> <F2> :Lspsaga rename<CR>
+" nnoremap <silent> <F12> :Lspsaga preview_definition<CR>
 " nnoremap <silent> gd :Lspsaga preview_definition<CR>
 " nnoremap <silent> <leader>cd :Lspsaga show_line_diagnostics<CR>
 " nnoremap <silent><leader>cc <cmd>lua require 'lspsaga.diagnostic'.show_cursor_diagnostics()<CR>

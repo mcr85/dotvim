@@ -1,6 +1,8 @@
 -- lspkind-nvim
 require('lspkind').init()
 
+vim.o.termguicolors = true
+
 -- require'lspconfig'.gopls.setup {
 --   on_attach = function(client)
 --     -- [[ other on_attach code ]]

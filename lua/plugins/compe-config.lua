@@ -1,90 +1,83 @@
-vim.o.completeopt = "menuone,noselect"
+local cmp = require 'cmp'
+local lspkind = require 'lspkind'
+local types = require 'cmp.types'
 
-require'compe'.setup {
-  enabled = true;
-  autocomplete = true;
-  debug = false;
-  min_length = 0;
-  preselect = 'enable';
-  throttle_time = 80;
-  source_timeout = 200;
-  incomplete_delay = 400;
-  max_abbr_width = 100;
-  max_kind_width = 100;
-  max_menu_width = 100;
-  documentation = false;
+cmp.setup({
+  snippet = {
+    expand = function(args)
+      -- For `vsnip` user.
+      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
 
-  source = {
-    path = true;
-    buffer = true;
-    calc = true;
-    vsnip = true;
-    nvim_lsp = true;
-    nvim_lua = true;
-    spell = false;
-    tags = true;
-    snippets_nvim = true;
-    treesitter = true;
-  };
-}
+      -- For `luasnip` user.
+      -- require('luasnip').lsp_expand(args.body)
 
--- local t = function(str)
---   return vim.api.nvim_replace_termcodes(str, true, true, true)
--- end
--- _G.s_tab_complete = function()
---   if vim.fn.pumvisible() == 1 then
---     return t "<C-p>"
---   elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
---     return t "<Plug>(vsnip-jump-prev)"
---   else
---     return t "<S-Tab>"
---   end
--- end
+      -- For `ultisnips` user.
+      -- vim.fn["UltiSnips#Anon"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<Tab>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-j>'] = cmp.mapping.select_next_item(),
+    ['<C-k>'] = cmp.mapping.select_prev_item(),
+    -- ['<Tab>'] = cmp.mapping.select_next_item(),
+    -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Esc>'] = cmp.mapping.close();
+    -- ['<CR>'] = cmp.mapping.confirm({
+    --   behavior = cmp.ConfirmBehavior.Replace,
+    --   select = true,
+    -- })
+  },
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
 
--- vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
--- vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+    -- For vsnip user.
+    -- { name = 'vsnip' },
 
+    -- For luasnip user.
+    -- { name = 'luasnip' },
 
-local t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+    -- For ultisnips user.
+    -- { name = 'ultisnips' },
 
-local check_back_space = function()
-    local col = vim.fn.col('.') - 1
-    if col == 0 or vim.fn.getline('.'):sub(col, col):match('%s') then
-        return true
-    else
-        return false
+    { name = 'buffer' },
+    { name = 'path' },
+    { name = 'spell' },
+  },
+  formatting = {
+    format = function(entry, vim_item)
+      vim_item.kind = lspkind.presets.default[vim_item.kind]
+      return vim_item
     end
-end
+  },
+  preselect = types.cmp.PreselectMode.None
+})
 
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-n>"
-  elseif vim.fn.call("vsnip#available", {1}) == 1 then
-    return t "<Plug>(vsnip-expand-or-jump)"
-  elseif check_back_space() then
-    return t "<Tab>"
-  else
-    return vim.fn['compe#complete']()
-  end
-end
-_G.s_tab_complete = function()
-  if vim.fn.pumvisible() == 1 then
-    return t "<C-p>"
-  elseif vim.fn.call("vsnip#jumpable", {-1}) == 1 then
-    return t "<Plug>(vsnip-jump-prev)"
-  else
-    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-    return t "<S-Tab>"
-  end
-end
+-- Setup lspconfig.
+-- require('lspconfig')[%YOUR_LSP_SERVER%].setup {
+--   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+-- }
 
-vim.api.nvim_set_keymap("i", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<Tab>", "v:lua.tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("i", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
-vim.api.nvim_set_keymap("s", "<S-Tab>", "v:lua.s_tab_complete()", {expr = true})
+-- omnisharp lsp config
+-- require'lspconfig'.omnisharp.setup {
+--   capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+--   on_attach = function(_, bufnr)
+--     vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+--   end,
+--   cmd = { "/path/to/omnisharp-roslyn/bin/omnisharp/run", "--languageserver" , "--hostPID", tostring(pid) },
+-- }
+
+-- for _, server in ipairs({"typescript", "angular", "html", "json", "lua"}) do
+--   require('lspconfig')[server].setup {
+--     -- on_attach = on_attach,
+--     -- flags = {
+--     --   debounce_text_changes = 150
+--     -- },
+--     capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+--   }
+-- end
