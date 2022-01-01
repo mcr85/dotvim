@@ -1,12 +1,29 @@
-local cmp = require 'cmp'
+local cmp_status_ok, cmp = pcall(require, 'cmp')
 local lspkind = require 'lspkind'
 local types = require 'cmp.types'
+
+if not cmp_status_ok then
+  return
+end
+
+local snip_status_ok, luasnip = pcall(require, 'luasnip')
+if not snip_status_ok then
+  return
+end
+
+require('luasnip/loaders/from_vscode').lazy_load()
+
+local check_backspace = function()
+  local col = vim.fn.col '.' - 1
+  return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
+end
 
 cmp.setup({
   snippet = {
     expand = function(args)
+      luasnip.lsp_expand(args.body)
       -- For `vsnip` user.
-      vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` user.
+      -- vim.fn['vsnip#anonymous'](args.body) -- For `vsnip` user.
 
       -- For `luasnip` user.
       -- require('luasnip').lsp_expand(args.body)
@@ -16,38 +33,53 @@ cmp.setup({
     end,
   },
   mapping = {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-1),
+    ['<C-f>'] = cmp.mapping.scroll_docs(1),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
+    ['<C-e>'] = cmp.mapping {
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    },
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<Tab>'] = cmp.mapping.confirm({ select = true }),
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<C-k>'] = cmp.mapping.select_prev_item(),
-    -- ['<Tab>'] = cmp.mapping.select_next_item(),
-    -- ['<S-Tab>'] = cmp.mapping.select_prev_item(),
     ['<Esc>'] = cmp.mapping.close();
-    -- ['<CR>'] = cmp.mapping.confirm({
-    --   behavior = cmp.ConfirmBehavior.Replace,
-    --   select = true,
-    -- })
+    ['<Tab>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.expandable() then
+        luasnip.expand()
+      elseif luasnip.expand_or_jumpable() then
+        luasnip.expand_or_jump()
+      elseif check_backspace() then
+        fallback()
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
   },
   sources = {
+    { name = 'npm' },
     { name = 'nvim_lsp' },
-    { name = 'nvim_lua' },
-
-    -- For vsnip user.
-    -- { name = 'vsnip' },
-
-    -- For luasnip user.
-    -- { name = 'luasnip' },
-
-    -- For ultisnips user.
-    -- { name = 'ultisnips' },
-
+    { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
-    { name = 'spell' },
+    { name = 'spell' }
   },
   formatting = {
     format = function(entry, vim_item)
@@ -55,7 +87,11 @@ cmp.setup({
       return vim_item
     end
   },
-  preselect = types.cmp.PreselectMode.None
+  preselect = types.cmp.PreselectMode.None,
+  documentation = true,
+  experimental = {
+    ghost_text = true
+  }
 })
 
 -- Setup lspconfig.

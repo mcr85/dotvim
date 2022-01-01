@@ -1,11 +1,9 @@
-let vim_home = '.config/nvim'
+" TODO: manually run lsp servers - currently I have an instance of tsserver and typescript server on one file.
+" One is from nvim-lspinstall, another from manual setup in lsp-config
 
+let vim_home = '.config/nvim'
 " set notimeout
 set timeoutlen=500
-
-function! DoRemote(arg)
-  UpdateRemotePlugins
-endfunction
 
 "-------------------------------------------------------------------------------
 " GENERAL
@@ -18,6 +16,7 @@ set sc
 set hidden          " allows to change buffer without saving file
 set nobackup        " backup
 set noswapfile      " swap
+set nowrap
 set undodir=~/.vim/undodir      " do not create .un~ files
 set undofile
 set nowb
@@ -31,13 +30,15 @@ set smartcase
 set wildignorecase
 set incsearch       " jump to search
 set virtualedit=block " visual edit block
-set completeopt=menu,menuone,noselect
+" set completeopt=menu,menuone,noselect
 set number
 set relativenumber
 set signcolumn=yes
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 set synmaxcol=160
+set list
+set termguicolors
 syntax sync minlines=256
 
 " opening new splits
@@ -45,11 +46,35 @@ set splitbelow
 set splitright
 set cursorline
 
+
+"-------------------------------------------------------------------------------
+" commands & functions
+"-------------------------------------------------------------------------------
+"TODO: too slow
+" autocmd TextYankPost * call system('win32yank.exe -i --crlf', @")
+
+" function! Paste(mode)
+"     let @" = system('win32yank.exe -o --lf')
+"     return a:mode
+" endfunction
+
+" map <expr> p Paste('p')
+" map <expr> P Paste('P')
+" autocmd TextYankPost * call system('win32yank.exe -i --crlf', @")
+
+" function! Paste(mode)
+"     let @" = system('win32yank.exe -o --lf')
+"     return a:mode
+" endfunction
+
+" map <expr> p Paste('p')
+" map <expr> P Paste('P')
+
 "-------------------------------------------------------------------------------
 " whitespace
 "-------------------------------------------------------------------------------
 "set noexpandtab
-set showmatch
+" set showmatch
 set ts=2
 set sw=2
 set sts=2
@@ -84,6 +109,7 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set showtabline=0
 
+
 " spell
 set spelllang=en
 
@@ -94,7 +120,7 @@ set spelllang=en
 "-------------------------------------------------------------------------------
 
 call plug#begin('~/' . vim_home . '/plugged')
-Plug 'dstein64/vim-startuptime'
+" Plug 'dstein54/vim-startuptime'
 " vim general ------------------------------------------------------------------
 " Plug 'mhartington/oceanic-next'
 Plug 'rafamadriz/gruvbox'
@@ -103,8 +129,10 @@ Plug 'rafamadriz/gruvbox'
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'glepnir/galaxyline.nvim'
 " https://github.com/akinsho/toggleterm.nvim TODO: investigate
+Plug 'kevinhwang91/nvim-bqf'
 "
 Plug 'famiu/feline.nvim'
+Plug 'akinsho/bufferline.nvim'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
@@ -127,22 +155,33 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'kyazdani42/nvim-tree.lua'
 " TODO: investigate sidebar.nvim
-Plug 'brooth/far.vim'                                  "project wide search and replace
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'lewis6991/gitsigns.nvim'
-Plug 'f-person/git-blame.nvim'
+" Plug 'f-person/git-blame.nvim'
+Plug 'brooth/far.vim'                                  "project wide search and replace
 Plug 'tpope/vim-fugitive'                              " git integration
+Plug 'mhinz/vim-grepper'
 " neogit - check it out
-Plug 'wfxr/minimap.vim'
+" Plug 'wfxr/minimap.vim'
 " hop.nvim - sprawdzić
 " coding -----------------------------------------------------------------------
 Plug 'neovim/nvim-lspconfig'
-Plug 'kabouzeid/nvim-lspinstall'
+Plug 'williamboman/nvim-lsp-installer'
+" Plug 'kabouzeid/nvim-lspinstall'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lua'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'David-Kunz/cmp-npm'
+" Plug 'hrsh7th/cmp-vsnip'
+" Plug 'hrsh7th/vim-vsnip'
 Plug 'folke/trouble.nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'onsails/lspkind-nvim'
@@ -150,32 +189,34 @@ Plug 'folke/lsp-colors.nvim'
 " Plug 'mhartington/formatter.nvim'
 " Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-angular'
 " tools ------------------------------------------------------------------------
 "NTBBloodbath/rest.nvim"
 " debugging --------------------------------------------------------------------
 " vimspector
 " nvim-dap
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
-Plug 'mattn/emmet-vim'                                 " html editing shortcuts
+" Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 " Plug 'pangloss/vim-javascript'
 " Plug 'leafgarland/typescript-vim'
 " Plug 'prettier/vim-prettier'
-Plug 'ap/vim-css-color'
+" Plug 'ap/vim-css-color'
 " css/sass
 call plug#end()
 
 luafile ~/.config/nvim/lua/config/init.lua
 luafile ~/.config/nvim/lua/plugins/telescope.lua
 luafile ~/.config/nvim/lua/plugins/nvim-tree.lua
-luafile ~/.config/nvim/lua/plugins/lsp-config.lua
-luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
-luafile ~/.config/nvim/lua/plugins/compe-config.lua
+luafile ~/.config/nvim/lua/plugins/lsp/lsp-config.lua
+" luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
+luafile ~/.config/nvim/lua/plugins/completion.lua
 luafile ~/.config/nvim/lua/plugins/treesitter.lua
+luafile ~/.config/nvim/lua/plugins/bufferline.lua
 luafile ~/.config/nvim/lua/plugins/feline.lua
 luafile ~/.config/nvim/lua/plugins/gitsigns.lua
-luafile ~/.config/nvim/lua/plugins/lsp-colors.lua
+luafile ~/.config/nvim/lua/plugins/lsp/lsp-colors.lua
 " luafile ~/.config/nvim/lua/plugins/formatter.lua
 " luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
 " luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
@@ -193,7 +234,6 @@ luafile ~/.config/nvim/lua/plugins/lsp-colors.lua
 "   set termguicolors
 "   print("has term gui colors")
 " endif
-set termguicolors
 
 " set t_Co=256
 syntax enable
@@ -254,7 +294,7 @@ nnoremap <leader>h :set hlsearch!<cr>
 nnoremap <Space> :noh<cr>
 
 " copy paste
-nmap <C-V> "+gP
+" nmap <C-V> "+gP
 imap <C-V> <ESC><C-V>i
 vmap <C-C> "+y
 nnoremap <Esc>P  P'[v']=
@@ -282,8 +322,8 @@ map <S-Up> <C-w>5+
 map <S-Right> <C-w>5>
 
 " tabs
-nnoremap <M-S-j> :tabprevious<CR>
-nnoremap <M-S-k> :tabnext<CR>
+nnoremap <M-S-k> :bnext<CR>
+nnoremap <M-S-j> :bprev<CR>
 nnoremap <C-t> :tabnew<CR>
 nnoremap <C-t>c :tabclose<CR>
 
@@ -339,11 +379,17 @@ let g:session_autosave = 'yes'
 let g:AutoPairsCenterLine = 0
  
 "-------------------------------------------------------------------------------
-" vim-move
+" bufferline.nvim
 "-------------------------------------------------------------------------------
-if has('mac')
-    let g:move_key_modifier = 'M'
-endif
+nnoremap <silent><leader>1 <Cmd>BufferLineGoToBuffer 1<CR>
+nnoremap <silent><leader>2 <Cmd>BufferLineGoToBuffer 2<CR>
+nnoremap <silent><leader>3 <Cmd>BufferLineGoToBuffer 3<CR>
+nnoremap <silent><leader>4 <Cmd>BufferLineGoToBuffer 4<CR>
+nnoremap <silent><leader>5 <Cmd>BufferLineGoToBuffer 5<CR>
+nnoremap <silent><leader>6 <Cmd>BufferLineGoToBuffer 6<CR>
+nnoremap <silent><leader>7 <Cmd>BufferLineGoToBuffer 7<CR>
+nnoremap <silent><leader>8 <Cmd>BufferLineGoToBuffer 8<CR>
+nnoremap <silent><leader>9 <Cmd>BufferLineGoToBuffer 9<CR>
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -371,11 +417,11 @@ set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_
 " Git
 "-------------------------------------------------------------------------------
 let g:gitblame_date_format = '%r, (%d.%m.%Y %H:%M)'
-let g:minimap_width = 5
-let g:minimap_auto_start = 0
-let g:minimap_auto_start_win_enter = 1
-let g:minimap_git_colors = 1
-nnoremap <silent> <F4> :MinimapToggle<CR>
+" let g:minimap_width = 5
+" let g:minimap_auto_start = 0
+" let g:minimap_auto_start_win_enter = 1
+" let g:minimap_git_colors = 1
+" nnoremap <silent> <F4> :MinimapToggle<CR>
 
 "-------------------------------------------------------------------------------
 " Telescope
@@ -400,7 +446,6 @@ nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()
 " nvim-tree
 "-------------------------------------------------------------------------------
 let g:nvim_tree_disable_window_picker = 1
-let g:nvim_tree_auto_resize = 1
 
 nnoremap <silent> <F1> :NvimTreeToggle<CR>
 nnoremap <silent> <leader>r :NvimTreeRefresh<CR>
