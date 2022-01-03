@@ -82,8 +82,15 @@ cmp.setup({
     { name = 'spell' }
   },
   formatting = {
+    fields = { "kind", "abbr", "menu" },
     format = function(entry, vim_item)
       vim_item.kind = lspkind.presets.default[vim_item.kind]
+      vim_item.menu = ({
+        nvim_lsp = "[LSP]",
+        luasnip = "[Snippet]",
+        buffer = "[Buffer]",
+        path = "[Path]",
+      })[entry.source.name]
       return vim_item
     end
   },

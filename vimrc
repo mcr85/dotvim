@@ -160,6 +160,7 @@ Plug 'lewis6991/gitsigns.nvim'
 " Plug 'f-person/git-blame.nvim'
 Plug 'brooth/far.vim'                                  "project wide search and replace
 Plug 'tpope/vim-fugitive'                              " git integration
+" Plug 'sindrets/diffview.nvim'                          " TODO: check this out
 Plug 'mhinz/vim-grepper'
 " neogit - check it out
 " Plug 'wfxr/minimap.vim'
