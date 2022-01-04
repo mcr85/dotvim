@@ -1,3 +1,4 @@
+-- TODO: to scrap
 local lspconfig = require("lspconfig")
 
 -- local status_ok, _ pcall(require, 'lspconfig')

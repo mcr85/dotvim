@@ -76,6 +76,7 @@ cmp.setup({
   sources = {
     { name = 'npm' },
     { name = 'nvim_lsp' },
+    { name = 'nvim_lua' },
     { name = 'luasnip' },
     { name = 'buffer' },
     { name = 'path' },
@@ -87,6 +88,7 @@ cmp.setup({
       vim_item.kind = lspkind.presets.default[vim_item.kind]
       vim_item.menu = ({
         nvim_lsp = "[LSP]",
+        nvim_lua = "[NVIM_LUA]",
         luasnip = "[Snippet]",
         buffer = "[Buffer]",
         path = "[Path]",
@@ -95,7 +97,9 @@ cmp.setup({
     end
   },
   preselect = types.cmp.PreselectMode.None,
-  documentation = true,
+  documentation = {
+    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+  },
   experimental = {
     ghost_text = true
   }

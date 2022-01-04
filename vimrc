@@ -172,10 +172,10 @@ Plug 'williamboman/nvim-lsp-installer'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-nvim-lua'
 Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
@@ -183,14 +183,13 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'David-Kunz/cmp-npm'
 " Plug 'hrsh7th/cmp-vsnip'
 " Plug 'hrsh7th/vim-vsnip'
-Plug 'folke/trouble.nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'onsails/lspkind-nvim'
 Plug 'folke/lsp-colors.nvim'
 " Plug 'mhartington/formatter.nvim'
 " Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'nvim-treesitter/nvim-treesitter-angular'
+" Plug 'nvim-treesitter/nvim-treesitter-angular'
 " tools ------------------------------------------------------------------------
 "NTBBloodbath/rest.nvim"
 " debugging --------------------------------------------------------------------
@@ -199,29 +198,9 @@ Plug 'nvim-treesitter/nvim-treesitter-angular'
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 " Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'tpope/vim-commentary'                            " commenting plugin
-" javascript -------------------------------------------------------------------
-" Plug 'pangloss/vim-javascript'
-" Plug 'leafgarland/typescript-vim'
-" Plug 'prettier/vim-prettier'
-" Plug 'ap/vim-css-color'
-" css/sass
 call plug#end()
 
-luafile ~/.config/nvim/lua/config/init.lua
-luafile ~/.config/nvim/lua/plugins/telescope.lua
-luafile ~/.config/nvim/lua/plugins/nvim-tree.lua
-luafile ~/.config/nvim/lua/plugins/lsp/lsp-config.lua
-" luafile ~/.config/nvim/lua/plugins/nvim-lspinstall.lua
-luafile ~/.config/nvim/lua/plugins/completion.lua
-luafile ~/.config/nvim/lua/plugins/treesitter.lua
-luafile ~/.config/nvim/lua/plugins/bufferline.lua
-luafile ~/.config/nvim/lua/plugins/feline.lua
-luafile ~/.config/nvim/lua/plugins/gitsigns.lua
-luafile ~/.config/nvim/lua/plugins/lsp/lsp-colors.lua
-" luafile ~/.config/nvim/lua/plugins/formatter.lua
-" luafile ~/.config/nvim/lua/plugins/galaxyline_eviline.lua
-" luafile ~/.config/nvim/lua/plugins/galaxyline_spaceline.lua
-
+luafile ~/.config/nvim/lua/init.lua
 
 "-------------------------------------------------------------------------------
 " THEME
@@ -296,8 +275,8 @@ nnoremap <Space> :noh<cr>
 
 " copy paste
 " nmap <C-V> "+gP
-imap <C-V> <ESC><C-V>i
-vmap <C-C> "+y
+" imap <C-V> <ESC><C-V>i
+" vmap <C-C> "+y
 nnoremap <Esc>P  P'[v']=
 nnoremap <Esc>p  p'[v']=
 
@@ -473,17 +452,17 @@ nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 " LSP
 "-------------------------------------------------------------------------------
 " LSP config (the mappings used in the default file don't quite work right)
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> <C-CR> <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> <C-]> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> <C-CR> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 " nnoremap <silent> K <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> ]e <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <silent> <F2> <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> [e <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+" nnoremap <silent> ]e <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+" nnoremap <silent> <F2> <cmd>lua vim.lsp.buf.rename()<CR>
 " nnoremap <silent> F2 <cmd>lua vim.lsp.buf.rename()<CR>
 
 " auto-format
