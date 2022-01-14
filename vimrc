@@ -32,7 +32,7 @@ set incsearch       " jump to search
 set virtualedit=block " visual edit block
 " set completeopt=menu,menuone,noselect
 set number
-set relativenumber
+" set relativenumber
 set signcolumn=yes
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
@@ -123,11 +123,13 @@ call plug#begin('~/' . vim_home . '/plugged')
 " Plug 'dstein54/vim-startuptime'
 " vim general ------------------------------------------------------------------
 " Plug 'mhartington/oceanic-next'
-Plug 'rafamadriz/gruvbox'
+" Plug 'rafamadriz/gruvbox'
+Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 " Plug 'liuchengxu/vim-which-key'
 " Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'glepnir/galaxyline.nvim'
+Plug 'akinsho/toggleterm'
 " https://github.com/akinsho/toggleterm.nvim TODO: investigate
 Plug 'kevinhwang91/nvim-bqf'
 "
@@ -138,7 +140,6 @@ Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
 Plug 'sickill/vim-pasta'			                         " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
-" Plug 'honza/vim-snippets'                              " snippets
 Plug 'matze/vim-move'                                  " move selection and maintain indentation
 " Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'justinmk/vim-sneak'                              " fast char navigation to first two chars
@@ -153,6 +154,7 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 " TODO: investigate sidebar.nvim
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
@@ -181,8 +183,6 @@ Plug 'L3MON4D3/LuaSnip'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'David-Kunz/cmp-npm'
-" Plug 'hrsh7th/cmp-vsnip'
-" Plug 'hrsh7th/vim-vsnip'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'onsails/lspkind-nvim'
 Plug 'folke/lsp-colors.nvim'
@@ -218,9 +218,9 @@ luafile ~/.config/nvim/lua/init.lua
 " set t_Co=256
 syntax enable
 " colorscheme OceanicNext
-colorscheme gruvbox
-let g:gruvbox_italic_keyword = 1
-let g:gruvbox_italic_function = 1
+colorscheme gruvbox-baby
+" let g:gruvbox_italic_keyword = 1
+" let g:gruvbox_italic_function = 1
 
 "-------------------------------------------------------------------------------
 " GENERAL KEY BINDINGS
@@ -416,9 +416,9 @@ let g:gitblame_date_format = '%r, (%d.%m.%Y %H:%M)'
 " Using lua functions
 nnoremap <C-P> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
-nnoremap <leader>fu <cmd>lua require('telescope.builtin').lsp_references<cr>
 nnoremap <C-Space> <cmd>lua require('telescope.builtin').buffers()<cr>
-nnoremap <leader><Space> <cmd>lua require('telescope.builtin').file_browser({ cwd = require('telescope.utils').buffer_dir() })<cr>
+nnoremap <leader>fu <cmd>lua require('telescope.builtin').lsp_references<cr>
+nnoremap <leader><Space> <cmd>lua require'telescope'.extensions.file_browser.file_browser({ path = require('telescope.utils').buffer_dir() })<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
 
@@ -442,11 +442,11 @@ nmap <leader>gs :G<CR>
 "-------------------------------------------------------------------------------
 " trouble
 "-------------------------------------------------------------------------------
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
+" nnoremap <leader>xx <cmd>TroubleToggle<cr>
+" nnoremap <leader>xw <cmd>TroubleToggle lsp_workspace_diagnostics<cr>
+" nnoremap <leader>xd <cmd>TroubleToggle lsp_document_diagnostics<cr>
+" nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
+" nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
 
 "-------------------------------------------------------------------------------
 " LSP

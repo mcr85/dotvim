@@ -46,16 +46,6 @@ require('telescope').setup {
         width = 0.8
       },
     },
-    file_browser = {
-      layout_strategy = "vertical",
-      layout_config = {
-        vertical = {
-          mirror = true,
-          width = 0.8
-        },
-        prompt_position = "top"
-      }
-    },
     find_files = {
       layout_strategy = "vertical",
       layout_config = {
@@ -89,6 +79,16 @@ require('telescope').setup {
   },
 
   extensions = {
+    file_browser = {
+      layout_strategy = "vertical",
+      layout_config = {
+        vertical = {
+          mirror = true,
+          width = 0.8
+        },
+        prompt_position = "top"
+      }
+    },
     fzf_native = {
       fuzzy = true,                    -- false will only do exact matching
       override_generic_sorter = true,  -- override the generic sorter
@@ -99,3 +99,4 @@ require('telescope').setup {
   }
 }
 
+require('telescope').load_extension('file_browser')
