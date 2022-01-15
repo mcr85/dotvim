@@ -129,12 +129,13 @@ Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 " Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'glepnir/galaxyline.nvim'
-Plug 'akinsho/toggleterm'
+Plug 'akinsho/toggleterm.nvim'
 " https://github.com/akinsho/toggleterm.nvim TODO: investigate
 Plug 'kevinhwang91/nvim-bqf'
 "
 Plug 'famiu/feline.nvim'
 Plug 'akinsho/bufferline.nvim'
+Plug 'AckslD/nvim-neoclip.lua'
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 " Plug 'w0rp/ale'
@@ -407,12 +408,6 @@ let g:gitblame_date_format = '%r, (%d.%m.%Y %H:%M)'
 " Telescope
 "-------------------------------------------------------------------------------
 
-" Find files using Telescope command-line sugar.
-" nnoremap <C-P> <cmd>Telescope find_files<cr>
-" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-" nnoremap <C-Space> <cmd>Telescope buffers<cr>
-" nnoremap <leader>fh <cmd>Telescope help_tags<cr>
-
 " Using lua functions
 nnoremap <C-P> <cmd>lua require('telescope.builtin').find_files()<cr>
 nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
@@ -421,6 +416,7 @@ nnoremap <leader>fu <cmd>lua require('telescope.builtin').lsp_references<cr>
 nnoremap <leader><Space> <cmd>lua require'telescope'.extensions.file_browser.file_browser({ path = require('telescope.utils').buffer_dir() })<cr>
 nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
 nnoremap <C-_> <cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+nnoremap <leader>v <cmd>lua require('telescope').extensions.neoclip.neoclip()<cr>
 
 "-------------------------------------------------------------------------------
 " nvim-tree

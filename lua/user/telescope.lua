@@ -1,3 +1,4 @@
+local telescope = require('telescope')
 local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 
@@ -21,7 +22,8 @@ require('telescope').setup {
         ["<C-p>"] = actions.move_selection_previous,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
-        ["<C-q>"] = actions.send_to_qflist
+        ["<C-q>"] = actions.close,
+        ["<M-q>"] = actions.send_to_qflist
       }
     },
 
@@ -43,7 +45,16 @@ require('telescope').setup {
         }
       },
       layout_config = {
-        width = 0.8
+        width = 0.8,
+        prompt_position = "top"
+      },
+    },
+    current_buffer_fuzzy_find = {
+      theme = "dropdown",
+      previewer = false,
+      layout_config = {
+        width = 0.8,
+        prompt_position = "top"
       },
     },
     find_files = {
@@ -99,4 +110,5 @@ require('telescope').setup {
   }
 }
 
-require('telescope').load_extension('file_browser')
+telescope.load_extension('file_browser')
+telescope.load_extension('neoclip')
