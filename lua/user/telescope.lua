@@ -2,7 +2,7 @@ local telescope = require('telescope')
 local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 
-require('telescope').setup {
+telescope.setup {
   defaults = {
     file_ignore_patterns = {".git/*", "node_modules"},
     file_sorter = require('telescope.sorters').get_fzy_sorter,
@@ -11,7 +11,7 @@ require('telescope').setup {
     file_previewer = previewers.vim_buffer_cat.new,
     grep_previewer = previewers.vim_buffer_vimgrep.new,
     qflist_previewer = previewers.vim_buffer_qflist.new,
-    path_display = function(opts, path)
+    path_display = function(_, path)
       local tail = require("telescope.utils").path_tail(path)
       return string.format("%s (%s)", tail, path)
     end,
@@ -45,7 +45,7 @@ require('telescope').setup {
         }
       },
       layout_config = {
-        width = 0.8,
+        width = 0.6,
         prompt_position = "top"
       },
     },
@@ -53,16 +53,18 @@ require('telescope').setup {
       theme = "dropdown",
       previewer = false,
       layout_config = {
-        width = 0.8,
+        width = 0.6,
         prompt_position = "top"
       },
     },
     find_files = {
+      previewer = false,
       layout_strategy = "vertical",
       layout_config = {
         vertical = {
           mirror = true,
-          width = 0.8
+          height = 0.6,
+          width = 0.6
         },
         prompt_position = "top"
       }
@@ -72,7 +74,7 @@ require('telescope').setup {
       layout_config = {
         vertical = {
           mirror = true,
-          width = 0.8
+          width = 0.6
         }
       },
       prompt_position = "top"
@@ -83,19 +85,28 @@ require('telescope').setup {
         horizontal = {
           prompt_position = 'top',
           mirror = true,
-          width = 0.8
+          width = 0.6
         }
       }
-    }
+    },
+    lsp_document_symbols = {
+      theme = "dropdown",
+      previewer = false,
+      layout_config = {
+        width = 0.8,
+        prompt_position = "top"
+      },
+    },
   },
 
   extensions = {
     file_browser = {
+      previewer = false,
       layout_strategy = "vertical",
       layout_config = {
         vertical = {
           mirror = true,
-          width = 0.8
+          width = 0.6
         },
         prompt_position = "top"
       }
@@ -112,3 +123,4 @@ require('telescope').setup {
 
 telescope.load_extension('file_browser')
 telescope.load_extension('neoclip')
+-- telescope.load_extension('projects')

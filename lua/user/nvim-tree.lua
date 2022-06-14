@@ -1,4 +1,32 @@
-require('nvim-tree').setup({
+vim.g.nvim_tree_icons = {
+  default = "",
+  symlink = "",
+  git = {
+    unstaged = "",
+    staged = "S",
+    unmerged = "",
+    renamed = "➜",
+    deleted = "",
+    untracked = "U",
+    ignored = "◌",
+  },
+  folder = {
+    -- arrow_open = " ",
+    -- arrow_closed = "",
+    default = "",
+    open = "",
+    empty = "",
+    empty_open = "",
+    symlink = "",
+  }
+}
+
+local status_ok, nvim_tree = pcall(require, "nvim-tree")
+if not status_ok then
+  return
+end
+
+nvim_tree.setup({
   disable_netrw       = true,
   hijack_netrw        = true,
   open_on_setup       = false,
@@ -22,7 +50,7 @@ require('nvim-tree').setup({
   },
   update_focused_file = {
     enable      = true,
-    update_cwd  = false,
+    update_cwd  = true,
     ignore_list = {}
   },
   system_open = {
@@ -30,7 +58,7 @@ require('nvim-tree').setup({
     args = {}
   },
   view = {
-    width = 50,
+    width = 40,
     height = 30,
     side = 'left',
     auto_resize = true,
@@ -40,6 +68,8 @@ require('nvim-tree').setup({
     }
   },
   git = {
-    enable = true
+    enable = true,
+    ignore = true,
+    timeout = 500
   }
 })

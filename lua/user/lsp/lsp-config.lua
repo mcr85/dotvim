@@ -53,7 +53,7 @@ lspconfig.tsserver.setup({
         })
         ts_utils.setup_client(client)
         buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-        buf_map(bufnr, "n", "gi", ":TSLspRenameFile<CR>")
+        buf_map(bufnr, "n", "<F2>", ":TSLspRenameFile<CR>")
         buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
         on_attach(client, bufnr)
     end
@@ -63,4 +63,4 @@ lspconfig.tsserver.setup({
 --   debug = false
 -- })
 
--- lspconfig["null-ls"].setup({ on_attach = on_attach })
+lspconfig["null-ls"].setup({ on_attach = on_attach })

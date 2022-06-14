@@ -18,6 +18,11 @@ local check_backspace = function()
   return col == 0 or vim.fn.getline('.'):sub(col, col):match '%s'
 end
 
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -41,16 +46,25 @@ cmp.setup({
       c = cmp.mapping.close(),
     },
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<Esc>'] = cmp.mapping.close();
+    -- ['<C-j>'] = cmp.mapping.select_next_item(),
+    -- ['<C-k>'] = cmp.mapping.select_prev_item(),
+    -- ['<Esc>'] = cmp.mapping.close();
+    ["<Right>"] = cmp.mapping {
+      i = cmp.mapping.confirm { select = true }
+    },
+    -- ["<Tab>"] = cmp.mapping(cmp.mapping.select_next_item(), { "i", "s" }),
+    -- ["<S-Tab>"] = cmp.mapping(cmp.mapping.select_prev_item(), { "i", "s" }),
+    ["<Up>"] = cmp.mapping(cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert }, { "i" }),
+    ["<Down>"] = cmp.mapping(cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert }, { "i" }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expandable() then
-        luasnip.expand()
+      -- elseif luasnip.expandable() then
+      --   luasnip.expand()
       elseif luasnip.expand_or_jumpable() then
         luasnip.expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
       elseif check_backspace() then
         fallback()
       else
@@ -74,13 +88,13 @@ cmp.setup({
     }),
   },
   sources = {
-    { name = 'npm' },
-    { name = 'nvim_lsp' },
     { name = 'nvim_lua' },
+    { name = 'nvim_lsp' },
     { name = 'luasnip' },
     { name = 'buffer' },
+    { name = 'spell' },
     { name = 'path' },
-    { name = 'spell' }
+    { name = 'npm' }
   },
   formatting = {
     fields = { "kind", "abbr", "menu" },
@@ -89,17 +103,26 @@ cmp.setup({
       vim_item.menu = ({
         nvim_lsp = "[LSP]",
         nvim_lua = "[NVIM_LUA]",
-        luasnip = "[Snippet]",
-        buffer = "[Buffer]",
+        treesitter = "[TreeSitter]",
         path = "[Path]",
+        buffer = "[Buffer]",
+        luasnip = "[Snippet]",
+        spell = "[Spell]"
       })[entry.source.name]
       return vim_item
     end
   },
-  preselect = types.cmp.PreselectMode.None,
-  documentation = {
-    border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  },
+  -- preselect = types.cmp.PreselectMode.None,
+	window = {
+		documentation = {
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+		},
+		completion = {
+			border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+			winhighlight = "NormalFloat:Pmenu,NormalFloat:Pmenu,CursorLine:PmenuSel,Search:None",
+		},
+	},
   experimental = {
     ghost_text = true
   }
