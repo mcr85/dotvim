@@ -118,7 +118,7 @@ set showtabline=0
 
 
 " spell
-set spelllang=en
+" set spelllang=en
 
 "-------------------------------------------------------------------------------
 " Plugins
@@ -213,6 +213,7 @@ Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 " Plug 'tpope/vim-commentary'                            " commenting plugin
 Plug 'numToStr/Comment.nvim'
+Plug 'kamykn/spelunker.vim'
 " service ----------------------------------------------------------------------
 Plug 'wakatime/vim-wakatime'
 
@@ -356,8 +357,8 @@ nnoremap <silent> <leader>j :lnext<cr>
 nnoremap <silent> <leader>k :lprev<cr>
 
 " set spell check on demand
-nnoremap <silent> <F9> :set spell!<cr>
-inoremap <silent> <F9> <C-O>:set spell!<cr>
+" nnoremap <silent> <F9> :set spell!<cr>
+" inoremap <silent> <F9> <C-O>:set spell!<cr>
 
 "-------------------------------------------------------------------------------
 " vim-session
@@ -446,3 +447,10 @@ nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 nmap <leader>gj :diffget //3<CR> 
 nmap <leader>gf :diffget //2<CR> 
 nmap <leader>gs :G<CR> 
+
+
+"-------------------------------------------------------------------------------
+" Spelunker
+"-------------------------------------------------------------------------------
+highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
+highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
