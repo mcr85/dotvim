@@ -1,4 +1,5 @@
 require('impatient')
+require 'user.settings'
 require 'user.keymaps'
 require 'user.comment'
 require 'user.completion'

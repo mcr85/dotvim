@@ -15,7 +15,7 @@ keymap("t", "<C-k>", "<C-w>k", opts)
 keymap("t", "<C-l>", "<C-w>l", opts)
 
 keymap("n", "<leader>i", "<cmd>:Telescope lsp_workspace_symbols<cr>", opts);
-keymap("n", "<leader>o", "<cmd>:Telescope lsp_document_symbols<cr>", opts);
+keymap("n", "<F15>", "<cmd>:Telescope lsp_document_symbols<cr>", opts);
 
 keymap("n", "<leader>g", "<cmd>:Git<CR>", opts)
 

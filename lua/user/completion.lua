@@ -1,6 +1,6 @@
 local cmp_status_ok, cmp = pcall(require, 'cmp')
 local lspkind = require 'lspkind'
-local types = require 'cmp.types'
+-- local types = require 'cmp.types'
 
 if not cmp_status_ok then
   return
@@ -41,10 +41,10 @@ cmp.setup({
     ['<C-d>'] = cmp.mapping.scroll_docs(-1),
     ['<C-f>'] = cmp.mapping.scroll_docs(1),
     ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping {
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    },
+    -- ['<C-e>'] = cmp.mapping {
+    --   i = cmp.mapping.abort(),
+    --   c = cmp.mapping.close(),
+    -- },
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     -- ['<C-j>'] = cmp.mapping.select_next_item(),
     -- ['<C-k>'] = cmp.mapping.select_prev_item(),

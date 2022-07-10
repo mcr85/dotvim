@@ -128,7 +128,7 @@ set showtabline=0
 
 call plug#begin('~/' . vim_home . '/plugged')
 Plug 'lewis6991/impatient.nvim'
-" Plug 'dstein54/vim-startuptime'
+
 " vim general ------------------------------------------------------------------
 " Plug 'mhartington/oceanic-next'
 " Plug 'Mofiqul/vscode.nvim'
@@ -137,50 +137,56 @@ Plug 'luisiacc/gruvbox-baby', {'branch': 'main'}
 Plug 'folke/which-key.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 " Plug 'glepnir/galaxyline.nvim'
-Plug 'akinsho/toggleterm.nvim'
-Plug 'kevinhwang91/nvim-bqf'
-"
+" Plug 'akinsho/toggleterm.nvim'
 Plug 'famiu/feline.nvim'
 Plug 'famiu/bufdelete.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'AckslD/nvim-neoclip.lua'
+
 " editing ----------------------------------------------------------------------
 Plug 'jdhao/better-escape.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sickill/vim-pasta'                               " context aware paste
 Plug 'windwp/nvim-autopairs'                           " auto instert paired char
 Plug 'matze/vim-move'                                  " move selection and maintain indentation
-" Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
-" Plug 'justinmk/vim-sneak'                              " fast char navigation to first two chars
-" Plug 'godlygeek/tabular'                               " text line up
 Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-unimpaired'
-Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
+Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-sleuth'                              " TODO: check out later
+Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
+
 " searching & project traversal ------------------------------------------------
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'
+Plug 'kevinhwang91/nvim-bqf'
 Plug 'kyazdani42/nvim-tree.lua'
-" Plug 'ahmedkhalf/project.nvim'
+Plug 'ahmedkhalf/project.nvim'
 " TODO: investigate sidebar.nvim
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
-Plug 'lewis6991/gitsigns.nvim'
 Plug 'kevinhwang91/nvim-hlslens'
 Plug 'petertriho/nvim-scrollbar'
 " Plug 'f-person/git-blame.nvim'
  " Plug 'windwp/nvim-spectre'                             "project wide search and replace // TODO: try replace with nvim-spectre
 " Plug 'brooth/far.vim'
 Plug 'tpope/vim-fugitive'                              " git integration
-" Plug 'sindrets/diffview.nvim'                        " TODO: check this out
+" Plug 'sindrets/diffview.nvim'                        " TODO: check this out, outdated git in ubuntu - need newer version
 " Plug 'TimUntersberger/neogit'                        " TOOD: check; integrates with diffview.nvim
 Plug 'mhinz/vim-grepper'
 " neogit - check it out
 " Plug 'ggandor/lightspeed.nvim'
 Plug 'phaazon/hop.nvim'
+
 " coding -----------------------------------------------------------------------
+Plug 'numToStr/Comment.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'mattn/emmet-vim'                                 " html editing shortcuts
+
+" IDE ----------------------------------------------------------------------
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
 " Plug 'kabouzeid/nvim-lspinstall'
@@ -198,22 +204,20 @@ Plug 'rafamadriz/friendly-snippets'
 Plug 'David-Kunz/cmp-npm'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'onsails/lspkind-nvim'
-Plug 'norcalli/nvim-colorizer.lua'
-" Plug 'folke/lsp-colors.nvim'
 " Plug 'mhartington/formatter.nvim'
 " Plug 'RRethy/vim-illuminate'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-" Plug 'nvim-treesitter/nvim-treesitter-angular'
+Plug 'lewis6991/gitsigns.nvim'
+" Plug 'nvim-neotest/neotest' " TODO: check it out
+" nvim-dap
+
 " tools ------------------------------------------------------------------------
 "NTBBloodbath/rest.nvim"
 " debugging --------------------------------------------------------------------
-" vimspector
-" nvim-dap
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
-Plug 'mattn/emmet-vim'                                 " html editing shortcuts
-" Plug 'tpope/vim-commentary'                            " commenting plugin
-Plug 'numToStr/Comment.nvim'
 Plug 'kamykn/spelunker.vim'
+" Plug 'dstein54/vim-startuptime'
+
 " service ----------------------------------------------------------------------
 Plug 'wakatime/vim-wakatime'
 
@@ -326,7 +330,7 @@ nnoremap <C-t>c :tabclose<CR>
 
 " buffer kill
 nnoremap <leader>dd :Bdelete! %d<cr>
-nnoremap <C-x>dd :Bdelete! %d<cr>
+nnoremap <C-x> :Bdelete! %d<cr>
 
 " allows backspace in insert mode
 set backspace=start,indent,eol
@@ -348,8 +352,8 @@ endfunction
 
 " quickfix list
 nnoremap <silent> <C-q> :call ToggleQuickFix()<cr>
-nnoremap <silent> <C-j> :cnext<cr>
-nnoremap <silent> <C-k> :cprev<cr>
+nnoremap <silent> <F13> :cnext<cr>
+nnoremap <silent> <F14> :cprev<cr>
 
 " local list
 nnoremap <silent> <leader>q :lopen<cr>

@@ -2,6 +2,11 @@ local telescope = require('telescope')
 local actions = require('telescope.actions')
 local previewers = require('telescope.previewers')
 
+local function path_display(_, path)
+  local tail = require("telescope.utils").path_tail(path)
+  return string.format("%s (%s)", tail, path)
+end
+
 telescope.setup {
   defaults = {
     file_ignore_patterns = {".git/*", "node_modules"},
@@ -11,10 +16,7 @@ telescope.setup {
     file_previewer = previewers.vim_buffer_cat.new,
     grep_previewer = previewers.vim_buffer_vimgrep.new,
     qflist_previewer = previewers.vim_buffer_qflist.new,
-    path_display = function(_, path)
-      local tail = require("telescope.utils").path_tail(path)
-      return string.format("%s (%s)", tail, path)
-    end,
+    path_display = path_display,
 
     mappings = {
       i = {
@@ -85,7 +87,7 @@ telescope.setup {
         horizontal = {
           prompt_position = 'top',
           mirror = true,
-          width = 0.6
+          width = 0.9
         }
       }
     },
@@ -103,6 +105,7 @@ telescope.setup {
     file_browser = {
       previewer = false,
       layout_strategy = "vertical",
+      path_display = path_display,
       layout_config = {
         vertical = {
           mirror = true,
@@ -122,5 +125,6 @@ telescope.setup {
 }
 
 telescope.load_extension('file_browser')
+telescope.load_extension('projects')
 telescope.load_extension('neoclip')
 -- telescope.load_extension('projects')
