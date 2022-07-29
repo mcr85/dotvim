@@ -215,6 +215,7 @@ Plug 'lewis6991/gitsigns.nvim'
 "NTBBloodbath/rest.nvim"
 " debugging --------------------------------------------------------------------
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
+" Plug 'michaelb/sniprun' " try that instead of codi.vim
 Plug 'kamykn/spelunker.vim'
 " Plug 'dstein54/vim-startuptime'
 
@@ -400,7 +401,7 @@ augroup EmmetSettings
   autocmd! FileType html imap <C-E> <plug>(emmet-expand-abbr)
 augroup END
 
-nnoremap <leader>l :ls <CR> :b<space>
+" nnoremap <leader>l :ls <CR> :b<space>
 
 " set
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/node_modules,*/bower_components
