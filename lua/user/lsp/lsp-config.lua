@@ -1,11 +1,8 @@
--- TODO: to scrap
-local lspconfig = require("lspconfig")
+local status_ok, lspconfig = pcall(require, 'lspconfig')
 
--- local status_ok, _ pcall(require, 'lspconfig')
-
--- if not status_ok then
---   return
--- end
+if not status_ok then
+  return
+end
 
 local buf_map = function(bufnr, mode, lhs, rhs, opts)
     vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
@@ -63,4 +60,4 @@ lspconfig.tsserver.setup({
 --   debug = false
 -- })
 
-lspconfig["null-ls"].setup({ on_attach = on_attach })
+-- lspconfig["null-ls"].setup({ on_attach = on_attach })

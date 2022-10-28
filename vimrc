@@ -32,7 +32,7 @@ set incsearch       " jump to search
 set virtualedit=block " visual edit block
 set number
 " set laststatus=3
-" set relativenumber
+set relativenumber
 " set signcolumn=auto
 set signcolumn=yes
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
@@ -148,7 +148,7 @@ Plug 'jdhao/better-escape.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'sickill/vim-pasta'                               " context aware paste
 Plug 'windwp/nvim-autopairs'                           " auto instert paired char
-Plug 'matze/vim-move'                                  " move selection and maintain indentation
+" Plug 'matze/vim-move'                                  " move selection and maintain indentation
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
@@ -174,7 +174,7 @@ Plug 'petertriho/nvim-scrollbar'
  " Plug 'windwp/nvim-spectre'                             "project wide search and replace // TODO: try replace with nvim-spectre
 " Plug 'brooth/far.vim'
 Plug 'tpope/vim-fugitive'                              " git integration
-" Plug 'sindrets/diffview.nvim'                        " TODO: check this out, outdated git in ubuntu - need newer version
+Plug 'sindrets/diffview.nvim'                        " TODO: check this out, outdated git in ubuntu - need newer version
 " Plug 'TimUntersberger/neogit'                        " TOOD: check; integrates with diffview.nvim
 Plug 'mhinz/vim-grepper'
 " neogit - check it out
@@ -187,11 +187,14 @@ Plug 'norcalli/nvim-colorizer.lua'
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 
 " IDE ----------------------------------------------------------------------
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+" Plug 'williamboman/nvim-lsp-installer'
 " Plug 'kabouzeid/nvim-lspinstall'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
+Plug 'jayp0521/mason-null-ls.nvim'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
