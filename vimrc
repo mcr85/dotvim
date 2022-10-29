@@ -37,7 +37,7 @@ set relativenumber
 set signcolumn=yes
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest:full,full   " file name completion
-" set completeopt=menu,menuone,noselect
+set completeopt=menu,menuone,noselect
 set synmaxcol=160
 set list
 set termguicolors
@@ -190,8 +190,6 @@ Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-" Plug 'williamboman/nvim-lsp-installer'
-" Plug 'kabouzeid/nvim-lspinstall'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'jayp0521/mason-null-ls.nvim'
@@ -333,8 +331,8 @@ nnoremap <S-tab> :bprev<CR>
 nnoremap <C-t>c :tabclose<CR>
 
 " buffer kill
-nnoremap <leader>dd :Bdelete! %d<cr>
-nnoremap <C-x> :Bdelete! %d<cr>
+nnoremap <leader>dd :Bdelete!<cr>
+nnoremap <C-x> :Bdelete!<cr>
 
 " allows backspace in insert mode
 set backspace=start,indent,eol

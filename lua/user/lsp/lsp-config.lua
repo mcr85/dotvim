@@ -4,6 +4,8 @@ if not status_ok then
   return
 end
 
+local mason_lspconfig = require('mason-lspconfig')
+
 local buf_map = function(bufnr, mode, lhs, rhs, opts)
     vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts or {
         silent = true,
@@ -36,24 +38,32 @@ local on_attach = function(client, bufnr)
     --     vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
     -- end
 end
-lspconfig.tsserver.setup({
-    on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = false
-        client.resolved_capabilities.document_range_formatting = false
-        local ts_utils = require("nvim-lsp-ts-utils")
-        ts_utils.setup({
-            eslint_bin = "eslint_d",
-            eslint_enable_diagnostics = true,
-            eslint_enable_code_actions = true,
-            enable_formatting = true,
-            formatter = "prettier",
-        })
-        ts_utils.setup_client(client)
-        buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
-        buf_map(bufnr, "n", "<F2>", ":TSLspRenameFile<CR>")
-        buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
-        on_attach(client, bufnr)
-    end
+
+mason_lspconfig.setup_handlers({
+  function (server_name)
+    lspconfig[server_name].setup()
+  end,
+  ["tsserver"] = function ()
+    lspconfig.tsserver.setup({
+        on_attach = function(client, bufnr)
+            client.resolved_capabilities.document_formatting = false
+            client.resolved_capabilities.document_range_formatting = false
+            local ts_utils = require("nvim-lsp-ts-utils")
+            ts_utils.setup({
+                eslint_bin = "eslint_d",
+                eslint_enable_diagnostics = true,
+                eslint_enable_code_actions = true,
+                enable_formatting = true,
+                formatter = "prettier",
+            })
+            ts_utils.setup_client(client)
+            buf_map(bufnr, "n", "gs", ":TSLspOrganize<CR>")
+            buf_map(bufnr, "n", "<F2>", ":TSLspRenameFile<CR>")
+            buf_map(bufnr, "n", "go", ":TSLspImportAll<CR>")
+            on_attach(client, bufnr)
+        end
+    })
+  end
 })
 
 -- require("null-ls").config({

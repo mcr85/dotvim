@@ -3,7 +3,14 @@ if not status_ok then
   return
 end
 
-mason_lsp_config.setup()
+mason_lsp_config.setup({
+  ensure_installed = {
+    "tsserver",
+    "html",
+    "cssls",
+    "sumneko_lua"
+  }
+})
 
 -- mason_lsp_config.setup_handlers({
 --   function

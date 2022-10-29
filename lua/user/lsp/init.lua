@@ -9,3 +9,6 @@ require('user.lsp.mason-lspconfig')
 require('user.lsp.mason-null-ls')
 require('user.lsp.lsp-config')
 require('user.lsp.handlers').setup()
+require('user.lsp.lsp-kind')
+-- TODO: fix this
+--require('user.lsp.lspsaga')
