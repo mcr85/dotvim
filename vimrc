@@ -217,7 +217,7 @@ Plug 'lewis6991/gitsigns.nvim'
 " debugging --------------------------------------------------------------------
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 " Plug 'michaelb/sniprun' " try that instead of codi.vim
-Plug 'kamykn/spelunker.vim'
+" Plug 'kamykn/spelunker.vim'
 " Plug 'dstein54/vim-startuptime'
 
 " service ----------------------------------------------------------------------
@@ -439,13 +439,13 @@ nnoremap <silent> <F10> :NvimTreeFindFile<CR>
 "-------------------------------------------------------------------------------
 " nvim-spectre
 "-------------------------------------------------------------------------------
-nnoremap <leader>S :lua require('spectre').open()<CR>
+" nnoremap <leader>S :lua require('spectre').open()<CR>
 
 "search current word
-nnoremap <leader>sw :lua require('spectre').open_visual({select_word=true})<CR>
-vnoremap <leader>s :lua require('spectre').open_visual()<CR>
+" nnoremap <leader>sw :lua require('spectre').open_visual({select_word=true})<CR>
+" vnoremap <leader>s :lua require('spectre').open_visual()<CR>
 "  search in current file
-nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
+" nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
 
 "-------------------------------------------------------------------------------
 " fugitive.git
@@ -458,5 +458,5 @@ nmap <leader>gs :G<CR>
 "-------------------------------------------------------------------------------
 " Spelunker
 "-------------------------------------------------------------------------------
-highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
-highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
+" highlight SpelunkerSpellBad cterm=underline ctermfg=247 gui=underline guifg=#9e9e9e
+" highlight SpelunkerComplexOrCompoundWord cterm=underline ctermfg=NONE gui=underline guifg=NONE
