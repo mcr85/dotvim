@@ -25,9 +25,10 @@ call plug#begin('~/' . vim_home . '/plugged')
 Plug 'crusoexia/vim-monokai'                           " monokai theme
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'Shougo/neocomplete.vim'                          " code completion
-Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
+" Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
+" Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
+Plug 'szw/vim-ctrlspace'                               " files, buffers and sessions management
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
-Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'SirVer/ultisnips'                                " snippets plugin
@@ -35,7 +36,7 @@ Plug 'honza/vim-snippets'                              " snippets
 Plug 'tpope/vim-commentary'                            " commenting plugin
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
-Plug 'bling/vim-airline'                               " fancy status bar
+" Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'godlygeek/tabular'                               " text line up
@@ -103,6 +104,17 @@ set cursorline
 
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
+
+" status line
+set statusline=
+set statusline +=%1*\ %n\ %*            "buffer number
+set statusline +=%5*%{&ff}%*            "file format
+set statusline +=%3*%y%*                "file type
+set statusline +=%4*\ %<%F%*            "full path
+set statusline +=%2*%m%*                "modified flag
+set statusline +=%1*%=%5l%*             "current line
+set statusline +=%2*/%L%*               "total lines
+set statusline +=%1*%4v\ %*             "virtual column number
 
 colorscheme monokai
 let g:monokai_italic = 1
@@ -210,10 +222,10 @@ syntax on
 "-------------------------------------------------------------------------------
 " Airline
 "-------------------------------------------------------------------------------
-set laststatus=2
-let g:airline_powerline_fonts=1
-let g:bufferline_echo=0
-let g:airline#extensions#tabline#enabled = 1
+" set laststatus=2
+" let g:airline_powerline_fonts=1
+" let g:bufferline_echo=0
+" let g:airline#extensions#tabline#enabled = 1
 " let g:airline_theme="tomorrow"
 
 "-------------------------------------------------------------------------------
@@ -289,19 +301,64 @@ let g:user_emmet_expandabbr_key='<c-l>'
 "-------------------------------------------------------------------------------
 " CtrlP
 "-------------------------------------------------------------------------------
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor 
+" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+" let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor 
+"                             \ --ignore .git
+"                             \ --ignore .DS_Store
+"                             \ --ignore dist
+"                             \ --ignore node_modules
+"                             \ -g "" %s'
+" let g:ctrlp_custom_ignore = '\v[\/](dist|node_modules|\.DS_Storegit)$'
+
+"-------------------------------------------------------------------------------
+" CtrlSpace
+"-------------------------------------------------------------------------------
+let g:ctrlspace_use_ruby_bindings = 1
+let g:ctrlspace_ignored_files = "\v(tmp|temp|.git|.DS_Sstore|dist|node_modules)[\/]"
+" let g:ctrlspace_search_timing = [10,10]
+let g:ctrlspace_glob_command = 'ag --nogroup --nobreak --noheading --nocolor 
                             \ --ignore .git
                             \ --ignore .DS_Store
                             \ --ignore dist
                             \ --ignore node_modules
-                            \ -g "" %s'
-let g:ctrlp_custom_ignore = '\v[\/](dist|node_modules|\.DS_Storegit)$'
+                            \ -g ""'
+
+" Colors
+" hi CtrlSpaceSelected guifg=#586e75 guibg=#eee8d5 guisp=#839496 gui=reverse,bold ctermfg=10 ctermbg=7 cterm=reverse,bold
+" hi CtrlSpaceNormal   guifg=#839496 guibg=#021B25 guisp=#839496 gui=NONE ctermfg=12 ctermbg=0 cterm=NONE
+" hi CtrlSpaceSearch   guifg=#cb4b16 guibg=NONE gui=bold ctermfg=9 ctermbg=NONE term=bold cterm=bold
+" hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
+
+hi CtrlSpaceSelected ctermfg=NONE ctermbg=237 cterm=NONE guifg=NONE guibg=#3c3d37 gui=reverse,bold
+hi CtrlSpaceNormal ctermfg=102 ctermbg=237 cterm=NONE guifg=#90908a guibg=#3c3d37 gui=bold 
+hi CtrlSpaceSearch ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=NONE
+
+let g:ctrlspace_symbols = {
+      \ "cs":      "⌗",
+      \ "tab":     "∙",
+      \ "all":     "፨",
+      \ "vis":     "★",
+      \ "file":    "⊚",
+      \ "tabs":    "○ ",
+      \ "c_tab":   "● ",
+      \ "ntm":     " ⁺",
+      \ "load":    "|∷|",
+      \ "save":    "[∷]",
+      \ "zoom":    "⌕",
+      \ "s_left":  "›",
+      \ "s_right": "‹",
+      \ "bm":      "♥",
+      \ "help":    "?",
+      \ "iv":      "☆",
+      \ "ia":      "★",
+      \ "im":      "+",
+      \ "dots":    "…"
+      \ }
 
 "-------------------------------------------------------------------------------
 " CtrlSF
 "-------------------------------------------------------------------------------
-nmap <Leader>sf <Plug>CtrlSFPrompt<cr>
+nmap <Leader>sf <Plug>CtrlSFPrompt
 nmap <Leader>sw <Plug>CtrlSFCwordExec<cr>
 nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 
