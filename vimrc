@@ -28,6 +28,7 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
+Plug 'sickill/vim-pasta'			       " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
@@ -270,9 +271,9 @@ augroup END
 "-------------------------------------------------------------------------------
 set completeopt-=preview
 let g:neocomplete#use_vimproc=1
-let g:acp_enableAtStartup = 0
+" let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#auto_completion_start_length = 1
+" let g:neocomplete#auto_completion_start_length = 1
 let g:neocomplete#sources#buffer#cache_limit_size = 50000
 let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 1
