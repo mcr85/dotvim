@@ -22,6 +22,7 @@ endif
 "-------------------------------------------------------------------------------
 
 call plug#begin('~/' . vim_home . '/plugged')
+Plug 'crusoexia/vim-monokai'                           " monokai theme
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'Shougo/neocomplete.vim'                          " code completion
 Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
@@ -36,12 +37,13 @@ Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'godlygeek/tabular'                               " text line up
-Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
+Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs
 Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
 Plug 'burnettk/vim-angular'                            " angularjs plugin
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node'                                   " node.js goodies
+Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'jaxbot/browserlink.vim'                          " web live coding
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
@@ -96,11 +98,14 @@ set cursorline
 set scrolloff=3 " at least 'n' number of lines at the top/bottom of the screen
 set wildmode=longest,list   " file name completion
 
-colorscheme hybrid
+colorscheme monokai
+let g:monokai_italic = 1
+let g:monokai_thick_border = 1
+let g:monokai_zentree = 1
 
 " font
 if has('win32')
-    set guifont=Consolas:h10:cANSI
+    set guifont=Consolas:h11:cANSI
 elseif has('mac')
     set guifont=Inconsolata-g\ for\ Powerline:h12
 elseif has('unix')
@@ -202,14 +207,14 @@ syntax on
 set laststatus=2
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
-let g:airline_theme="dark"
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme="tomorrow"
+" let g:airline_theme="tomorrow"
 
 "-------------------------------------------------------------------------------
 " NERDTree
 "-------------------------------------------------------------------------------
 map <F2> :NERDTreeToggle<CR>
+map <F3> :NERDTreeMirror<CR>
 let NERDTreeWinSize=36
 let NERDTreeMouseMode=2
 
