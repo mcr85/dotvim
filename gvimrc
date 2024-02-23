@@ -13,6 +13,7 @@ if has('win32')
     let vim_home = 'vimfiles'
 else
     let vim_home = '.vim'
+endif
 
 "-------------------------------------------------------------------------------
 " Plugins
@@ -210,9 +211,7 @@ let g:airline_theme="tomorrow"
 "-------------------------------------------------------------------------------
 map <F2> :NERDTreeToggle<CR>
 let NERDTreeWinSize=36
-
-" CheckSytnax
-let g:checksyntax#auto_enable_rx = "."
+let NERDTreeMouseMode=2
 
 "-------------------------------------------------------------------------------
 " EasyMotion
