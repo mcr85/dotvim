@@ -313,10 +313,10 @@ let g:ctrlspace_glob_command = 'ag --nogroup --nobreak --noheading --nocolor
                             \ -g ""'
 
 " Colors
-hi CtrlSpaceStatus   guifg=#839496 guibg=#002b36 gui=reverse term=reverse cterm=reverse ctermfg=12 ctermbg=8
-hi CtrlSpaceSelected ctermfg=NONE ctermbg=237 cterm=NONE guifg=NONE guibg=#3c3d37 gui=reverse,bold
-hi CtrlSpaceNormal ctermfg=102 ctermbg=237 cterm=NONE guifg=#90908a guibg=#3c3d37 gui=bold 
-hi CtrlSpaceSearch ctermfg=81 ctermbg=NONE cterm=NONE guifg=#66d9ef guibg=NONE gui=NONE
+hi CtrlSpaceStatus ctermbg=4 guibg=#383a3e
+hi CtrlSpaceSelected ctermbg=8 guibg=#383a3e gui=bold
+hi CtrlSpaceNormal ctermfg=14 guifg=#8F908A guibg=#2F312B
+hi CtrlSpaceSearch cterm=bold ctermfg=11 guifg=#A6E22D
 
 let g:ctrlspace_symbols = {
       \ "cs":      "⌗",
