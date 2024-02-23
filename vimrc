@@ -16,14 +16,14 @@ endfunction
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
-Plug 'neomake/neomake'
-Plug 'benjie/neomake-local-eslint.vim'
+Plug 'Shougo/vimproc.vim'
 Plug 'xolox/vim-session'                               " session management
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
 Plug 'mhartington/oceanic-next'
 Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
+Plug 'w0rp/ale'
 Plug 'sickill/vim-pasta'			                         " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
@@ -60,9 +60,11 @@ Plug 'tpope/vim-commentary'                            " commenting plugin
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
 Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
-Plug 'davidosomething/vim-jsdoc'                       " Helps creating JSDoc comments
+Plug 'davidosomething/vim-jsdoc', { 'for': 'javascript' } " Helps creating JSDoc comments
 Plug 'mxw/vim-jsx'
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
 " css/sass
 Plug 'ap/vim-css-color'
 
@@ -216,7 +218,7 @@ endif
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
-" nnoremap <c-h> <c-w>h
+nnoremap <c-h> <c-w>h
 
 " window resizing
 map <S-Left> <C-w>5<
@@ -354,8 +356,8 @@ let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 nnoremap <C-P> :CtrlP<CR>
 nnoremap <M-up> :CtrlPCurFile<CR>
 nnoremap <A-up> :CtrlPCurFile<CR>
-nnoremap <C-@> :CtrlPBuffer<CR>
-nnoremap <C-S-O>o :CtrlPFunky<CR>
+nnoremap <C-Space> :CtrlPBuffer<CR>
+nnoremap <Leader>o :CtrlPFunky<CR>
 nnoremap <Leader>t :CtrlPTag<CR>
 command! RECENT :CtrlPMRU<CR>
 
@@ -371,16 +373,11 @@ nmap <Leader>sw <Plug>CtrlSFCwordExec<cr>
 nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 
 "-------------------------------------------------------------------------------
-" Syntastic (syntax checker)
+" Ale (syntax checker)
 "-------------------------------------------------------------------------------
-map <F2> :lnext<CR>
-
-autocmd! BufWritePost * Neomake
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_jsx_enabled_makers = ['eslint']
-let g:neomake_open_list = 2
-let g:neomake_serialize = 1
-let g:neomake_serialize_abort_on_error = 0
+let g:ale_sign_column_always = 1
+nmap <silent> <F2> <Plug>(ale_previous_wrap)
+nmap <silent> <F3> <Plug>(ale_next_wrap)
 
 "-------------------------------------------------------------------------------
 " JavaScript & WEB
