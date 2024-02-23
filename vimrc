@@ -16,7 +16,7 @@ endfunction
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
-Plug 'Shougo/vimproc.vim'
+" Plug 'Shougo/vimproc.vim'
 Plug 'xolox/vim-session'                               " session management
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
@@ -54,7 +54,7 @@ Plug 'bronson/vim-visual-star-search'                  " better search with * an
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
-Plug 'Valloric/YouCompleteMe'                          " code completion
+" Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 Plug 'othree/yajs.vim', { 'for': 'javascript' }
@@ -64,7 +64,7 @@ Plug 'davidosomething/vim-jsdoc', { 'for': 'javascript' } " Helps creating JSDoc
 Plug 'mxw/vim-jsx'
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
 Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
+" Plug 'Quramy/tsuquyomi'
 " css/sass
 Plug 'ap/vim-css-color'
 
@@ -146,9 +146,9 @@ set wildmode=longest,list   " file name completion
 
 " font
 if has('win32')
-    set guifont=Consolas:h11:cEASTEUROPE
+    set guifont=Fira\ Code:h11:cEASTEUROPE
 elseif has('mac')
-    set guifont=Sauce\ Code\ Powerline:h14
+    set guifont=Fira\ Code:h14
 elseif has('unix')
     set guifont=Ubuntu\ Mono\ 12
 endif
@@ -349,6 +349,7 @@ nnoremap <leader>l :ls <CR> :b<space>
 call ctrlp_bdelete#init()
 
 let g:ctrlp_working_path_mode = ''
+let g:ctrlp_lazy_update = 1
 let g:ctrlp_max_files = 0
 let g:ctrlp_max_depth = 40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
