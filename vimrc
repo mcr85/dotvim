@@ -22,36 +22,42 @@ endif
 "-------------------------------------------------------------------------------
 
 call plug#begin('~/' . vim_home . '/plugged')
+" vim general ------------------------------------------------------------------
 Plug 'crusoexia/vim-monokai'                           " monokai theme
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
-Plug 'Shougo/neocomplete.vim'                          " code completion
-" Plug 'kien/ctrlp.vim'                                  " fuzzy goto file
-" Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
+Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
+Plug 'bling/vim-airline'                               " fancy status bar
+" editing ----------------------------------------------------------------------
+Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
+Plug 'honza/vim-snippets'                              " snippets
+Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
+Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
+Plug 'godlygeek/tabular'                               " text line up
+" searching & project traversal ------------------------------------------------
+Plug 'rking/ag.vim'
 Plug 'szw/vim-ctrlspace'                               " files, buffers and sessions management
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
-Plug 'scrooloose/syntastic'                            " syntax checker
-Plug 'SirVer/ultisnips'                                " snippets plugin
-Plug 'honza/vim-snippets'                              " snippets
-Plug 'tpope/vim-commentary'                            " commenting plugin
-Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
-Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
-Plug 'bling/vim-airline'                               " fancy status bar
-Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
+Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
-Plug 'godlygeek/tabular'                               " text line up
-"Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
+" coding -----------------------------------------------------------------------
+Plug 'mattn/emmet-vim'                                 " html editing shortcuts
+Plug 'SirVer/ultisnips'                                " snippets plugin
+Plug 'Shougo/neocomplete.vim'                          " code completion
+Plug 'scrooloose/syntastic'                            " syntax checker
+Plug 'tpope/vim-commentary'                            " commenting plugin
+" javascript -------------------------------------------------------------------
 Plug 'othree/yajs.vim'                                 " JavaScript syntax
+"Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
 "Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs - pangloss companion
 Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
 Plug 'burnettk/vim-angular'                            " angularjs plugin
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node'                                   " node.js goodies
-Plug 'mattn/emmet-vim'                                 " html editing shortcuts
+" orginizer --------------------------------------------------------------------
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 Plug 'Rykka/InstantRst'                                " reStructuredText live preview
-Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'KabbAmine/vCoolor.vim'                           " color picker
 call plug#end()
 
@@ -71,6 +77,7 @@ set history=700     " history
 set wildmenu        " Better command completion
 set incsearch       " jump to search
 set ignorecase      " ignore case when searching
+set virtualedit=block " visual edit block
 
 " map Leader
 let mapleader = ","
@@ -274,30 +281,9 @@ inoremap <expr><C-y>  neocomplete#close_popup()
 inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 "-------------------------------------------------------------------------------
-" UltiSnippets
-"-------------------------------------------------------------------------------
-" let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
-" let g:UltiSnipsExpandTrigger="<c-l>"
-" let g:UltiSnipsJumpForwardTrigger="<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-k>"
-" let g:UltiSnipsListSnippets="<c-m>"
-
-"-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
 let g:user_emmet_expandabbr_key='<c-l>'
-
-"-------------------------------------------------------------------------------
-" CtrlP
-"-------------------------------------------------------------------------------
-" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-" let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor 
-"                             \ --ignore .git
-"                             \ --ignore .DS_Store
-"                             \ --ignore dist
-"                             \ --ignore node_modules
-"                             \ -g "" %s'
-" let g:ctrlp_custom_ignore = '\v[\/](dist|node_modules|\.DS_Storegit)$'
 
 "-------------------------------------------------------------------------------
 " CtrlSpace
@@ -350,14 +336,16 @@ nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 "-------------------------------------------------------------------------------
 " Syntastic (syntax checker)
 "-------------------------------------------------------------------------------
+let g:syntastic_auto_jump = 3
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_error_symbol = "✗"
+let g:syntastic_warning_symbol = "⚠"
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
 
 "-------------------------------------------------------------------------------
 " JavaScript & WEB
