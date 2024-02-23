@@ -359,6 +359,8 @@ call ctrlp_bdelete#init()
 
 " let g:ctrlp_working_path_mode = 'c'
 
+let g:ctrlp_match_window = 'top,order:ttb,min:1,max:10,results:20'
+
 nnoremap <C-P> :CtrlPRoot<CR>
 nnoremap <A-Up> :CtrlPCurFile<CR>
 nnoremap <C-Space> :CtrlPBuffer<CR>
