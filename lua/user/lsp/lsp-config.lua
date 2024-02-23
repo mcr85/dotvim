@@ -53,6 +53,10 @@ if not status_ok then
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true
+}
 local defaultCapabilities = cmp_nvim_lsp.default_capabilities(capabilities)
 
 
@@ -104,8 +108,8 @@ mason_lspconfig.setup_handlers({
       capabilities = defaultCapabilities
     })
   end,
-  ["sumneko_lua"] = function()
-    lspconfig.sumneko_lua.setup({
+  ["lua_ls"] = function()
+    lspconfig.lua_ls.setup({
       settings = {
         Lua = {
           diagnostics = {

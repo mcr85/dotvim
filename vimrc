@@ -88,9 +88,9 @@ set autoindent
 filetype plugin indent on
 set textwidth=256
 set expandtab
-set foldlevelstart=20
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+" set foldlevelstart=20
+" set foldmethod=expr
+" set foldexpr=nvim_treesitter#foldexpr()
 
 " map Leader
 let mapleader = ","
@@ -142,6 +142,7 @@ Plug 'famiu/feline.nvim'
 Plug 'famiu/bufdelete.nvim'
 Plug 'akinsho/bufferline.nvim'
 Plug 'AckslD/nvim-neoclip.lua'
+Plug 'christoomey/vim-tmux-navigator'
 
 " editing ----------------------------------------------------------------------
 Plug 'jdhao/better-escape.vim'
@@ -154,6 +155,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 " Plug 'tpope/vim-sleuth'                              " TODO: check out later
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
+Plug 'kevinhwang91/promise-async'                           " code folding
+Plug 'kevinhwang91/nvim-ufo'                           " code folding
 
 " searching & project traversal ------------------------------------------------
 Plug 'nvim-lua/popup.nvim'
