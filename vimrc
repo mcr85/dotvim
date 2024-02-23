@@ -19,12 +19,7 @@ endfunction
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
-" Plug 'Shougo/vimproc.vim'
-" Plug 'xolox/vim-session'                               " session management
-" Plug 'xolox/vim-misc'
-" Plug 'xolox/vim-shell'
 Plug 'mhartington/oceanic-next'
-Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
 Plug 'terryma/vim-multiple-cursors'
 Plug 'w0rp/ale'
@@ -47,13 +42,6 @@ Plug 'wincent/ferret'                                  " multi file search
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'pbogut/fzf-mru.vim'
-" Plug 'ctrlpvim/ctrlp.vim'
-" Plug 'JazzCore/ctrlp-cmatcher'
-" Plug 'jasoncodes/ctrlp-modified.vim'
-" Plug 'ivalkeen/vim-ctrlp-tjump'
-" Plug 'sgur/ctrlp-extensions.vim'
-" Plug 'tacahiroy/ctrlp-funky'
-" Plug 'd11wtq/ctrlp_bdelete.vim'
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
@@ -62,26 +50,20 @@ Plug 'bronson/vim-visual-star-search'                  " better search with * an
 Plug 'metakirby5/codi.vim'                             " Quokka like plugin
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
-Plug 'SirVer/ultisnips'                                " snippets plugin
+" Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
-" Plug 'mhartington/nvim-typescript', { 'do': './install.sh' }
-" Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-" Plug 'othree/yajs.vim', { 'for': 'javascript' }
-" Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-" Plug 'othree/jspc.vim', { 'for': 'javascript' }        " funciton parameter completion
-" Plug 'davidosomething/vim-jsdoc', { 'for': 'javascript' } " Helps creating JSDoc comments
-" Plug 'mxw/vim-jsx'
-Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
+" Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
+Plug 'prettier/vim-prettier'
 " css/sass
 Plug 'ap/vim-css-color'
 
 " orginizer --------------------------------------------------------------------
-Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
+" Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
+Plug 'vim-scripts/rest.vim', { 'for': 'reStructuredText' }
 call plug#end()
 
 "-------------------------------------------------------------------------------
@@ -147,11 +129,6 @@ colorscheme OceanicNext
 if (has("termguicolors"))
    set termguicolors
  endif
-
-" switching buffers
-" nnoremap <leader>l :ls <CR> :b<space>
-" nnoremap <C-S-L> :bnext<CR>
-" nnoremap <C-S-H> :bprev<CR>
 
 " opening new splits
 set splitbelow
@@ -287,42 +264,6 @@ setlocal nofoldenable
 "-------------------------------------------------------------------------------
 let g:session_autoload = 'no'
 let g:session_autosave = 'yes'
-
-"-------------------------------------------------------------------------------
-" Airline
-"-------------------------------------------------------------------------------
-set laststatus=2
-let g:airline_theme='oceanicnext'
-let g:airline_powerline_fonts=1
-let g:bufferline_echo=0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tab_nr = 1
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline_mode_map = {
-  \ '__' : '-',
-  \ 'n'  : 'N',
-  \ 'i'  : 'I',
-  \ 'R'  : 'R',
-  \ 'c'  : 'C',
-  \ 'v'  : 'V',
-  \ 'V'  : 'V',
-  \ '' : 'V',
-  \ 's'  : 'S',
-  \ 'S'  : 'S',
-  \ '' : 'S',
-  \ }
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
 
 "-------------------------------------------------------------------------------
 " NERDTree
