@@ -35,6 +35,8 @@ Plug 'honza/vim-snippets'                              " snippets
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'godlygeek/tabular'                               " text line up
+Plug 'osyo-manga/vim-over'                             " peek search and replace
+Plug 'tpope/vim-surround'
 " searching & project traversal ------------------------------------------------
 Plug 'rking/ag.vim'
 Plug 'wincent/command-t'                               " fuzzy find files
@@ -55,12 +57,14 @@ Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
 Plug 'othree/yajs.vim', { 'for': 'javascript' }        " JavaScript syntax
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More JavaScript goodies
-"Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
-"Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs - pangloss companion
-Plug 'burnettk/vim-angular', { 'for': 'javascript' }                            " angularjs plugin
-" TODO: replace below with vim-esformatter
-Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript conveniences
+Plug 'crusoexia/vim-javascript-lib', { 'for': 'javascript' } " Syntax highlight for common js libs - pangloss companion
+Plug 'burnettk/vim-angular', { 'for': 'javascript' }   " angularjs plugin 
+Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module TODO: replace below with vim-esformatter
 Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
+Plug 'ahayman/vim-nodejs-complete', { 'for': 'javascript' }
+Plug 'digitaltoad/vim-jade'
+Plug 'wavded/vim-stylus'
 " orginizer --------------------------------------------------------------------
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
@@ -80,6 +84,7 @@ set noundofile      " do not create .un~ files
 set nowb
 set encoding=utf-8  " encoding
 set ttyfast         " fast scrolling
+set nolazyredraw    " don't redraw while executing macros
 set history=700     " history
 set wildmenu        " Better command completion
 set incsearch       " jump to search
@@ -163,6 +168,9 @@ nnoremap K <nop>
 nnoremap q: <nop>
 
 " search & replace
+
+" nnoremap <leader>l :ls <CR> :b<space>
+nnoremap <Leader>r :OverCommandLine <CR>:%s/
 " substitute word under cursor on current line
 nnoremap <Leader>n :s/\<<C-r><C-w>\>//g<Left><Left>
 " substitute word under cursor in whole document
@@ -261,6 +269,8 @@ map <F2> :NERDTreeToggle<CR>
 map <F3> :NERDTreeMirror<CR>
 let NERDTreeWinSize=36
 let NERDTreeMouseMode=2
+let NERDTreeShowHidden=1
+let NERDTreeIgnore = ['\.js.map$']
 
 "-------------------------------------------------------------------------------
 " Voom
@@ -314,6 +324,11 @@ augroup END
 " Emmet
 "-------------------------------------------------------------------------------
 let g:user_emmet_expandabbr_key='<c-l>'
+
+"-------------------------------------------------------------------------------
+" over.vim - powered up search & replace
+"-------------------------------------------------------------------------------
+nnoremap <leader>l :ls <CR> :b<space>
 
 "-------------------------------------------------------------------------------
 " CtrlSpace
