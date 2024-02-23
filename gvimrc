@@ -30,6 +30,8 @@ Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searc
 Plug 'FelikZ/ctrlp-py-matcher'                         " make CtrlP faster
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'scrooloose/syntastic'                            " syntax checker
+Plug 'SirVer/ultisnips'                                " snippets plugin
+Plug 'honza/vim-snippets'                              " snippets
 Plug 'tpope/vim-commentary'                            " commenting plugin
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
@@ -37,14 +39,14 @@ Plug 'bling/vim-airline'                               " fancy status bar
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 Plug 'godlygeek/tabular'                               " text line up
-Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
-Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs
+"Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
+Plug 'othree/yajs.vim'                                 " JavaScript syntax
+"Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs - pangloss companion
 Plug 'othree/javascript-libraries-syntax.vim'          " More JavaScript goodies
 Plug 'burnettk/vim-angular'                            " angularjs plugin
 Plug 'maksimr/vim-jsbeautify'                          " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node'                                   " node.js goodies
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
-Plug 'jaxbot/browserlink.vim'                          " web live coding
 Plug 'vim-voom/VOoM'                                   " outliner (generally for notes)
 Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 Plug 'Rykka/InstantRst'                                " reStructuredText live preview
@@ -91,6 +93,9 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 
+" switching buffers
+nnoremap <leader>l :ls <CR> :b<space>
+
 " opening new splits
 set splitbelow
 set splitright
@@ -123,7 +128,7 @@ imap jk <Esc>
 nmap . .`[
 
 " CDC = Change to Directory of Current file
-" command CDC cd %:p:h
+command! CDC cd %:p:h
 
 nnoremap <tab> %
 
@@ -220,6 +225,16 @@ let NERDTreeWinSize=36
 let NERDTreeMouseMode=2
 
 "-------------------------------------------------------------------------------
+" Voom
+"-------------------------------------------------------------------------------
+map <F4> :VoomToggle<CR>
+
+"-------------------------------------------------------------------------------
+" UltiSnips
+"-------------------------------------------------------------------------------
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
+
+"-------------------------------------------------------------------------------
 " EasyMotion
 "-------------------------------------------------------------------------------
 let g:EasyMotion_leader_key = '<Leader>'
@@ -234,8 +249,7 @@ augroup omnicomplete
   autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
   autocmd FileType markdown setlocal omnifunc=htmlcomplete#CompleteTags
   autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-  " autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  " autocmd FileType javascript setlocal omnifunc=tern#Complete
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
@@ -276,7 +290,20 @@ let g:user_emmet_expandabbr_key='<c-l>'
 " CtrlP
 "-------------------------------------------------------------------------------
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor -g "" %s '
+let g:ctrlp_user_command = 'ag --nogroup --nobreak --noheading --nocolor 
+                            \ --ignore .git
+                            \ --ignore .DS_Store
+                            \ --ignore dist
+                            \ --ignore node_modules
+                            \ -g "" %s'
+let g:ctrlp_custom_ignore = '\v[\/](dist|node_modules|\.DS_Storegit)$'
+
+"-------------------------------------------------------------------------------
+" CtrlSF
+"-------------------------------------------------------------------------------
+nmap <Leader>sf <Plug>CtrlSFPrompt<cr>
+nmap <Leader>sw <Plug>CtrlSFCwordExec<cr>
+nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 
 "-------------------------------------------------------------------------------
 " Syntastic (syntax checker)
@@ -303,8 +330,5 @@ syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
 setlocal foldmethod=syntax
 setlocal foldlevel=99
 
-" TernJS (javascript intelligence engine)
-" let g:tern_show_argument_hints='on_hold'
-" let g:tern_request_timeout=3
-" let g:tern_map_prefix="<leader>"
-" let g:tern_map_keys=1
+" JsBeautify
+command! Beautify call JsBeautify()
