@@ -23,6 +23,9 @@ endif
 
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
+Plug 'xolox/vim-session'                               " session management
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-shell'
 Plug 'jnurmine/Zenburn'                                " zenburn theme
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
@@ -31,13 +34,14 @@ Plug 'editorconfig/editorconfig-vim'                   " editor
 Plug 'sickill/vim-pasta'			                   " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
-Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
 Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'godlygeek/tabular'                               " text line up
 Plug 'osyo-manga/vim-over'                             " peek search and replace
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
 " searching & project traversal ------------------------------------------------
+Plug 'tpope/vim-fugitive'                             " git integration
 Plug 'haya14busa/incsearch.vim'
 Plug 'rking/ag.vim'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -51,7 +55,7 @@ Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searc
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
 Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
-Plug 'ludovicchabant/vim-gutentags'                    " tags generator
+Plug 'xolox/vim-easytags'                              " tags generator
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
 Plug 'ervandew/supertab'                               " tab for completions
@@ -59,7 +63,7 @@ Plug 'SirVer/ultisnips'                                " snippets plugin
 Plug 'Valloric/YouCompleteMe'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
-Plug 'sheerun/vim-polyglot'                            " syntax highlighting and identation for many languages
+"Plug 'sheerun/vim-polyglot'                            " syntax highlighting and identation for many languages
 " javascript -------------------------------------------------------------------
 Plug 'othree/javascript-libraries-syntax.vim',         " More JavaScript goodies
 Plug 'othree/jspc.vim'                                 " funciton parameter completion
@@ -247,12 +251,22 @@ set expandtab
 syntax on
 
 "-------------------------------------------------------------------------------
+" vim-session
+"-------------------------------------------------------------------------------
+let g:session_autoload = 'no'
+let g:session_autosave = 'no'
+
+"-------------------------------------------------------------------------------
 " Airline
 "-------------------------------------------------------------------------------
 set laststatus=2
 let g:airline_powerline_fonts=1
 let g:bufferline_echo=0
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tab_nr = 1
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+let g:airline#extensions#tabline#show_tab_type = 0
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_mode_map = {
   \ '__' : '-',
   \ 'n'  : 'N',
@@ -266,6 +280,16 @@ let g:airline_mode_map = {
   \ 'S'  : 'S',
   \ '' : 'S',
   \ }
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+nmap <leader>1 <Plug>AirlineSelectTab1
+nmap <leader>2 <Plug>AirlineSelectTab2
+nmap <leader>3 <Plug>AirlineSelectTab3
+nmap <leader>4 <Plug>AirlineSelectTab4
+nmap <leader>5 <Plug>AirlineSelectTab5
+nmap <leader>6 <Plug>AirlineSelectTab6
+nmap <leader>7 <Plug>AirlineSelectTab7
+nmap <leader>8 <Plug>AirlineSelectTab8
+nmap <leader>9 <Plug>AirlineSelectTab9
 
 "-------------------------------------------------------------------------------
 " NERDTree
@@ -312,6 +336,11 @@ if !exists("g:ycm_semantic_triggers")
 endif
 let g:ycm_semantic_triggers['typescript'] = ['.']
 set completeopt-=preview
+"
+"-------------------------------------------------------------------------------
+" Easytags
+"-------------------------------------------------------------------------------
+let g:easytags_cmd = 'C:\Programy\ctags\ctags.exe'
 
 "-------------------------------------------------------------------------------
 " Emmet
@@ -367,11 +396,6 @@ autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_prelude = 0
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
-
-" Javascript Code Folding
-syntax region foldBraces start=/{/ end=/}/ transparent fold keepend extend
-setlocal foldmethod=syntax
-setlocal foldlevel=99
 
 " JsBeautify
 command! Beautify call JsBeautify()

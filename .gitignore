@@ -4,3 +4,5 @@ vimproc_win32.dll
 bundle/YouCompleteMe
 bundle/vim-colors-solarized
 plugged
+sessions/
+tags
