@@ -1,7 +1,7 @@
 if has('win32')
     let vim_home = 'vimfiles'
 else
-    let vim_home = '.vim'
+    let vim_home = '.config/nvim'
 endif
 
 function! DoRemote(arg)
@@ -17,15 +17,14 @@ endfunction
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 Plug 'neomake/neomake'
+Plug 'benjie/neomake-local-eslint.vim'
 Plug 'xolox/vim-session'                               " session management
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-shell'
-Plug 'jnurmine/Zenburn'                                " zenburn theme
 Plug 'mhartington/oceanic-next'
-" Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
 " editing ----------------------------------------------------------------------
-Plug 'sickill/vim-pasta'			                   " context aware paste
+Plug 'sickill/vim-pasta'			                         " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
 Plug 'honza/vim-snippets'                              " snippets
 Plug 'matze/vim-move'                                  " move selection and maintain indentation
@@ -37,11 +36,9 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tmhedberg/matchit'                               " enhanced go to matching pair
 Plug 'tpope/vim-repeat'
 " searching & project traversal ------------------------------------------------
-Plug 'tpope/vim-fugitive'                             " git integration
+Plug 'tpope/vim-fugitive'                              " git integration
 Plug 'wincent/loupe'
 Plug 'wincent/ferret'
-" Plug 'haya14busa/incsearch.vim'
-" Plug 'rking/ag.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'JazzCore/ctrlp-cmatcher'
 Plug 'jasoncodes/ctrlp-modified.vim'
@@ -89,7 +86,6 @@ set wildmenu        " Better command completion
 set wildignorecase
 set incsearch       " jump to search
 set smartcase
-" set ignorecase      " ignore case when searching
 set virtualedit=block " visual edit block
 
 " map Leader
@@ -114,6 +110,17 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set showtabline=0
+
+
+" theme
+" For Neovim 0.1.3 and 0.1.4
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+" Or if you have Neovim > 0.1.5
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 set t_Co=256
 syntax enable
 colorscheme OceanicNext
@@ -325,20 +332,6 @@ let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_autoclose_preview_window_after_insertion = 1
 
 "-------------------------------------------------------------------------------
-" Deoplete
-"-------------------------------------------------------------------------------
-" set completeopt-=preview
-
-" let g:deoplete#enable_at_startup = 1
-" let g:tern_request_timeout = 1
-" let g:tern_show_signature_in_pum = 0
-" let g:tern#command = ["tern"]
-" let g:tern#arguments = ["--persistent"]
-
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-" inoremap <expr><S-tab> pumvisible() ? "\<c-p>" : "\<S-tab>"
-
-"-------------------------------------------------------------------------------
 " Emmet
 "-------------------------------------------------------------------------------
 let g:user_emmet_expandabbr_key='<c-l>'
@@ -359,9 +352,10 @@ let g:ctrlp_max_depth = 40
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
 nnoremap <C-P> :CtrlP<CR>
-nnoremap <C-A-P> :CtrlPCurFile<CR>
-nnoremap <M-Space> :CtrlPBuffer<CR>
-nnoremap <Leader>o :CtrlPFunky<CR>
+nnoremap <M-up> :CtrlPCurFile<CR>
+nnoremap <A-up> :CtrlPCurFile<CR>
+nnoremap <C-@> :CtrlPBuffer<CR>
+nnoremap <C-S-O>o :CtrlPFunky<CR>
 nnoremap <Leader>t :CtrlPTag<CR>
 command! RECENT :CtrlPMRU<CR>
 
@@ -381,17 +375,12 @@ nmap <Leader>sv <Plug>CtrlSFVwordExec<cr>
 "-------------------------------------------------------------------------------
 map <F2> :lnext<CR>
 
-function! neomake#makers#ft#javascript#eslint()
-    return {
-        \ 'args': ['-f', 'compact'],
-        \ 'errorformat': '%E%f: line %l\, col %c\, Error - %m,' .
-        \ '%W%f: line %l\, col %c\, Warning - %m'
-        \ }
-endfunction
-
-let g:neomake_javascript_enabled_makers = ['eslint']
-let g:neomake_open_list = 1
 autocmd! BufWritePost * Neomake
+let g:neomake_javascript_enabled_makers = ['eslint']
+let g:neomake_jsx_enabled_makers = ['eslint']
+let g:neomake_open_list = 2
+let g:neomake_serialize = 1
+let g:neomake_serialize_abort_on_error = 0
 
 "-------------------------------------------------------------------------------
 " JavaScript & WEB
