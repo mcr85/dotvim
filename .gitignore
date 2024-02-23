@@ -1,5 +1,6 @@
 .netrwhist
 .gvimrc.swp
+spell/pl.utf-8.spl
 vimproc_win32.dll
 bundle/YouCompleteMe
 bundle/vim-colors-solarized
