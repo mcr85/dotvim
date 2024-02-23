@@ -24,9 +24,10 @@ endif
 call plug#begin('~/' . vim_home . '/plugged')
 " vim general ------------------------------------------------------------------
 Plug 'crusoexia/vim-monokai'                           " monokai theme
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
+"Plug 'Shougo/vimproc.vim', { 'do': 'make' }            " asynchronous stuff
 Plug 'nelstrom/vim-qargs'                              " run commands on Quickfix results
 Plug 'bling/vim-airline'                               " fancy status bar
+Plug 'editorconfig/editorconfig-vim'                   " editor
 " editing ----------------------------------------------------------------------
 Plug 'sickill/vim-pasta'			                   " context aware paste
 Plug 'jiangmiao/auto-pairs'                            " auto instert paired char
@@ -36,6 +37,7 @@ Plug 'Lokaltog/vim-easymotion'                         " fast char navigation
 Plug 'godlygeek/tabular'                               " text line up
 " searching & project traversal ------------------------------------------------
 Plug 'rking/ag.vim'
+Plug 'wincent/command-t'                               " fuzzy find files
 Plug 'szw/vim-ctrlspace'                               " files, buffers and sessions management
 Plug 'dyng/ctrlsf.vim'                                 " sublime-like text searching
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " tree file explorer
@@ -43,10 +45,11 @@ Plug 'airblade/vim-gitgutter'                          " git helper
 Plug 'bronson/vim-visual-star-search'                  " better search with * and #
 " coding -----------------------------------------------------------------------
 Plug 'mattn/emmet-vim'                                 " html editing shortcuts
-Plug 'jordwalke/VimCompleteLikeAModernEditor'          " tab completion helper
+"Plug 'jordwalke/VimCompleteLikeAModernEditor'          " tab completion helper
 Plug 'ervandew/supertab'                               " tab for completions
 Plug 'SirVer/ultisnips'                                " snippets plugin
-Plug 'Shougo/neocomplete.vim'                          " code completion
+Plug 'Valloric/YouCompleteMe'                          " code completion
+" Plug 'Shougo/neocomplete.vim'                          " code completion
 Plug 'scrooloose/syntastic'                            " syntax checker
 Plug 'tpope/vim-commentary'                            " commenting plugin
 " javascript -------------------------------------------------------------------
@@ -55,6 +58,7 @@ Plug 'othree/javascript-libraries-syntax.vim', { 'for': 'javascript' } " More Ja
 "Plug 'pangloss/vim-javascript'                         " JavaScript conveniences
 "Plug 'crusoexia/vim-javascript-lib'                    " Syntax highlight for common js libs - pangloss companion
 Plug 'burnettk/vim-angular', { 'for': 'javascript' }                            " angularjs plugin
+" TODO: replace below with vim-esformatter
 Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file - needs node module
 Plug 'moll/vim-node', { 'for': 'javascript' }          " node.js goodies
 " orginizer --------------------------------------------------------------------
@@ -158,8 +162,14 @@ nnoremap Q <nop>
 nnoremap K <nop>
 nnoremap q: <nop>
 
-" turn off search highlight
-nnoremap <leader>h :noh<cr>
+" search & replace
+" substitute word under cursor on current line
+nnoremap <Leader>n :s/\<<C-r><C-w>\>//g<Left><Left>
+" substitute word under cursor in whole document
+nnoremap <Leader>m :%s/\<<C-r><C-w>\>//g<Left><Left>
+
+" toggle search highlight
+nnoremap <leader>h :set hlsearch!<cr>
 
 " copy paste
 nmap <C-V> "+gP
@@ -261,9 +271,9 @@ map <F4> :VoomToggle<CR>
 " UltiSnips
 "-------------------------------------------------------------------------------
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "mysnippets"]
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsExpandTrigger="<c-e>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 "-------------------------------------------------------------------------------
 " EasyMotion
@@ -288,17 +298,17 @@ augroup END
 "-------------------------------------------------------------------------------
 " neocomplete
 "-------------------------------------------------------------------------------
-set completeopt-=preview
-let g:neocomplete#use_vimproc=1
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#sources#buffer#cache_limit_size = 50000
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#sources#syntax#min_keyword_length = 1
-inoremap <expr><C-g>  neocomplete#undo_completion()
-inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
+" set completeopt-=preview
+" let g:neocomplete#use_vimproc=1
+" let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#sources#buffer#cache_limit_size = 50000
+" let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#sources#syntax#min_keyword_length = 1
+" inoremap <expr><C-g>  neocomplete#undo_completion()
+" inoremap <expr><C-h>  neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>   neocomplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><C-y>  neocomplete#close_popup()
+" inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 "-------------------------------------------------------------------------------
 " Emmet
