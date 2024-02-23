@@ -66,7 +66,7 @@ Plug 'maksimr/vim-jsbeautify', { 'for': 'javascript' } " de-obfuscate .js file -
 Plug 'ternjs/tern_for_vim'
 Plug 'groenewege/vim-less'
 " orginizer --------------------------------------------------------------------
-" Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
+Plug 'Rykka/riv.vim'                                   " notes with reStructuredText
 call plug#end()
 
 "-------------------------------------------------------------------------------
@@ -80,7 +80,6 @@ set noundofile      " do not create .un~ files
 set nowb
 set encoding=utf-8  " encoding
 set ttyfast         " fast scrolling
-set nolazyredraw    " don't redraw while executing macros
 set history=700     " history
 set wildmenu        " Better command completion
 set wildignorecase
